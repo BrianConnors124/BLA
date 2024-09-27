@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCD;
     private Action endDash;
     private float dashDistancePH;
+    [SerializeField] private float dashSlowDownInterval;
     
 
     [Header("Raycast")] 
@@ -192,12 +193,12 @@ public class PlayerMovement : MonoBehaviour
         
         while (dashDistance > 0)
         {
-            dashDistance -= 0.05f;
+            dashDistance -= dashSlowDownInterval;
             dashDistance = Mathf.Clamp(dashDistance, 0, dashDistancePH); yield return new WaitForEndOfFrame();
         } 
         while (dashDistance < 0)
         {
-            dashDistance += 0.05f;
+            dashDistance += dashSlowDownInterval;
             dashDistance = Mathf.Clamp(dashDistance, dashDistancePH * -1, 0);
             yield return new WaitForEndOfFrame();
         }
