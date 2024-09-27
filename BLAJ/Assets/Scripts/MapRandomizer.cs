@@ -11,28 +11,62 @@ public class MapRandomizer : MonoBehaviour
 
     [Header("GameObject Inst")] 
     [SerializeField] private GameObject[] platform;
-    public bool placeable;
+
+    private bool a = true;
+
+    private BoxCollider2D thisCol;
+    
 
 
-    private void Awake()
+    private void Start()
     {
-        _location = transform.position;
-        StartCoroutine(TryPlace());
+        StartCoroutine(InstantiateObj());
     }
 
-    private IEnumerator TryPlace()
+    private IEnumerator InstantiateObj()
     {
-
-        for (var i = 0; i < platform.Length; i++)
-        {
-            var rand = Random.Range(0, 1);
-            _direction = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
-            BoxCollider2D platformCol = platform[i].GetComponent<BoxCollider2D>();
-            Vector2 colSize = platformCol.size;
-            Vector2 scaleSize = platform[i].transform.localScale;
-            Instantiate(platform[i], new Vector2((float) _location.x + _direction.x * colSize.x * scaleSize.x, (float) _location.y + _direction.y * colSize.y * scaleSize.y), Quaternion.identity);
-            Debug.Log(placeable);
-            yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
+        if (GameManager.instance.numberOfRooms < GameManager.instance.maxRooms)
+        { 
+            thisCol = GetComponent<BoxCollider2D>(); 
+            _direction = new Vector2(0, 0);
+            var rand = Random.Range(0, platform.Length);
+            _location = transform.position;
+            RandomXorY();
+            BoxCollider2D platformCol = platform[rand].GetComponent<BoxCollider2D>();
+            var thisScale = transform.localScale;
+            var thisColSize = thisCol.size;
+            var nextColSize = platformCol.size;
+            var scaleSize = platform[rand].transform.localScale;
+            if (a)
+            {
+                Instantiate(platform[rand], new Vector2 ((_location.x + _direction.x * nextColSize.x * scaleSize.x / 2) + (thisColSize.x * thisScale.x * _direction.x /2),(_location.y + _direction.y * nextColSize.y * scaleSize.y / 2) + (thisColSize.y * thisScale.y * _direction.y /2)), Quaternion.identity);
+            }//instantiating obj
+            GameManager.instance.AddRoom();
         }
+    }
+
+    private void RandomXorY()
+    {
+        while (_direction.x == 0 && _direction.y == 0 && GameManager.instance.previousDirection.x == _direction.x || GameManager.instance.previousDirection.y == _direction.y)
+        {
+           
+            var rand = Random.Range(0, 2);
+
+            if (rand == 0)
+            {
+                var x = Random.Range(-1, 2); 
+                _direction = new Vector2(x, 0); 
+                Debug.Log("rand = 0");   
+            }
+
+            if (rand == 1)
+            {
+                var y = Random.Range(-1, 2);
+                _direction = new Vector2(0, y); 
+                Debug.Log("rand = 1");
+            }
+        }
+        GameManager.instance.previousDirection = new Vector2(_direction.x * -1, _direction.y * -1);
     }
 }
