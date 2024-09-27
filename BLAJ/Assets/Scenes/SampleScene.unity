@@ -245,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 90254851}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0904, y: -2.87, z: 0}
+  m_LocalPosition: {x: 0.4, y: -3.2, z: 0}
   m_LocalScale: {x: 41.753567, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,7 +266,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2673644289758886473, guid: 3a67c93532d51684bb161e745c0fa612, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00000047683716
+      value: 0.00000071525574
       objectReference: {fileID: 0}
     - target: {fileID: 2673644289758886473, guid: 3a67c93532d51684bb161e745c0fa612, type: 3}
       propertyPath: m_LocalPosition.y
@@ -369,13 +369,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8926187724458583355, guid: 5b4cdfb7b1555ae45bf61d8ddf1994d6, type: 3}
+      propertyPath: maxRooms
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3611580238400490735, guid: 5b4cdfb7b1555ae45bf61d8ddf1994d6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1143987936}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b4cdfb7b1555ae45bf61d8ddf1994d6, type: 3}
 --- !u!1001 &1021332900
 PrefabInstance:
@@ -387,7 +388,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4820796378574920404, guid: 94e2412adad2fa9428488f6843d9403a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00000047683716
+      value: 0.00000071525574
       objectReference: {fileID: 0}
     - target: {fileID: 4820796378574920404, guid: 94e2412adad2fa9428488f6843d9403a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -486,43 +487,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5519312577967371637, guid: 642371193571a8a4794bf1133effec68, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5519312577967371637, guid: 642371193571a8a4794bf1133effec68, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5519312577967371637, guid: 642371193571a8a4794bf1133effec68, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 642371193571a8a4794bf1133effec68, type: 3}
---- !u!1 &1143987931 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3611580238400490735, guid: 5b4cdfb7b1555ae45bf61d8ddf1994d6, type: 3}
-  m_PrefabInstance: {fileID: 843571785}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1143987936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143987931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a53ca097ac249e45bb7b8d5e49902c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfRooms: 0
-  previousDirection: {x: 0, y: 0}
-  maxRooms: 8
 --- !u!1001 &1993709109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -584,9 +553,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1049360660}
   - {fileID: 1021332900}
   - {fileID: 632411199}
   - {fileID: 1993709109}
   - {fileID: 843571785}
   - {fileID: 90254854}
+  - {fileID: 1049360660}
