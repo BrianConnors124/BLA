@@ -34,11 +34,11 @@ public class GameManager : MonoBehaviour
         numberOfRooms++;
     }
 
-    public void Failed(Collider2D other)
+    public void Failed(Collider2D other, Collider2D thisColl)
     {
         
         var ogGO = other.gameObject;
-        var secGO = thisCol.gameObject;
+        var secGO = thisColl.gameObject;
         Destroy(secGO);
         Debug.Log(ogGO.name + " is intersecting " + secGO.name);
     }

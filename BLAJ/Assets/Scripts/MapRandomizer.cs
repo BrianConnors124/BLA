@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,13 +19,13 @@ public class MapRandomizer : MonoBehaviour
     private Transform thisTransform;
     private bool canPlace = false;
     private UniversalTimer timer = new UniversalTimer();
-    private bool placed = false;
-    
+    private bool placed = false; 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        thisCol = GetComponent<BoxCollider2D>(); 
         if (!timer.TimerDone)
         {
-            GameManager.instance.Failed(other);
+            GameManager.instance.Failed(other, thisCol);
         }
     }
     
