@@ -20,13 +20,17 @@ public class MapRandomizer : MonoBehaviour
     private Transform thisTransform;
     private bool canPlace = false;
     private UniversalTimer timer = new UniversalTimer();
-    private bool placed = false; 
+    private bool placed = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        thisCol = GetComponent<BoxCollider2D>(); 
-        if (!timer.TimerDone)
+        if (!placed)
         {
-            GameManager.instance.Failed(other, thisCol);
+            placed = true;
+            thisCol = GetComponent<BoxCollider2D>(); 
+            if (!timer.TimerDone)
+            {
+                GameManager.instance.Failed(other, thisCol);
+            }
         }
     }
     
@@ -35,11 +39,11 @@ public class MapRandomizer : MonoBehaviour
         thisCol = GetComponent<BoxCollider2D>(); 
         _direction = new Vector2(0, 0);
         thisTransform = transform;
-        redoInst += ActionInstantiate;
+        _instantiate += ActionInstantiate;
         addRoomSuccess += AddRoom;
 
-        StartCoroutine(timer.Timer(.1f, addRoomSuccess));
-        StartCoroutine(new UniversalTimer().Timer(1, redoInst));
+        StartCoroutine(timer.Timer(.02f, addRoomSuccess));
+        StartCoroutine(new UniversalTimer().Timer(1f, _instantiate));
         
     }
 
@@ -55,7 +59,7 @@ public class MapRandomizer : MonoBehaviour
     public void ActionInstantiate()
     {
         GameManager.instance.SetValues(_direction, platform, thisCol, thisTransform);
-        _instantiate += GameManager.instance.InstantiateObj;
+        _instantiate = GameManager.instance.InstantiateObj;
         _instantiate.Invoke();
     }
 }

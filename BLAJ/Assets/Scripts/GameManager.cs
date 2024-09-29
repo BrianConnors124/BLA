@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,9 +19,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 _location;
     [SerializeField] private Vector2 _direction;
     [SerializeField] private GameObject[] platform;
+    public Action instOBJ;
     
     public int maxRooms;
     public Vector2 previousDirection;
+    public Vector2 oppositeDirection;
     private BoxCollider2D thisCol;
     public bool redo;
     
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        instOBJ += InstantiateObj;
+        instOBJ += PrintStatement;
     }
 
     // Update is called once per frame
@@ -41,8 +47,13 @@ public class GameManager : MonoBehaviour
         var ogGO = other.gameObject;
         var secGO = thisColl.gameObject;
         Destroy(secGO);
-        InstantiateObj();
+        StartCoroutine(new UniversalTimer().Timer(1f, instOBJ));
         Debug.Log(ogGO.name + " is intersecting " + secGO.name);
+    }
+
+    private void PrintStatement()
+    {
+        Debug.Log("retry");
     }
 
     public void SetValues(Vector2 a, GameObject[] b, BoxCollider2D c, Transform d)
@@ -61,7 +72,7 @@ public class GameManager : MonoBehaviour
             var randObj = Random.Range(0, platform.Length);
             
             
-            while (_direction.x == 0 && _direction.y == 0 && previousDirection.x == _direction.x || previousDirection.y == _direction.y)
+            while (_direction.x == 0 && _direction.y == 0 && previousDirection.x == _direction.x || previousDirection.y == _direction.y || previousDirection.y == _direction.y)
             {
            
                 var rand = Random.Range(0, 2);
@@ -80,7 +91,8 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            previousDirection = new Vector2(_direction.x * -1, _direction.y * -1);
+            previousDirection = new Vector2(_direction.x, _direction.y);
+            oppositeDirection = new Vector2(_direction.x * -1, _direction.y * -1);
             
             BoxCollider2D platformCol = platform[randObj].GetComponent<BoxCollider2D>();
             var thisScale = thisTransform.localScale;
