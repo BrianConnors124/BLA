@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
 
     public void InstantiateObj()
     {
-        redo = false;
         _location = thisTransform.position;
         if (numberOfRooms < maxRooms)
         { 
@@ -69,15 +68,14 @@ public class GameManager : MonoBehaviour
 
                 if (rand == 0)
                 {
-                    var y = Random.Range(-1, 1);
+                    var y = Random.Range(-1, 2);
                     _direction = new Vector2(0, y); 
                     //Debug.Log("rand = 0");   
                 }
 
                 if (rand == 1)
                 {
-                    var x = Random.Range(-1, 2); 
-                    _direction = new Vector2(x, 0); 
+                    _direction = new Vector2(1, 0); 
                     //Debug.Log("rand = 1");
                 }
             }

@@ -15,6 +15,7 @@ public class MapRandomizer : MonoBehaviour
     [SerializeField] private GameObject[] platform;
     private Action redoInst;
     private Action _instantiate;
+    private Action addRoomSuccess;
     private BoxCollider2D thisCol;
     private Transform thisTransform;
     private bool canPlace = false;
@@ -35,11 +36,21 @@ public class MapRandomizer : MonoBehaviour
         _direction = new Vector2(0, 0);
         thisTransform = transform;
         redoInst += ActionInstantiate;
+        addRoomSuccess += AddRoom;
 
-        StartCoroutine(timer.Timer(.1f));
+        StartCoroutine(timer.Timer(.1f, addRoomSuccess));
         StartCoroutine(new UniversalTimer().Timer(1, redoInst));
         
     }
+
+    
+    public void AddRoom()
+    {
+        GameManager.instance.AddRoom();
+    }
+
+    
+    
 
     public void ActionInstantiate()
     {
