@@ -25,12 +25,8 @@ public class MapRandomizer : MonoBehaviour
     {
         if (!placed)
         {
-            placed = true;
             thisCol = GetComponent<BoxCollider2D>(); 
-            if (!timer.TimerDone)
-            {
-                GameManager.instance.Failed(other, thisCol);
-            }
+            GameManager.instance.Failed(other, thisCol);
         }
     }
     
@@ -50,6 +46,7 @@ public class MapRandomizer : MonoBehaviour
     
     public void AddRoom()
     {
+        placed = true;
         GameManager.instance.AddRoom();
     }
 
