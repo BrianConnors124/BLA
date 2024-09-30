@@ -38,7 +38,7 @@ public class MapRandomizer : MonoBehaviour
         _instantiate += ActionInstantiate;
         addRoomSuccess += AddRoom;
 
-        StartCoroutine(timer.Timer(.01f, addRoomSuccess));
+        StartCoroutine(timer.Timer(.1f, addRoomSuccess));
         StartCoroutine(new UniversalTimer().Timer(1f, _instantiate));
         
     }
