@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         var secGO = thisColl.gameObject;
         Destroy(secGO);
         StartCoroutine(new UniversalTimer().Timer(1f, instOBJ));
-        Debug.Log(ogGO.name + " is intersecting " + secGO.name);
+        Debug.Log(secGO.name + " is intersecting " + ogGO.name);
     }
 
     private void PrintStatement()
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
             var randObj = Random.Range(0, platform.Length);
             
             
-            while (_direction.x == 0 && _direction.y == 0 && previousDirection.x == _direction.x || previousDirection.y == _direction.y || previousDirection.y == _direction.y)
+            while (_direction.x == 0 && _direction.y == 0 && previousDirection.x == _direction.x || _direction.x == 0 && _direction.y == 0 && previousDirection.y == _direction.y || _direction.x == 0 && _direction.y == 0 && oppositeDirection.y == _direction.y)
             {
            
                 var rand = Random.Range(0, 2);

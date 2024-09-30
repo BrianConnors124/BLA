@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         if(!TouchingGround() && !extraJump)
             rb.gravityScale = baseGrav * endJumpMultiplier;
     }
-    
+    //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
     private bool TouchingGround()
     {
         return Physics2D.Raycast(transform.position, Vector2.down, lengthOfRay, LayerMask.GetMask("WorldObj"));
@@ -158,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
             extraJumps = jumpAmountPH;
         }
     }
-    //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
+    
     
     
     
