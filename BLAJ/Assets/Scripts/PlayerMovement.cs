@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpAmountPH;
     [SerializeField] private bool extraJump;
     public bool touchingGround;
-    private bool jumped;
+    public bool jumped;
     
 
     [Header("Dash")] 
@@ -110,12 +110,13 @@ public class PlayerMovement : MonoBehaviour
         
         if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
         {
-            //Debug.Log("Jumped");
+            Debug.Log("Jumped");
+            jumped = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
             StartCoroutine(jumpCooldown.Timer(jumpCD));
         } else if (extraJumps > 0)
         {
-            //Debug.Log("Jumped Extra");
+            Debug.Log("Jumped Extra");
             rb.gravityScale = baseGrav;
             rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
             extraJumps--;
@@ -143,25 +144,23 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         touchingGround = TouchingGround();
-        if (!touchingGround)
+        if (jumped)
         {
-            if (rb.velocityY > 0)
-            {
-                coyoteTime = 0;
-                coyoteJump = false;
-            }
-            else
-            {
-                if (coyoteTime <= 0)
-                { 
-                    coyoteJump = false;
-                }    
-            }
+            coyoteJump = false;
+        } 
+        
+        if (!touchingGround && !jumped)
+        {
             coyoteTime -= Time.deltaTime;
+            if (coyoteTime <= 0)
+            { 
+                coyoteJump = false;
+            } 
         }
-        else
+        
+        if(touchingGround)
         {
-            jumped = false;
+            
             extraJump = true;
             rb.gravityScale = baseGrav;
             coyoteTime = coyotePH;

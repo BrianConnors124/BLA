@@ -9,9 +9,7 @@ public class MapSelect : MonoBehaviour
     public GameObject[] level;
     public bool _once;
     public GameObject background;
-    
 
-    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!_once)
@@ -34,6 +32,15 @@ public class MapSelect : MonoBehaviour
         Instantiate(level[mapNum], new Vector3(transform.position.x + (backTrans.x -0.01f) * 2, transform.position.y), Quaternion.identity);
         
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     
     
 }

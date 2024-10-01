@@ -33,10 +33,10 @@ public class NextLevel : MonoBehaviour
 
     private IEnumerator LoadingNewLevel(Collider2D other)
     {
-        yield return new WaitForSeconds(2
-            );
+        yield return new WaitForSeconds(0.5f);
         other.transform.position = transform.position;
         _once = true;
+        yield return new WaitForSeconds(2);
         GameManager.instance.DeactivateLoadingScreen();
     }
 }
