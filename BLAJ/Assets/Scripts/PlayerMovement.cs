@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float extraJumps;
     private float jumpAmountPH;
     [SerializeField] private bool extraJump;
+    public bool touchingGround;
+    private bool jumped;
     
 
     [Header("Dash")] 
@@ -105,20 +107,20 @@ public class PlayerMovement : MonoBehaviour
     //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
     private void AttemptJump()
     {
-        if (extraJumps > 0 && !extraJump)
+        
+        if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
         {
-            extraJump = true;
+            //Debug.Log("Jumped");
+            rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
+            StartCoroutine(jumpCooldown.Timer(jumpCD));
+        } else if (extraJumps > 0)
+        {
+            //Debug.Log("Jumped Extra");
             rb.gravityScale = baseGrav;
             rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
             extraJumps--;
         }
-        if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
-        {
-            extraJump = false;
-            coyoteJump = false;
-            rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
-            StartCoroutine(jumpCooldown.Timer(jumpCD));
-        }
+        
     }
     
     private void EndJump()
@@ -140,17 +142,26 @@ public class PlayerMovement : MonoBehaviour
                    
     void Update()
     {
-        //print(TouchingGround());
-        if (!TouchingGround() || rb.velocity.y != 0)
+        touchingGround = TouchingGround();
+        if (!touchingGround)
         {
-            coyoteTime -= Time.deltaTime;
-            if (coyoteTime <= 0)
+            if (rb.velocityY > 0)
             {
+                coyoteTime = 0;
                 coyoteJump = false;
             }
+            else
+            {
+                if (coyoteTime <= 0)
+                { 
+                    coyoteJump = false;
+                }    
+            }
+            coyoteTime -= Time.deltaTime;
         }
         else
         {
+            jumped = false;
             extraJump = true;
             rb.gravityScale = baseGrav;
             coyoteTime = coyotePH;

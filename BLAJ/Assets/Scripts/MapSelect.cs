@@ -8,7 +8,10 @@ public class MapSelect : MonoBehaviour
 {
     public GameObject[] level;
     public bool _once;
+    public GameObject background;
+    
 
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!_once)
@@ -24,7 +27,12 @@ public class MapSelect : MonoBehaviour
 
     private void MakeNewLevel(int mapNum)
     {
-        Instantiate(level[mapNum], new Vector3(transform.position.x + transform.localScale.x -0.01f, transform.position.y), Quaternion.identity);
+        GameManager.instance.AddLevel();
+        background = GameObject.Find("Background");
+        var backTrans = background.transform.localScale;
+        level[mapNum].name = "Level: " + GameManager.instance.levelNum;
+        Instantiate(level[mapNum], new Vector3(transform.position.x + (backTrans.x -0.01f) * 2, transform.position.y), Quaternion.identity);
+        
     }
     
     
