@@ -38,5 +38,6 @@ public class NextLevel : MonoBehaviour
         _once = true;
         yield return new WaitForSeconds(2);
         GameManager.instance.DeactivateLoadingScreen();
+        //print("Hey");
     }
 }

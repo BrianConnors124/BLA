@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,8 @@ public class MapSelect : MonoBehaviour
     public GameObject[] level;
     public bool _once;
     public GameObject background;
+    private UniversalTimer timer;
+    
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -35,12 +38,17 @@ public class MapSelect : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        
         if (other.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            Invoke("DeleteGo", 2.6f);
         }
+        
     }
-    
-    
+
+    private void DeleteGo()
+    {
+        Destroy(gameObject);
+    }
     
 }

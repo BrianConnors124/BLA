@@ -110,13 +110,13 @@ public class PlayerMovement : MonoBehaviour
         
         if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
         {
-            Debug.Log("Jumped");
+            //Debug.Log("Jumped");
             jumped = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
             StartCoroutine(jumpCooldown.Timer(jumpCD));
         } else if (extraJumps > 0)
         {
-            Debug.Log("Jumped Extra");
+            //Debug.Log("Jumped Extra");
             rb.gravityScale = baseGrav;
             rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
             extraJumps--;
