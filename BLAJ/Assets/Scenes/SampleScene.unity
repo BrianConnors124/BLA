@@ -438,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3898099825416793766, guid: e466ea05cb3152745b029045934cab3b, type: 3}
       propertyPath: lengthOfRay
-      value: 0.495
+      value: 0.5075047
       objectReference: {fileID: 0}
     - target: {fileID: 3898099825416793766, guid: e466ea05cb3152745b029045934cab3b, type: 3}
       propertyPath: endJumpMultiplier
