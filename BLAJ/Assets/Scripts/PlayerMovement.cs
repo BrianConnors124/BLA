@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float extraJumps;
     private float jumpAmountPH;
     [SerializeField] private bool extraJump;
+    public bool touchingGround;
+    public bool jumped;
     
 
     [Header("Dash")] 
@@ -105,20 +107,21 @@ public class PlayerMovement : MonoBehaviour
     //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
     private void AttemptJump()
     {
-        if (extraJumps > 0 && !extraJump)
+        
+        if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
         {
-            extraJump = true;
+            Debug.Log("Jumped");
+            jumped = true;
+            rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
+            StartCoroutine(jumpCooldown.Timer(jumpCD));
+        } else if (extraJumps > 0)
+        {
+            Debug.Log("Jumped Extra");
             rb.gravityScale = baseGrav;
             rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
             extraJumps--;
         }
-        if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
-        {
-            extraJump = false;
-            coyoteJump = false;
-            rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
-            StartCoroutine(jumpCooldown.Timer(jumpCD));
-        }
+        
     }
     
     private void EndJump()
@@ -126,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         if(!TouchingGround() && !extraJump)
             rb.gravityScale = baseGrav * endJumpMultiplier;
     }
-    
+    //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
     private bool TouchingGround()
     {
         return Physics2D.Raycast(transform.position, Vector2.down, lengthOfRay, LayerMask.GetMask("WorldObj"));
@@ -140,17 +143,24 @@ public class PlayerMovement : MonoBehaviour
                    
     void Update()
     {
-        //print(TouchingGround());
-        if (!TouchingGround() || rb.velocity.y != 0)
+        touchingGround = TouchingGround();
+        if (jumped)
+        {
+            coyoteJump = false;
+        } 
+        
+        if (!touchingGround && !jumped)
         {
             coyoteTime -= Time.deltaTime;
             if (coyoteTime <= 0)
-            {
+            { 
                 coyoteJump = false;
-            }
+            } 
         }
-        else
+        
+        if(touchingGround)
         {
+            
             extraJump = true;
             rb.gravityScale = baseGrav;
             coyoteTime = coyotePH;
@@ -158,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
             extraJumps = jumpAmountPH;
         }
     }
-    //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
+    
     
     
     

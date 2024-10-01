@@ -58,6 +58,7 @@ public class UniversalTimer
         if(timer <= 0)
             Commit.Invoke();
     }
+    
     public IEnumerator Timer(float Length)
     {
         timer = Length; 
