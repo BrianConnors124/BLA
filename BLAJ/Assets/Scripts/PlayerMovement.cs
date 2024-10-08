@@ -71,10 +71,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Actions()
     {
-        endDash += EndDash;
-        InputSystemController.instance.endJump += EndJump;
-        InputSystemController.instance.jumpAction += AttemptJump;
-        InputSystemController.instance.dashAction += Dash;
+        while (endDash == null || InputSystemController.instance.endJump == null ||
+               InputSystemController.instance.jumpAction == null || InputSystemController.instance.dashAction == null)
+        {
+            endDash += EndDash;
+            InputSystemController.instance.endJump += EndJump;
+            InputSystemController.instance.jumpAction += AttemptJump;
+            InputSystemController.instance.dashAction += Dash;  
+        }
     }
     private void ActivateTimers()
     {
