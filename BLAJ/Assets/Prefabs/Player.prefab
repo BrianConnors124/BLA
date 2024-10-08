@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5523464433240212355}
   - component: {fileID: 5157935125656104001}
   - component: {fileID: 3898099825416793766}
+  - component: {fileID: 433475153693438441}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -180,9 +181,24 @@ MonoBehaviour:
   endJumpMultiplier: 3
   extraJumps: 1
   extraJump: 0
+  touchingGround: 0
+  jumped: 0
   dashDistance: 3.5
   dashTime: 0.1
   dashCD: 0.2
   dashSlowDownInterval: 0.9
   coyoteJump: 0
   lengthOfRay: 0.509
+--- !u!114 &433475153693438441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6880437960901488795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781ea764913fc83429ea23c2f4320242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 3611580238400490735, guid: 5b4cdfb7b1555ae45bf61d8ddf1994d6, type: 3}

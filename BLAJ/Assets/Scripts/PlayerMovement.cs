@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCD;
-    private Action endDash;
+    private Action endDash = null;
     private float dashDistancePH;
     [SerializeField] private float dashSlowDownInterval;
     
@@ -71,14 +71,19 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Actions()
     {
-        while (endDash == null || InputSystemController.instance.endJump == null ||
-               InputSystemController.instance.jumpAction == null || InputSystemController.instance.dashAction == null)
-        {
-            endDash += EndDash;
-            InputSystemController.instance.endJump += EndJump;
-            InputSystemController.instance.jumpAction += AttemptJump;
-            InputSystemController.instance.dashAction += Dash;  
-        }
+        StartCoroutine(Retrying());
+    }
+
+    IEnumerator Retrying()
+    {
+        yield return new WaitForSeconds(0.01f);
+        endDash += EndDash;
+        InputSystemController.instance.endJump += EndJump;
+        InputSystemController.instance.jumpAction += AttemptJump;
+        InputSystemController.instance.dashAction += Dash;  
+        print("retry");
+        yield return new WaitForEndOfFrame();
+        
     }
     private void ActivateTimers()
     {
@@ -130,8 +135,11 @@ public class PlayerMovement : MonoBehaviour
     
     private void EndJump()
     {
-        if(!TouchingGround() && !extraJump)
+        if (!TouchingGround() && extraJump && rb.velocityY >= 0)
+        {
+            print("end jump early");
             rb.gravityScale = baseGrav * endJumpMultiplier;
+        }
     }
     //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
     private bool TouchingGround()

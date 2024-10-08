@@ -24,6 +24,11 @@ public class InputSystemController : MonoBehaviour
         instance = this;
     }
 
+    static private void Filler()
+    {
+        print("Not Working");
+    }
+
     public static Vector2 MovementInput()
     {
         return instance.walking.action.ReadValue<Vector2>();
@@ -38,6 +43,7 @@ public class InputSystemController : MonoBehaviour
             {
                 //Debug.Log("VAR");
                 jumpAction.Invoke();
+                print("big jump");
             }
             else if (context.canceled)
             {
