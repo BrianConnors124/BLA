@@ -26,11 +26,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LoadGame()
-    {
-        
-    }
-
     public void AddLevel()
     {
         levelNum++;

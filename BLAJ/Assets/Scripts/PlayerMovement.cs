@@ -10,7 +10,6 @@ using UnityEngine.UIElements;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
-    PlayerMovement instance;
     
     
     [Header("Movement")] 
@@ -54,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {   
         rb = GetComponent<Rigidbody2D>();
-        instance = this;
         Actions();
         ActivateTimers();
         ActivatePresets();
@@ -76,14 +74,12 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Retrying()
     {
-        yield return new WaitForSeconds(0.01f);
+        //yield return new WaitForSeconds(0.01f);
         endDash += EndDash;
         InputSystemController.instance.endJump += EndJump;
         InputSystemController.instance.jumpAction += AttemptJump;
         InputSystemController.instance.dashAction += Dash;  
-        print("retry");
-        yield return new WaitForEndOfFrame();
-        
+        yield break;
     }
     private void ActivateTimers()
     {
@@ -137,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!TouchingGround() && extraJump && rb.velocityY >= 0)
         {
-            print("end jump early");
+            //print("end jump early");
             rb.gravityScale = baseGrav * endJumpMultiplier;
         }
     }

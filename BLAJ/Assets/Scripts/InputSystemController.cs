@@ -19,14 +19,9 @@ public class InputSystemController : MonoBehaviour
     public Action endJump;
     public Action dashAction;
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
-    }
-
-    static private void Filler()
-    {
-        print("Not Working");
     }
 
     public static Vector2 MovementInput()
@@ -43,14 +38,14 @@ public class InputSystemController : MonoBehaviour
             {
                 //Debug.Log("VAR");
                 jumpAction.Invoke();
-                print("big jump");
+                //print("big jump");
             }
             else if (context.canceled)
             {
                 endJump.Invoke();
             }
         }
-        else
+        else if (endJump == null || jumpAction == null) 
         {
             Debug.LogError("endJump or jumpAction not assigned a value");
         }
@@ -61,7 +56,7 @@ public class InputSystemController : MonoBehaviour
         {
             dashAction.Invoke();
         }
-        else
+        else if (dashAction == null)
         {
             Debug.LogError("dashAction is not assigned a value");
         }
