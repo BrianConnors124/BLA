@@ -45,7 +45,7 @@ public class InputSystemController : MonoBehaviour
                 endJump.Invoke();
             }
         }
-        else if (endJump == null || jumpAction == null) 
+        else
         {
             Debug.LogError("endJump or jumpAction not assigned a value");
         }
@@ -56,7 +56,7 @@ public class InputSystemController : MonoBehaviour
         {
             dashAction.Invoke();
         }
-        else if (dashAction == null)
+        else
         {
             Debug.LogError("dashAction is not assigned a value");
         }

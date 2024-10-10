@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     private Vector2 startingPoint;
     private Vector2 obstaclePos;
     public float jumpHeight;
+    public float groundRayLength;
+    private bool movingRight;
     
     [Header("Movement Speed")]
     [SerializeField] private float npcMovementSpeed;
@@ -34,7 +36,7 @@ public class EnemyController : MonoBehaviour
                 if (transform.position.x <= _origPos.x)
                 {
                     rb.velocity = new Vector2(0, 0);
-                    transform.position = _origPos;
+                    transform.position = new Vector3(_origPos.x, transform.position.y, transform.position.z);
                     checkingPos = false;
                 }
             } else
@@ -42,7 +44,7 @@ public class EnemyController : MonoBehaviour
                 if (transform.position.x >= _origPos.x)
                 {
                     rb.velocity = new Vector2(0, 0);
-                    transform.position = _origPos;
+                    transform.position = new Vector3(_origPos.x, transform.position.y, transform.position.z);
                     checkingPos = false;
                 }
             }
@@ -51,13 +53,22 @@ public class EnemyController : MonoBehaviour
         {
             greaterThan = transform.position.x > _origPos.x;
         }
-        startingPoint = new Vector2(transform.position.x, transform.position.y + transform.localScale.x + 1 );
-        obstaclePos = new Vector2(transform.position.x, transform.position.y + transform.localScale.x);
+        //jumping
+        if (movingRight)
+        {
+            lengthOfRay = Math.Abs(lengthOfRay);
+        } else if (!movingRight)
+        {
+            lengthOfRay = Math.Abs(lengthOfRay) * -1;
+        }
+        
+        startingPoint = new Vector2(transform.position.x, transform.position.y + transform.localScale.x + 1 );//jump height limit
+        obstaclePos = new Vector2(transform.position.x, transform.position.y);//testing to see if there is a collider in front
         bool isJump = Physics2D.Raycast(startingPoint,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
         bool isObstacle = Physics2D.Raycast(obstaclePos,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
         if (!isJump && isObstacle)
         {
-            print(isJump);
+            print(isTouchingGround());
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
     }
@@ -66,13 +77,14 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.DrawLine(startingPoint, new Vector3(startingPoint.x + lengthOfRay, startingPoint.y));
         Gizmos.DrawLine(obstaclePos, new Vector3(obstaclePos.x + lengthOfRay, obstaclePos.y));
+        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            rb.velocity = new Vector2(0, 0);
+            rb.velocity = new Vector2(0, rb.velocity.y);
             Invoke("Return", .5f);
             //print(Direction);
         }
@@ -84,9 +96,11 @@ public class EnemyController : MonoBehaviour
         if (Direction.x > 0)
         {
             rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+            movingRight = true;
         } else if (Direction.x < 0)
         {
             rb.velocity = new Vector2(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+            movingRight = false;
         }
         
         checkingPos = true;
@@ -106,13 +120,15 @@ public class EnemyController : MonoBehaviour
             if (Direction.x >= 1.08)
             {
                 rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale, rb.velocity.y);
+                movingRight = true;
             } else if (Direction.x <= -1.08)
             {
                 rb.velocity = new Vector2(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y);
+                movingRight = false;
             }
             else
             {
-                rb.velocity = new Vector2(0, 0);
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
                 
             //print(Direction);
@@ -120,7 +136,7 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down);
+    private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
 
     private void SetVelocity(Vector2 newVelocity) => rb.velocity = newVelocity;
     private void SetVelocityX(float X) => rb.velocity = new Vector2(X, rb.velocity.y);
