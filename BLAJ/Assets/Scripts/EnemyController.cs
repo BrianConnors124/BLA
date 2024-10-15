@@ -17,7 +17,9 @@ public class EnemyController : MonoBehaviour
     private Vector2 obstaclePos;
     public float jumpHeight;
     public float groundRayLength;
+    public double maxJumpHeight;
     private bool movingRight;
+    private bool similarX;
     
     [Header("Movement Speed")]
     [SerializeField] private float npcMovementSpeed;
@@ -26,6 +28,16 @@ public class EnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         _origPos = transform.position;
+        //jumpHeightLimit();
+    }
+
+    private void jumpHeightLimit()
+    {
+        float timeToReachTop = (jumpHeight)/rb.gravityScale;
+        //print(timeToReachTop);
+
+        maxJumpHeight = (jumpHeight * timeToReachTop) + (-.5f * rb.gravityScale * Math.Pow(timeToReachTop, 2));
+        //print(maxJumpHeight);
     }
     private void Update()
     {
@@ -35,7 +47,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (transform.position.x <= _origPos.x)
                 {
-                    rb.velocity = new Vector2(0, 0);
+                    rb.velocity = new Vector2(0, rb.velocity.y);
                     transform.position = new Vector3(_origPos.x, transform.position.y, transform.position.z);
                     checkingPos = false;
                 }
@@ -43,7 +55,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (transform.position.x >= _origPos.x)
                 {
-                    rb.velocity = new Vector2(0, 0);
+                    rb.velocity = new Vector2(0, rb.velocity.y);
                     transform.position = new Vector3(_origPos.x, transform.position.y, transform.position.z);
                     checkingPos = false;
                 }
@@ -62,15 +74,16 @@ public class EnemyController : MonoBehaviour
             lengthOfRay = Math.Abs(lengthOfRay) * -1;
         }
         
-        startingPoint = new Vector2(transform.position.x, transform.position.y + transform.localScale.x + 1 );//jump height limit
+        startingPoint = new Vector2(transform.position.x, transform.position.y + (float) maxJumpHeight );//jump height limit
         obstaclePos = new Vector2(transform.position.x, transform.position.y);//testing to see if there is a collider in front
         bool isJump = Physics2D.Raycast(startingPoint,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
         bool isObstacle = Physics2D.Raycast(obstaclePos,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
-        if (!isJump && isObstacle)
+        if (!isJump && isObstacle && !similarX && isTouchingGround())
         {
-            print(isTouchingGround());
+            //print(isTouchingGround());
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
+        //print(isTouchingGround());
     }
 
     private void OnDrawGizmos()
@@ -121,13 +134,16 @@ public class EnemyController : MonoBehaviour
             {
                 rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale, rb.velocity.y);
                 movingRight = true;
+                similarX = false;
             } else if (Direction.x <= -1.08)
             {
                 rb.velocity = new Vector2(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y);
                 movingRight = false;
+                similarX = false;
             }
             else
             {
+                similarX = true;
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
                 
