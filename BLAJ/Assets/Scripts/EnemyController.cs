@@ -13,59 +13,118 @@ public class EnemyController : MonoBehaviour
     private bool checkingPos = false;
     private bool greaterThan;
     public float lengthOfRay;
-    private Vector2 startingPoint;
-    private Vector2 obstaclePos;
+    private Vector2 jumpLimit;
+    private Vector2 obstacleSensor;
     public float jumpHeight;
     public float groundRayLength;
     public double maxJumpHeight;
-    private bool movingRight;
     private bool similarX;
+    private bool hostile = false;
     
     [Header("Movement Speed")]
     [SerializeField] private float npcMovementSpeed;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         _origPos = transform.position;
-        //jumpHeightLimit();
     }
-
-    private void jumpHeightLimit()
+    
+    
+    //follow player ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private void OnTriggerStay2D(Collider2D other)
     {
-        float timeToReachTop = (jumpHeight)/rb.gravityScale;
-        //print(timeToReachTop);
-
-        maxJumpHeight = (jumpHeight * timeToReachTop) + (-.5f * rb.gravityScale * Math.Pow(timeToReachTop, 2));
-        //print(maxJumpHeight);
-    }
-    private void Update()
-    {
-        if (checkingPos)
+        if (other.CompareTag("Player"))//This is used to see if the collider belongs to the player
         {
-            if (greaterThan)
+            hostile = true;
+            checkingPos = false;//idk what this is for 
+            _player = other.gameObject; //this is assigning the "_player" gameObject to the player in the game
+            playerDirection = _player.transform.position; //this updates the player's position while the player is inside the trigger collider of the enemy
+            
+            var distance = new Vector2(playerDirection.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
+                                                                                                            while keeping the same Y value and so the difference of the two is the distance the enemy must travel    */
+            
+            if (distance.x >= 1.08)//if this is true the enemy must move right
             {
-                if (transform.position.x <= _origPos.x)
-                {
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    transform.position = new Vector3(_origPos.x, transform.position.y, transform.position.z);
-                    checkingPos = false;
-                }
-            } else
+                rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale, rb.velocity.y);//applying the velocity
+                EnemyFaceRight(true);//the enemy is moving right
+                similarX = false; 
+            } else if (distance.x <= -1.08)//however if this is true the enemy must move left
             {
-                if (transform.position.x >= _origPos.x)
-                {
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    transform.position = new Vector3(_origPos.x, transform.position.y, transform.position.z);
-                    checkingPos = false;
-                }
+                rb.velocity = new Vector2(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y);//applying the velocity
+                EnemyFaceRight(false);//the enemy is moving left so that means the enemy isn't traveling left
+                similarX = false;/*similarX is used to see if the player and enemy have an "distance" value of:  -1.08 < x < 1.08 , if so then this will be set to true, 
+                                  but in this case it isn't true so it is set to false. This is to prohibit the enemy from continuously walking into the player when it is already close enough. */
+            }
+            else
+            {
+                similarX = true; //as previously stated this is set to true because "distance" is not greater than 1.08 nor is it less than -1.08 meaning it fits the inequality of -1.08 < x < 1.08 so it shouldn't move anymore
+                rb.velocity = new Vector2(0, rb.velocity.y);//preventing anymore movement along the X axis
+                
+                //similarX is used to prevent the enemy from jumping when under the player, however I didn't set the Y velocity to zero because if the enemy is falling I want it to fall onto solid ground instead of staying in the air
             }
         }
-        else if(transform.position.x != _origPos.x)
+        
+    }
+    
+    //return to beginning position ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            greaterThan = transform.position.x > _origPos.x;
+            StartCoroutine(Return());
         }
-        //jumping
+    }
+
+    private IEnumerator Return()//this is used to return the enemy back to its original position once the player leaves the trigger collider
+    {
+        if (transform.position.x < _origPos.x)
+        {
+            //if the enemy x position is less than the original x position then it will apply a positive velocity and wait until the position is greater than original x position
+            rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+            EnemyFaceRight(true);
+            yield return new WaitUntil(() => transform.position.x > _origPos.x);
+            hostile = false;
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        } else if(transform.position.x > _origPos.x)
+        {
+            //if the enemy x position is greater than the original position then it will apply a negative velocity and wait until the position is less than original position
+            rb.velocity = new Vector2(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+            EnemyFaceRight(false);
+            yield return new WaitUntil(() => transform.position.x < _origPos.x);
+            hostile = false;
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+    }
+    
+    //jumping ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private void Update()
+    {
+        
+        jumpLimit = new Vector2(transform.position.x, transform.position.y + (float) maxJumpHeight );//jump height limit
+        obstacleSensor = new Vector2(transform.position.x, transform.position.y);//testing to see if there is a collider in the direction of the enemy's movement
+        
+        
+        var limitTest = Physics2D.Raycast(jumpLimit,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
+        var sensor = Physics2D.Raycast(obstacleSensor,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
+        
+        
+        if (!limitTest && sensor && !similarX && isTouchingGround() && hostile)
+        {
+            Jump();
+        }
+        
+    }
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+    }
+
+    //Extra ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
+    private void EnemyFaceRight(bool movingRight)
+    {
+        //This is flipping the ray left and right based on the direction of the enemy movement
         if (movingRight)
         {
             lengthOfRay = Math.Abs(lengthOfRay);
@@ -73,88 +132,12 @@ public class EnemyController : MonoBehaviour
         {
             lengthOfRay = Math.Abs(lengthOfRay) * -1;
         }
-        
-        startingPoint = new Vector2(transform.position.x, transform.position.y + (float) maxJumpHeight );//jump height limit
-        obstaclePos = new Vector2(transform.position.x, transform.position.y);//testing to see if there is a collider in front
-        bool isJump = Physics2D.Raycast(startingPoint,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
-        bool isObstacle = Physics2D.Raycast(obstaclePos,Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
-        if (!isJump && isObstacle && !similarX && isTouchingGround())
-        {
-            //print(isTouchingGround());
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-        }
-        //print(isTouchingGround());
     }
-
+    
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(startingPoint, new Vector3(startingPoint.x + lengthOfRay, startingPoint.y));
-        Gizmos.DrawLine(obstaclePos, new Vector3(obstaclePos.x + lengthOfRay, obstaclePos.y));
+        Gizmos.DrawLine(jumpLimit, new Vector3(jumpLimit.x + lengthOfRay, jumpLimit.y));
+        Gizmos.DrawLine(obstacleSensor, new Vector3(obstacleSensor.x + lengthOfRay, obstacleSensor.y));
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
     }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            Invoke("Return", .5f);
-            //print(Direction);
-        }
-    }
-
-    private void Return()
-    {
-        var Direction = new Vector2(_origPos.x - transform.position.x, transform.position.y).normalized;
-        if (Direction.x > 0)
-        {
-            rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
-            movingRight = true;
-        } else if (Direction.x < 0)
-        {
-            rb.velocity = new Vector2(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
-            movingRight = false;
-        }
-        
-        checkingPos = true;
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            
-            checkingPos = false;
-            //print("Attack");
-            _player = other.gameObject;
-            playerDirection = _player.transform.position;
-            var Direction = new Vector2(playerDirection.x - transform.position.x, transform.position.y);
-            
-            if (Direction.x >= 1.08)
-            {
-                rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale, rb.velocity.y);
-                movingRight = true;
-                similarX = false;
-            } else if (Direction.x <= -1.08)
-            {
-                rb.velocity = new Vector2(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y);
-                movingRight = false;
-                similarX = false;
-            }
-            else
-            {
-                similarX = true;
-                rb.velocity = new Vector2(0, rb.velocity.y);
-            }
-                
-            //print(Direction);
-        }
-        
-    }
-
-    private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
-
-    private void SetVelocity(Vector2 newVelocity) => rb.velocity = newVelocity;
-    private void SetVelocityX(float X) => rb.velocity = new Vector2(X, rb.velocity.y);
-    private void SetVelocityY(float Y) => rb.velocity = new Vector2(rb.velocity.x, Y);
 }

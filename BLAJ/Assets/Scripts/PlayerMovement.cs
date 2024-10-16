@@ -26,9 +26,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float endJumpMultiplier;
     [SerializeField] private float extraJumps;
     private float jumpAmountPH;
+    [SerializeField] private bool coyoteJump;
     [SerializeField] private bool extraJump;
-    public bool touchingGround;
-    public bool jumped;
+    private bool jumped;
     
 
     [Header("Dash")] 
@@ -41,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
     
 
     [Header("Raycast")] 
-    [SerializeField] private bool coyoteJump;
     [SerializeField] private float lengthOfRay;
 
     private UniversalTimer jumpCooldown;
@@ -112,23 +111,33 @@ public class PlayerMovement : MonoBehaviour
     //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
     private void AttemptJump()
     {
-        
-        if (TouchingGround() && jumpCooldown.TimerDone || coyoteJump && jumpCooldown.TimerDone)
+        if (jumpCooldown.TimerDone)
         {
-            //Debug.Log("Jumped");
-            jumped = true;
-            rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
-            StartCoroutine(jumpCooldown.Timer(jumpCD));
-        } else if (extraJumps > 0)
-        {
-            //Debug.Log("Jumped Extra");
-            rb.gravityScale = baseGrav;
-            rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
-            extraJumps--;
+            if (coyoteJump)
+            { 
+                jumped = true;
+                coyoteJump = false;
+                Debug.Log("Jumped");
+                rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
+                StartCoroutine(jumpCooldown.Timer(jumpCD));
+                
+            }  else if (extraJumps > 0)
+            {
+                //Debug.Log("Jumped Extra");
+                rb.gravityScale = baseGrav;
+                rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
+                extraJumps--;
+            }
+            
         }
         
     }
-    
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
+    }
+
     private void EndJump()
     {
         if (!TouchingGround() && extraJump && rb.velocityY >= 0)
@@ -151,29 +160,26 @@ public class PlayerMovement : MonoBehaviour
                    
     void Update()
     {
-        touchingGround = TouchingGround();
-        if (jumped)
-        {
-            coyoteJump = false;
-        } 
         
-        if (!touchingGround && !jumped)
+        if (!TouchingGround())
         {
             coyoteTime -= Time.deltaTime;
-            if (coyoteTime <= 0)
-            { 
-                coyoteJump = false;
-            } 
+        }
+        if (coyoteTime <= 0)
+        { 
+            coyoteJump = false;
+        } else if (!jumped)
+        {
+            coyoteJump = true;
         }
         
-        if(touchingGround)
+        if(TouchingGround())
         {
-            
             extraJump = true;
             rb.gravityScale = baseGrav;
             coyoteTime = coyotePH;
-            coyoteJump = true;
             extraJumps = jumpAmountPH;
+            jumped = false;
         }
     }
     
