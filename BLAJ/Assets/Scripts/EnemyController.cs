@@ -12,14 +12,20 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private bool checkingPos = false;
     private bool greaterThan;
-    public float lengthOfRay;
     private Vector2 jumpLimit;
     private Vector2 obstacleSensor;
-    public float jumpHeight;
-    public float groundRayLength;
-    public double maxJumpHeight;
     private bool similarX;
     private bool hostile = false;
+    
+    [Header("Jumping")]
+    [SerializeField] private float groundRayLength;
+    [SerializeField] private float jumpHeight;
+
+    [Header("Obj Detection")] 
+    [SerializeField] private float maxJumpHeight;
+    [SerializeField] private float lengthOfRay;
+    [SerializeField] private float distanceToStopBeforePlayer;
+    
     
     [Header("Movement Speed")]
     [SerializeField] private float npcMovementSpeed;
@@ -28,6 +34,10 @@ public class EnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         _origPos = transform.position;
+        lengthOfRay *= transform.localScale.x;
+        groundRayLength *= transform.localScale.x;
+        maxJumpHeight *= transform.localScale.x;
+        jumpHeight *= (float) Math.Sqrt(transform.localScale.x);
     }
     
     
@@ -44,12 +54,12 @@ public class EnemyController : MonoBehaviour
             var distance = new Vector2(playerDirection.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
                                                                                                             while keeping the same Y value and so the difference of the two is the distance the enemy must travel    */
             
-            if (distance.x >= 1.08)//if this is true the enemy must move right
+            if (distance.x >= distanceToStopBeforePlayer)//if this is true the enemy must move right
             {
                 rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale, rb.velocity.y);//applying the velocity
                 EnemyFaceRight(true);//the enemy is moving right
                 similarX = false; 
-            } else if (distance.x <= -1.08)//however if this is true the enemy must move left
+            } else if (distance.x <= -1 * distanceToStopBeforePlayer)//however if this is true the enemy must move left
             {
                 rb.velocity = new Vector2(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y);//applying the velocity
                 EnemyFaceRight(false);//the enemy is moving left so that means the enemy isn't traveling left
@@ -136,8 +146,8 @@ public class EnemyController : MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(jumpLimit, new Vector3(jumpLimit.x + lengthOfRay, jumpLimit.y));
-        Gizmos.DrawLine(obstacleSensor, new Vector3(obstacleSensor.x + lengthOfRay, obstacleSensor.y));
+        Gizmos.DrawLine((Vector3) jumpLimit, new Vector3(jumpLimit.x + lengthOfRay, jumpLimit.y));
+        Gizmos.DrawLine((Vector3) obstacleSensor, new Vector3(obstacleSensor.x + lengthOfRay, obstacleSensor.y));
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
     }
 }

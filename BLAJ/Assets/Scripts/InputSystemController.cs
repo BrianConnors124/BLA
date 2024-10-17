@@ -31,9 +31,7 @@ public class InputSystemController : MonoBehaviour
     
 
     public void HandleJump(InputAction.CallbackContext context)
-    {
-        if (endJump != null && jumpAction != null)
-        {
+    { 
             if (context.performed)
             {
                 //Debug.Log("VAR");
@@ -44,11 +42,6 @@ public class InputSystemController : MonoBehaviour
             {
                 endJump.Invoke();
             }
-        }
-        else
-        {
-            Debug.LogError("endJump or jumpAction not assigned a value");
-        }
     }
     public void HandleDash(InputAction.CallbackContext context)
     {

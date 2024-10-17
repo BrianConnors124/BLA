@@ -19,23 +19,20 @@ public class PlayerMovement : MonoBehaviour
     private float coyotePH;
     
     [Header("Jump")]
-    [SerializeField] private float jumpMultiplier;
-    private float inputsystemcontrollerDash;
-    private float baseGrav;
+    [SerializeField] private float jumpHeight;
     [SerializeField] private float jumpCD;
     [SerializeField] private float endJumpMultiplier;
     [SerializeField] private float extraJumps;
     private float jumpAmountPH;
-    [SerializeField] private bool coyoteJump;
-    [SerializeField] private bool extraJump;
-    private bool jumped;
+    private float baseGrav;
+    private bool extraJump = false;
     
 
     [Header("Dash")] 
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCD;
-    private Action endDash = null;
+    private Action endDash;
     private float dashDistancePH;
     [SerializeField] private float dashSlowDownInterval;
     
@@ -68,17 +65,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Actions()
     {
-        StartCoroutine(Retrying());
-    }
-
-    IEnumerator Retrying()
-    {
-        //yield return new WaitForSeconds(0.01f);
         endDash += EndDash;
         InputSystemController.instance.endJump += EndJump;
         InputSystemController.instance.jumpAction += AttemptJump;
         InputSystemController.instance.dashAction += Dash;  
-        yield break;
     }
     private void ActivateTimers()
     {
@@ -91,114 +81,66 @@ public class PlayerMovement : MonoBehaviour
         groundCheck = new UniversalTimer();
         groundCheck.Reset();
     }
-    //~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Movement (Velocity workings) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     void FixedUpdate()
     {
+        if(!TouchingGround())
+            rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speedInAir * Time.deltaTime * 100, rb.velocity.y);
+        if(TouchingGround())
+            rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);
         
-        rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);
+        if (!TouchingGround())
+            coyoteTime -= Time.deltaTime;
+
+        if (TouchingGround())
+        {
+            coyoteTime = coyotePH;
+            rb.gravityScale = baseGrav;
+            extraJumps = jumpAmountPH;
+            extraJump = false;
+        }
         
     }
-    //~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~~~~~WALK~~~~~~~~~~~~~~~~~~~~~~~~~
     
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        StartCoroutine(jumpCooldown.Timer(jumpCD));
+    }
     
+    private void EndJump()
+    {
+        if(rb.velocityY >= 0 && !TouchingGround() && !extraJump)
+            rb.gravityScale = baseGrav * endJumpMultiplier;
+    }
     
-    
-    
-    
-    
-    
-
-    //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Jump Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void AttemptJump()
     {
         if (jumpCooldown.TimerDone)
         {
-            if (coyoteJump)
+            if (coyoteTime > 0)
             { 
-                jumped = true;
-                coyoteJump = false;
-                Debug.Log("Jumped");
-                rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
-                StartCoroutine(jumpCooldown.Timer(jumpCD));
-                
+                coyoteTime = 0;
+                Jump();
             }  else if (extraJumps > 0)
             {
-                //Debug.Log("Jumped Extra");
+                extraJump = true;
                 rb.gravityScale = baseGrav;
-                rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
+                Jump();
                 extraJumps--;
             }
             
         }
         
     }
-
-    private void Jump()
-    {
-        rb.velocity = new Vector2(rb.velocity.x, jumpMultiplier);
-    }
-
-    private void EndJump()
-    {
-        if (!TouchingGround() && extraJump && rb.velocityY >= 0)
-        {
-            //print("end jump early");
-            rb.gravityScale = baseGrav * endJumpMultiplier;
-        }
-    }
-    //~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~~JUMP~~~~~~~~~~~~~~~~~~~~~~~~~
-    private bool TouchingGround()
-    {
-        return Physics2D.Raycast(transform.position, Vector2.down, lengthOfRay, LayerMask.GetMask("WorldObj"));
-    }
-               
-    private void OnDrawGizmos()
-    { 
-        Vector3 endPoint = new Vector3(transform.position.x, transform.position.y - lengthOfRay, transform.position.z);
-        Gizmos.DrawLine(transform.position, endPoint);
-    }
-                   
-    void Update()
-    {
-        
-        if (!TouchingGround())
-        {
-            coyoteTime -= Time.deltaTime;
-        }
-        if (coyoteTime <= 0)
-        { 
-            coyoteJump = false;
-        } else if (!jumped)
-        {
-            coyoteJump = true;
-        }
-        
-        if(TouchingGround())
-        {
-            extraJump = true;
-            rb.gravityScale = baseGrav;
-            coyoteTime = coyotePH;
-            extraJumps = jumpAmountPH;
-            jumped = false;
-        }
-    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Dash Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void Dash()
     {
         if (dashCooldown.TimerDone)
         {
-            rb.gravityScale = baseGrav/2;
+            rb.gravityScale = baseGrav/1.5f;
             if(InputSystemController.MovementInput().x < 0)
                 dashDistance = dashDistancePH * -1;
             if(InputSystemController.MovementInput().x > 0)
@@ -228,10 +170,19 @@ public class PlayerMovement : MonoBehaviour
         }
         yield return new WaitForEndOfFrame();
     }
-    //~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~~~~~DASH~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Extra ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     
-    
+    private bool TouchingGround()
+    {
+        return Physics2D.Raycast(transform.position, Vector2.down, lengthOfRay, LayerMask.GetMask("WorldObj"));
+    }
+               
+    private void OnDrawGizmos()
+    { 
+        Vector3 endPoint = new Vector3(transform.position.x, transform.position.y - lengthOfRay, transform.position.z);
+        Gizmos.DrawLine(transform.position, endPoint);
+    }
     
     
     
