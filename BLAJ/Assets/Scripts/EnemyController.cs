@@ -51,8 +51,13 @@ public class EnemyController : MonoBehaviour
             checkingPos = false;//idk what this is for 
             _player = other.gameObject; //this is assigning the "_player" gameObject to the player in the game
             playerDirection = _player.transform.position; //this updates the player's position while the player is inside the trigger collider of the enemy
+
+            var playerEyeSight = Physics2D.Raycast(transform.position,  playerDirection-transform.position, GetComponent<CircleCollider2D>().radius , LayerMask.GetMask("WorldObj"));
             
-            var distance = new Vector2(playerDirection.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
+            if (!playerEyeSight)
+            {
+                Debug.DrawLine(transform.position, playerDirection, Color.green, .1f);
+                var distance = new Vector2(playerDirection.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
                                                                                                             while keeping the same Y value and so the difference of the two is the distance the enemy must travel    */
             
             if (distance.x >= distanceToStopBeforePlayer)//if this is true the enemy must move right
@@ -73,6 +78,12 @@ public class EnemyController : MonoBehaviour
                 rb.velocity = new Vector2(0, rb.velocity.y);//preventing anymore movement along the X axis
                 
                 //similarX is used to prevent the enemy from jumping when under the player, however I didn't set the Y velocity to zero because if the enemy is falling I want it to fall onto solid ground instead of staying in the air
+            }
+                
+            }
+            else
+            {
+                Debug.DrawLine(transform.position, playerDirection, Color.red, .1f);
             }
         }
         
@@ -175,5 +186,6 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine((Vector3) jumpLimit, new Vector3(jumpLimit.x + lengthOfRay, jumpLimit.y));
         Gizmos.DrawLine((Vector3) obstacleSensor, new Vector3(obstacleSensor.x + lengthOfRay, obstacleSensor.y));
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
+        //Gizmos.DrawLine(transform.position, playerDirection);
     }
 }
