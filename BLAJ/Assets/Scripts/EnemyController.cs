@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     private Vector2 obstacleSensor;
     private bool similarX;
     private bool hostile = false;
+    private bool returning;
     
     [Header("Jumping")]
     [SerializeField] private float groundRayLength;
@@ -37,14 +38,14 @@ public class EnemyController : MonoBehaviour
         lengthOfRay *= transform.localScale.x;
         groundRayLength *= transform.localScale.x;
         maxJumpHeight *= transform.localScale.x;
-        jumpHeight *= (float) Math.Sqrt(transform.localScale.x);
+        //jumpHeight = (float) Math.Pow(jumpHeight, transform.localScale.x);
     }
     
     
     //follow player ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))//This is used to see if the collider belongs to the player
+        if (other.CompareTag("Player") && !returning)//This is used to see if the collider belongs to the player
         {
             hostile = true;
             checkingPos = false;//idk what this is for 
@@ -86,8 +87,24 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            StopReturn();
+        }
+    }
+
+    private void StopReturn()
+    {
+        //print("yo wsg");
+        returning = false;
+        StopCoroutine(Return());
+    }
+
     private IEnumerator Return()//this is used to return the enemy back to its original position once the player leaves the trigger collider
     {
+        returning = true;
         if (transform.position.x < _origPos.x)
         {
             //if the enemy x position is less than the original x position then it will apply a positive velocity and wait until the position is greater than original x position
@@ -104,7 +121,8 @@ public class EnemyController : MonoBehaviour
             yield return new WaitUntil(() => transform.position.x < _origPos.x);
             hostile = false;
             rb.velocity = new Vector2(0, rb.velocity.y);
-        }
+        } 
+        returning = false;
     }
     
     //jumping ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,7 +141,15 @@ public class EnemyController : MonoBehaviour
         {
             Jump();
         }
-        
+
+        if (limitTest && sensor && _player.transform.position.x - transform.position.x < lengthOfRay)
+            StartCoroutine(Return());
+        if (limitTest && sensor && _player.transform.position.x - transform.position.x < lengthOfRay)
+        {
+            //rb.velocityX = 0; 
+            returning = true;
+        }
+
     }
     private void Jump()
     {
