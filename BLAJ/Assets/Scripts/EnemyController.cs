@@ -7,7 +7,9 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private GameObject _player;
-    private Vector3 playerDirection;
+    private Vector3 playerLocation;
+    private Vector3 playerLocation2;
+    private bool something = false;
     private Vector2 _origPos;
     private Rigidbody2D rb;
     private bool checkingPos = false;
@@ -45,19 +47,27 @@ public class EnemyController : MonoBehaviour
     //follow player ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void OnTriggerStay2D(Collider2D other)
     {
+        
         if (other.CompareTag("Player") && !returning)//This is used to see if the collider belongs to the player
         {
+            if (!something)
+                playerLocation2 += playerLocation;
+            something = true;
             hostile = true;
             checkingPos = false;//idk what this is for 
             _player = other.gameObject; //this is assigning the "_player" gameObject to the player in the game
-            playerDirection = _player.transform.position; //this updates the player's position while the player is inside the trigger collider of the enemy
-
-            var playerEyeSight = Physics2D.Raycast(transform.position,  playerDirection-transform.position, GetComponent<CircleCollider2D>().radius , LayerMask.GetMask("WorldObj"));
+            playerLocation = _player.transform.localPosition; //this updates the player's position while the player is inside the trigger collider of the enemy
+            var playerDist = (float)Math.Sqrt((Math.Pow(playerLocation.x - transform.position.x, 2) + Math.Pow(playerLocation.y - transform.position.y, 2)));
+            var playerEyeSight = Physics2D.Raycast(transform.position,  (playerLocation - transform.localPosition).normalized , playerDist, LayerMask.GetMask("Player"));
+            var playerEyeSight2 = Physics2D.Raycast(transform.position,  (playerLocation - transform.localPosition).normalized , playerDist, LayerMask.GetMask("WorldObj"));
             
-            if (!playerEyeSight)
+            
+            if (playerEyeSight && !playerEyeSight2)
             {
-                Debug.DrawLine(transform.position, playerDirection, Color.green, .1f);
-                var distance = new Vector2(playerDirection.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
+                GetComponent<SpriteRenderer>().color = Color.red;
+                StopReturn();
+                Debug.DrawLine(transform.position, playerLocation, Color.green, .1f);
+                var distance = new Vector2(playerLocation.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
                                                                                                             while keeping the same Y value and so the difference of the two is the distance the enemy must travel    */
             
             if (distance.x >= distanceToStopBeforePlayer)//if this is true the enemy must move right
@@ -83,10 +93,23 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                Debug.DrawLine(transform.position, playerDirection, Color.red, .1f);
+                if (something)
+                {
+                    Invoke("Cautious", 2);
+                    something = false;
+                }
+                Debug.DrawLine(transform.localPosition, playerLocation, Color.red, .1f);
             }
+
+            playerLocation2 = playerLocation;
         }
         
+    }
+
+    private void Cautious()
+    {
+        GetComponent<SpriteRenderer>().color = Color.yellow;
+        Invoke("StartReturn", 2);
     }
     
     //return to beginning position ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -112,9 +135,16 @@ public class EnemyController : MonoBehaviour
         returning = false;
         StopCoroutine(Return());
     }
+    private void StartReturn()
+    {
+        //print("yo wsg");
+        returning = true;
+        StartCoroutine(Return());
+    }
 
     private IEnumerator Return()//this is used to return the enemy back to its original position once the player leaves the trigger collider
     {
+        GetComponent<SpriteRenderer>().color = Color.green;
         returning = true;
         if (transform.position.x < _origPos.x)
         {
@@ -154,7 +184,14 @@ public class EnemyController : MonoBehaviour
         }
 
         if (limitTest && sensor && _player.transform.position.x - transform.position.x < lengthOfRay)
-            StartCoroutine(Return());
+        {
+            rb.velocity = new Vector2(0, rb.velocityY);
+            if (something)
+            {
+                StartCoroutine(Return());
+            } 
+        }
+        
         if (limitTest && sensor && _player.transform.position.x - transform.position.x < lengthOfRay)
         {
             //rb.velocityX = 0; 
