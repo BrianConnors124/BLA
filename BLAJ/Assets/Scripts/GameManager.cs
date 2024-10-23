@@ -17,18 +17,13 @@ public class GameManager : MonoBehaviour
             loadingScreen = GameObject.Find("Loading Screen");
         if (loadingScreen == null)
         {
-            Debug.Log("There is no loading screen rename the prefered loading screen to \"Loading Screen\" ");
+            Debug.LogError("There is no loading screen rename the prefered loading screen to \"Loading Screen\" ");
         }
         else
         {
             Debug.Log("Loading Screen found");
             DeactivateLoadingScreen();
         }
-    }
-
-    private void LoadGame()
-    {
-        
     }
 
     public void AddLevel()

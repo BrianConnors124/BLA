@@ -13,15 +13,13 @@ public class InputSystemController : MonoBehaviour
     [SerializeField] private InputActionReference walking;
     [SerializeField] private InputActionReference jumping;
     [SerializeField] private InputActionReference dashing;
-    [SerializeField] private InputActionReference zoomOut;
-
-    public Action _zoomOut;
-    public Action _zoomIn;
+    
+    
     public Action jumpAction;
     public Action endJump;
     public Action dashAction;
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
     }
@@ -33,36 +31,27 @@ public class InputSystemController : MonoBehaviour
     
 
     public void HandleJump(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            //Debug.Log("VAR");
+    { 
+            if (context.performed)
+            {
+                //Debug.Log("VAR");
                 jumpAction.Invoke();
-        }
-        else if (context.canceled)
-        {
-            endJump.Invoke();
-        }
+                //print("big jump");
+            }
+            else if (context.canceled)
+            {
+                endJump.Invoke();
+            }
     }
     public void HandleDash(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (dashAction != null)
         {
             dashAction.Invoke();
         }
-    }
-    
-    public void HandleZoom(InputAction.CallbackContext context)
-    {
-        if (context.performed)
+        else
         {
-            print("zoom");
-            _zoomOut.Invoke();
-        }
-
-        if (context.canceled)
-        {
-            _zoomIn.Invoke();
+            Debug.LogError("dashAction is not assigned a value");
         }
     }
 }

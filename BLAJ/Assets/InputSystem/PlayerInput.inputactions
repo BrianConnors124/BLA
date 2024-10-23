@@ -100,6 +100,17 @@
                 },
                 {
                     "name": "",
+                    "id": "16b8675c-5749-451f-9b37-cf23301091e3",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5712bea7-31af-4d91-9ea3-0ee2f3eddc63",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
