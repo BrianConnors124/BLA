@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     
+    [Header("Animator")] 
+    Animator animator;
+
     
     [Header("Movement")] 
     [SerializeField] private float speed;
@@ -26,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpAmountPH;
     private float baseGrav;
     private bool extraJump = false;
+    private bool jumped;
     
 
     [Header("Dash")] 
@@ -52,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         Actions();
         ActivateTimers();
         ActivatePresets();
+        animator = GetComponent<Animator>();
 
     }
 
@@ -84,6 +89,14 @@ public class PlayerMovement : MonoBehaviour
     // Movement (Velocity workings) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     void FixedUpdate()
     {
+        
+        if (rb.velocity.x < 0)
+        {
+            transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * -1, transform.localScale.y);
+        } else if (rb.velocity.x > 0)
+        {
+            transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
+        }
         if(!TouchingGround())
             rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speedInAir * Time.deltaTime * 100, rb.velocity.y);
         if(TouchingGround())
@@ -99,15 +112,24 @@ public class PlayerMovement : MonoBehaviour
             extraJumps = jumpAmountPH;
             extraJump = false;
         }
+        animator.SetFloat("xVelocity",Math.Abs(rb.velocity.x));
+        animator.SetFloat("yVelocity",rb.velocity.y);
         
     }
     
     private void Jump()
     {
+        jumped = true;
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         StartCoroutine(jumpCooldown.Timer(jumpCD));
+        animator.SetBool("isJumping", true);
+        Invoke("EndJumpAnim", .23f);
     }
-    
+
+    private void EndJumpAnim()
+    {
+        animator.SetBool("isJumping", false);
+    }
     private void EndJump()
     {
         if(rb.velocityY >= 0 && !TouchingGround() && !extraJump)
@@ -184,10 +206,13 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, endPoint);
     }
     
+    //anmation~~~~~~~~~~~~~~~~~~~~~~~~
     
     
-    
-    
-    
-    
+
+
+
+
+
+
 }

@@ -1,43 +1,28 @@
 fileFormatVersion: 2
-guid: b8eca3ac6ab825649bbacaaebb0e14ee
+guid: e513c6c5bda7ba64e945830161a0e1fa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6220041527581211351
-    second: running cloak_0
+      213: -5883868635297446496
+    second: Jumping Cloak_0
   - first:
-      213: 5608801515886086696
-    second: running cloak_1
+      213: 7761406420075396471
+    second: Jumping Cloak_1
   - first:
-      213: -1130005959988349296
-    second: running cloak_2
+      213: 5678148785443637495
+    second: Jumping Cloak_2
   - first:
-      213: 5360465922219047519
-    second: running cloak_3
+      213: 4392861924253497979
+    second: Jumping Cloak_3
   - first:
-      213: 4197642144919372110
-    second: running cloak_4
+      213: 3998911407916304545
+    second: Jumping Cloak_4
   - first:
-      213: -4259943016416239312
-    second: running cloak_5
+      213: 2706743322804905105
+    second: Jumping Cloak_5
   - first:
-      213: 8553471299386342747
-    second: running cloak_6
-  - first:
-      213: -7766114250980876161
-    second: running cloak_7
-  - first:
-      213: -6850019843839712523
-    second: running cloak_8
-  - first:
-      213: 6637456475563801792
-    second: running cloak_9
-  - first:
-      213: -77028262470766531
-    second: running cloak_10
-  - first:
-      213: -2680378197755328635
-    second: running cloak_11
+      213: -664337534168037131
+    second: Jumping Cloak_6
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -131,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: running cloak_0
+      name: Jumping Cloak_0
       rect:
         serializedVersion: 2
         x: 0
@@ -143,16 +128,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7e8b5c161a59caf4e97782e2d6643e15
-      internalID: 1054216625
+      spriteID: 0a5880876ac485ea0800000000000000
+      internalID: -5883868635297446496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running cloak_1
+      name: Jumping Cloak_1
       rect:
         serializedVersion: 2
         x: 64
@@ -164,16 +149,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 79cc3356cb5b55943b25ddd503553fbe
-      internalID: 1232123784
+      spriteID: 77db702740e06bb60800000000000000
+      internalID: 7761406420075396471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running cloak_2
+      name: Jumping Cloak_2
       rect:
         serializedVersion: 2
         x: 128
@@ -185,16 +170,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c58a517696f1c2d45a4af4350c582d3b
-      internalID: -1511173100
+      spriteID: 7f80f2a7c36dcce40800000000000000
+      internalID: 5678148785443637495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running cloak_3
+      name: Jumping Cloak_3
       rect:
         serializedVersion: 2
         x: 192
@@ -206,16 +191,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 0ec0958fc2264994cb09339ce41f1a61
-      internalID: 1546863534
+      spriteID: b7af77e45a496fc30800000000000000
+      internalID: 4392861924253497979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running cloak_4
+      name: Jumping Cloak_4
       rect:
         serializedVersion: 2
         x: 256
@@ -227,16 +212,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 96d69f190f8567549ba36412a12db606
-      internalID: -418995486
+      spriteID: 1a8cb150dbcfe7730800000000000000
+      internalID: 3998911407916304545
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running cloak_5
+      name: Jumping Cloak_5
       rect:
         serializedVersion: 2
         x: 320
@@ -248,16 +233,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: dd8ad3c2a98490f41aac2cf13654bf3f
-      internalID: -944263219
+      spriteID: 19462fd06b8409520800000000000000
+      internalID: 2706743322804905105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running cloak_6
+      name: Jumping Cloak_6
       rect:
         serializedVersion: 2
         x: 384
@@ -269,115 +254,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b8f14875c6698ca48ab1950992715293
-      internalID: 290835786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: running cloak_7
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 36ffedc848d1c824d8165f91d40f53de
-      internalID: 1285861743
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: running cloak_8
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e26c181a1f9eb9a478ff02e9075b0b79
-      internalID: -788117444
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: running cloak_9
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63b3237ec89745346b04371dc63c9bc6
-      internalID: -546208
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: running cloak_10
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5f3e268916ea0d64bb54f6522d1438d1
-      internalID: 1143741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: running cloak_11
-      rect:
-        serializedVersion: 2
-        x: 704
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa569da059849534db55f10b12781b2a
-      internalID: -1951638945
+      spriteID: 5f884f0588cc7c6f0800000000000000
+      internalID: -664337534168037131
       vertices: []
       indices: 
       edges: []
@@ -385,7 +265,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a394a70ed2e1adf4582fb922d929846f
+    spriteID: 98a52a32efd0a3940a503a2c33c94573
     internalID: 0
     vertices: []
     indices: 
@@ -393,18 +273,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      running cloak_0: 1054216625
-      running cloak_1: 1232123784
-      running cloak_10: 1143741
-      running cloak_11: -1951638945
-      running cloak_2: -1511173100
-      running cloak_3: 1546863534
-      running cloak_4: -418995486
-      running cloak_5: -944263219
-      running cloak_6: 290835786
-      running cloak_7: 1285861743
-      running cloak_8: -788117444
-      running cloak_9: -546208
+      Jumping Cloak_0: -5883868635297446496
+      Jumping Cloak_1: 7761406420075396471
+      Jumping Cloak_2: 5678148785443637495
+      Jumping Cloak_3: 4392861924253497979
+      Jumping Cloak_4: 3998911407916304545
+      Jumping Cloak_5: 2706743322804905105
+      Jumping Cloak_6: -664337534168037131
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
