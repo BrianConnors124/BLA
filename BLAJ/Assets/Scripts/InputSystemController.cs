@@ -11,13 +11,14 @@ public class InputSystemController : MonoBehaviour
     public static InputSystemController instance;
     
     [SerializeField] private InputActionReference walking;
-    [SerializeField] private InputActionReference jumping;
-    [SerializeField] private InputActionReference dashing;
+    
     
     
     public Action jumpAction;
     public Action endJump;
     public Action dashAction;
+    public Action primaryAction;
+    public Action secondaryAction;
 
     private void Awake()
     {
@@ -53,5 +54,15 @@ public class InputSystemController : MonoBehaviour
         {
             Debug.LogError("dashAction is not assigned a value");
         }
+    }
+    
+    public void HandlePrimary(InputAction.CallbackContext context)
+    {
+        primaryAction.Invoke();
+    }
+    
+    public void HandleSecondary(InputAction.CallbackContext context)
+    {
+        secondaryAction.Invoke();
     }
 }

@@ -7,9 +7,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
+    public static PlayerController instance;
     
     
     [Header("Movement")] 
@@ -25,7 +26,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float extraJumps;
     private float jumpAmountPH;
     private float baseGrav;
-    private bool extraJump = false;
+    private bool extraJump;
+    private UniversalTimer jumpCooldown;
+    private UniversalTimer groundCheck;
     
 
     [Header("Dash")] 
@@ -35,19 +38,21 @@ public class PlayerMovement : MonoBehaviour
     private Action endDash;
     private float dashDistancePH;
     [SerializeField] private float dashSlowDownInterval;
+    private UniversalTimer dashDuration;
+    private UniversalTimer dashCooldown;
+
+    
     
 
     [Header("Raycast")] 
     [SerializeField] private float lengthOfRay;
-
-    private UniversalTimer jumpCooldown;
-    private UniversalTimer dashDuration;
-    private UniversalTimer dashCooldown;
-    private UniversalTimer groundCheck;
+    public float lengthOfRay2;
+    
     
     
     void Start()
-    {   
+    {
+        instance = this;
         rb = GetComponent<Rigidbody2D>();
         Actions();
         ActivateTimers();
@@ -170,6 +175,8 @@ public class PlayerMovement : MonoBehaviour
         }
         yield return new WaitForEndOfFrame();
     }
+    
+    
     // Extra ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     
