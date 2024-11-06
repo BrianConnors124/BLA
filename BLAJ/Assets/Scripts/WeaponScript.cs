@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,37 +16,67 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private bool primaryAttackHasAOE;
     private Action primaryAttack;
     private Action secondaryAttack;
+    private Rigidbody2D rb;
+
+    private UniversalTimer primaryCD;
+    private UniversalTimer secondaryCD;
+    private GameObject parent;
+    
     
     
     
     // Start is called before the first frame update
     void Start()
     {
+        parent = GameObject.Find("Player");
         InputSystemController.instance.primaryAction += Primary;
-        InputSystemController.instance.primaryAction += Secondary;
+        InputSystemController.instance.secondaryAction += Secondary;
+        primaryCD = new UniversalTimer();
+        primaryCD.Reset();
+        secondaryCD = new UniversalTimer();
+        secondaryCD.Reset();
     }
+
     
-    
+
     // Primary/Secondary Attack ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public static RaycastHit2D CircleCast()
+    //public static RaycastHit2D CircleCast()
     //RaycastHit2D CircleCastAll for AOE attacks
     //RaycastHit2D CircleCast for single attacks
     private void Primary()
     {
-        //primary will likely be a single attack for most classes
-        //RaycastHit2D CircleCast(new Vector2())
-        Physics2D.CircleCastAll(transform.position, attackRadius,
-            new Vector2(NegOrPos(transform.position.x), transform.position.y));
+        if (primaryCD.TimerDone)
+        {
+            StartCoroutine(primaryCD.Timer(.5f));
+            RaycastHit2D a = Physics2D.CircleCast(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
+            print(a.transform.position);
+            print(GetComponentInParent<Transform>().position);
+            
+        }
     }
 
     private void Secondary()
     {
-        //secondary will likely be an AOE attack for some classes
+        if (secondaryCD.TimerDone)
+        {
+            StartCoroutine(secondaryCD.Timer(1.5f));
+            RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
+            print(a.Length);
+            for (int i = 0; i < a.Length; i++)
+            {
+                print(a[i].transform.position);
+            } 
+        }
     }
 
     private float NegOrPos(float a)
     {
         return a / math.abs(a);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }

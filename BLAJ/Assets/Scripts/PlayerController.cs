@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
@@ -190,11 +191,16 @@ public class PlayerController : MonoBehaviour
         Vector3 endPoint = new Vector3(transform.position.x, transform.position.y - lengthOfRay, transform.position.z);
         Gizmos.DrawLine(transform.position, endPoint);
     }
-    
-    
-    
-    
-    
-    
-    
+
+    private void Update()
+    {
+        if (rb.velocityX < 0)
+        {
+            transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * -1, transform.localScale.y);
+        }
+        if (rb.velocityX > 0)
+        {
+            transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
+        }
+    }
 }

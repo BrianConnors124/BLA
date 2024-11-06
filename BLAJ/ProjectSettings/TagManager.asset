@@ -11,9 +11,9 @@ TagManager:
   - WorldObj
   - Water
   - UI
-  - Enemy
-  - Player
   - 
+  - Player
+  - Enemy
   - 
   - 
   - 

@@ -41,7 +41,7 @@ public class MapSelect : MonoBehaviour
         
         if (other.CompareTag("Player"))
         {
-            Invoke("DeleteGo", 2.6f);
+            //Invoke("DeleteGo", 2.6f);
         }
         
     }
