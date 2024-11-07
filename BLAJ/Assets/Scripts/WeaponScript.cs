@@ -12,7 +12,7 @@ public class WeaponScript : MonoBehaviour
 {
     [Header("Attack")] 
     [SerializeField] private float attackRadius;
-    [SerializeField]private float reach;
+    [SerializeField] private float secondaryAttackSize;
     [SerializeField] private bool primaryAttackHasAOE;
     private Action primaryAttack;
     private Action secondaryAttack;
@@ -48,24 +48,31 @@ public class WeaponScript : MonoBehaviour
     {
         if (primaryCD.TimerDone)
         {
+            GameObject other;
             StartCoroutine(primaryCD.Timer(.5f));
-            RaycastHit2D a = Physics2D.CircleCast(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
-            print(a.transform.position);
-            print(GetComponentInParent<Transform>().position);
+            RaycastHit2D a = Physics2D.CircleCast(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
+            print(a.collider);
             
+            Destroy(a.collider.gameObject);
         }
     }
 
+    // private void Secondary()
+    // {
+    //     StartCoroutine(Secondary1());
+    // }
     private void Secondary()
     {
         if (secondaryCD.TimerDone)
         {
             StartCoroutine(secondaryCD.Timer(1.5f));
-            RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
+            //RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
+            RaycastHit2D[] a = Physics2D.BoxCastAll(new Vector3((0.5f* secondaryAttackSize) * PlayerController.instance.direction + transform.position.x, transform.position.y), new Vector2(attackRadius, transform.localScale.y), 0, new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
             print(a.Length);
             for (int i = 0; i < a.Length; i++)
             {
-                print(a[i].transform.position);
+                
+                Destroy(a[i].collider.gameObject);
             } 
         }
     }
@@ -78,5 +85,6 @@ public class WeaponScript : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.DrawWireCube(new Vector3((0.5f* secondaryAttackSize) * PlayerController.instance.direction + transform.position.x, transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y));
     }
 }
