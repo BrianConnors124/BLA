@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         Actions();
         ActivateTimers();
         ActivatePresets();
-
+        direction = 1;
     }
 
     private void ActivatePresets()

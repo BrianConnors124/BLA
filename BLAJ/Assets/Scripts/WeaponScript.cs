@@ -21,13 +21,13 @@ public class WeaponScript : MonoBehaviour
     private UniversalTimer primaryCD;
     private UniversalTimer secondaryCD;
     private GameObject parent;
-    
-    
+    [SerializeField] private bool start;    
     
     
     // Start is called before the first frame update
     void Start()
     {
+        start = true;
         parent = GameObject.Find("Player");
         InputSystemController.instance.primaryAction += Primary;
         InputSystemController.instance.secondaryAction += Secondary;
@@ -67,7 +67,7 @@ public class WeaponScript : MonoBehaviour
         {
             StartCoroutine(secondaryCD.Timer(1.5f));
             //RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
-            RaycastHit2D[] a = Physics2D.BoxCastAll(new Vector3((0.5f* secondaryAttackSize) * PlayerController.instance.direction + transform.position.x, transform.position.y), new Vector2(attackRadius, transform.localScale.y), 0, new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
+            RaycastHit2D[] a = Physics2D.BoxCastAll(new Vector3((0.5f* secondaryAttackSize) * PlayerController.instance.direction + transform.position.x, transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y), 0, new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
             print(a.Length);
             for (int i = 0; i < a.Length; i++)
             {
@@ -85,6 +85,16 @@ public class WeaponScript : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-        Gizmos.DrawWireCube(new Vector3((0.5f* secondaryAttackSize) * PlayerController.instance.direction + transform.position.x, transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y));
+        if(start){
+            Gizmos.DrawWireCube(
+                new Vector3((0.5f * secondaryAttackSize) * PlayerController.instance.direction + transform.position.x,
+                    transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y));
+        }
+        else
+        {
+            Gizmos.DrawWireCube(
+                new Vector3((0.5f * secondaryAttackSize) + transform.position.x,
+                    transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y));
+        }
     }
 }
