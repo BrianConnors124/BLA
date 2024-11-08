@@ -195,12 +195,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (rb.velocityX < 0)
+        if (InputSystemController.MovementInput().x < 0)
         {
             transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * -1, transform.localScale.y);
             direction = -1;
         }
-        if (rb.velocityX > 0)
+        if (InputSystemController.MovementInput().x > 0)
         {
             transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
             direction = 1;

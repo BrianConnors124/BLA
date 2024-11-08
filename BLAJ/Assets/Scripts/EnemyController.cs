@@ -82,9 +82,8 @@ public class EnemyController : MonoBehaviour
 
         if (_player != null)
         {
-
-        var distance = new Vector2(_player.transform.localPosition.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
-                                                                                                                        while keeping the same Y value and so the difference of the two is the distance the enemy must travel    */
+            var distance = new Vector2(_player.transform.localPosition.x - transform.position.x, transform.position.y); /*  this is finding the distance that the enemy should take to reach the player     EX: x2 - x1 = D
+                                                                                                                                    while keeping the same Y value and so the difference of the two is the distance the enemy must travel    */
         jumped = !isTouchingGround();
         if (cautious)
         {
@@ -152,11 +151,10 @@ public class EnemyController : MonoBehaviour
                 StartCoroutine(Return());
                 passive = false;
             }
+        } 
         }
+
     }
-
-
-}
     
     private void OnTriggerExit2D(Collider2D other)
     {

@@ -58,11 +58,13 @@ public class InputSystemController : MonoBehaviour
     
     public void HandlePrimary(InputAction.CallbackContext context)
     {
-        primaryAction.Invoke();
+        if(context.performed)
+            primaryAction.Invoke();
     }
     
     public void HandleSecondary(InputAction.CallbackContext context)
     {
-        secondaryAction.Invoke();
+        if(context.performed)
+            secondaryAction.Invoke();
     }
 }
