@@ -21,7 +21,7 @@ public class WeaponScript : MonoBehaviour
     private UniversalTimer primaryCD;
     private UniversalTimer secondaryCD;
     private GameObject parent;
-    [SerializeField] private bool start;    
+    private bool start;    
     
     
     // Start is called before the first frame update

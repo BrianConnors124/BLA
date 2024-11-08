@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5523464433240212355}
   - component: {fileID: 5157935125656104001}
   - component: {fileID: 3898099825416793766}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 11
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 50d089d6fdef87a4dadada3869fdf7c3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -172,19 +172,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405320ebdf2853447b88dbf51867d1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 6.5
   speedInAir: 6
-  coyoteTime: 2
-  jumpMultiplier: 30
+  coyoteTime: 0.18
+  direction: 0
+  jumpHeight: 29
   jumpCD: 0.1
   endJumpMultiplier: 2
   extraJumps: 1
-  extraJump: 0
-  touchingGround: 0
-  jumped: 0
   dashDistance: 3.5
   dashTime: 0.1
-  dashCD: 0.2
+  dashCD: 0.5
   dashSlowDownInterval: 0.9
-  coyoteJump: 0
   lengthOfRay: 0.5075047
+  lengthOfRay2: 0
