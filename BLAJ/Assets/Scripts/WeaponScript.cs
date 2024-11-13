@@ -63,7 +63,7 @@ public class WeaponScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.red;
             GameObject other;
-            StartCoroutine(primaryCD.Timer(2));
+            StartCoroutine(primaryCD.Timer(.4f));
             if (primaryAttackHasAOE)
             {
                 RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));

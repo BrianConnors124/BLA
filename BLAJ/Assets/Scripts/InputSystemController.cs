@@ -11,6 +11,7 @@ public class InputSystemController : MonoBehaviour
     public static InputSystemController instance;
     
     [SerializeField] private InputActionReference walking;
+    [SerializeField] private InputActionReference aiming;
     
     
     
@@ -28,6 +29,11 @@ public class InputSystemController : MonoBehaviour
     public static Vector2 MovementInput()
     {
         return instance.walking.action.ReadValue<Vector2>();
+    }
+    
+    public static Vector2 AimInput()
+    {
+        return instance.aiming.action.ReadValue<Vector2>();
     }
     
 

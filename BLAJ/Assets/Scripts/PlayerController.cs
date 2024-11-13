@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         if (dashCooldown.TimerDone)
         {
-            rb.gravityScale = baseGrav/1.5f;
+            rb.gravityScale = baseGrav/100;
             if(InputSystemController.MovementInput().x < 0)
                 dashDistance = dashDistancePH * -1;
             if(InputSystemController.MovementInput().x > 0)
@@ -197,12 +197,10 @@ public class PlayerController : MonoBehaviour
     {
         if (InputSystemController.MovementInput().x < 0)
         {
-            transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * -1, transform.localScale.y);
             direction = -1;
         }
         if (InputSystemController.MovementInput().x > 0)
         {
-            transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
             direction = 1;
         }
     }

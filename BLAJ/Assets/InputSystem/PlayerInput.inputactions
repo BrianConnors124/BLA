@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "HandMovement",
+                    "type": "Value",
+                    "id": "64dc6c46-7a82-4201-aef9-9a2dc9fd0967",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "f273893f-426d-4ebf-99e4-9c5d29fce755",
@@ -121,7 +130,7 @@
                 {
                     "name": "",
                     "id": "5712bea7-31af-4d91-9ea3-0ee2f3eddc63",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -132,7 +141,7 @@
                 {
                     "name": "",
                     "id": "8a3a0bdf-3af5-459f-a0cf-1fe0d7022e51",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Secondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dbf47b32-22bc-4386-938b-091660abb2e5",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandMovement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
