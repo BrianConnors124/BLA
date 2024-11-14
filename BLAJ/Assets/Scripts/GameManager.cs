@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int levelNum;
     private GameObject loadingScreen;
+    public bool armAttached = false;
     
     private void Start()
     {
         instance = this;
+        
         
         if(loadingScreen == null)
             loadingScreen = GameObject.Find("Loading Screen");
@@ -34,11 +36,22 @@ public class GameManager : MonoBehaviour
     public void ActivateLoadingScreen()
     {
         loadingScreen.SetActive(true);
+        
     }
 
     public void DeactivateLoadingScreen()
     {
         loadingScreen.SetActive(false);
+        if (armAttached == false)
+        {
+            GameObject.Find("ArmAttached").SetActive(false);
+            GameObject.Find("ArmUnattached").SetActive(true);
+        }
+        else
+        {
+            GameObject.Find("ArmAttached").SetActive(true);
+            GameObject.Find("ArmUnattached").SetActive(false);
+        }
     }
     
     

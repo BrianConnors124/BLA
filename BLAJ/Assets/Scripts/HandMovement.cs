@@ -5,18 +5,24 @@ using UnityEngine;
 
 public class HandMovement : MonoBehaviour
 {
-    public float change;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
+    public bool armMovesWithMovement = false;
+    
+    
+    
     void FixedUpdate()
     {
-        var input = InputSystemController.AimInput();
-        var dir = Vector3.up * input.x + Vector3.left * input.y;
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
+        if (!armMovesWithMovement)
+        {
+            var input = InputSystemController.AimInput();
+            var dir = Vector3.up * input.x + Vector3.left * input.y;
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);   
+        }
+        else
+        {
+            var input = InputSystemController.MovementInput();
+            var dir = Vector3.up * input.x + Vector3.left * input.y;
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);  
+        }
     }
 }
