@@ -44,13 +44,13 @@ public class GameManager : MonoBehaviour
         loadingScreen.SetActive(false);
         if (armAttached == false)
         {
-            GameObject.Find("ArmAttached").SetActive(false);
-            GameObject.Find("ArmUnattached").SetActive(true);
+            GameObject.Find("Shoulder").SetActive(false);
+            GameObject.Find("ShoulderFreeMove").SetActive(true);
         }
         else
         {
-            GameObject.Find("ArmAttached").SetActive(true);
-            GameObject.Find("ArmUnattached").SetActive(false);
+            GameObject.Find("Shoulder").SetActive(true);
+            GameObject.Find("ShoulderFreeMove").SetActive(false);
         }
     }
     

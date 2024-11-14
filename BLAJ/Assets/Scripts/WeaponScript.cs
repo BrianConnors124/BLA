@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.XR;
 using Timer = Unity.VisualScripting.Timer;
 
 public class WeaponScript : MonoBehaviour
@@ -15,27 +16,25 @@ public class WeaponScript : MonoBehaviour
     [Header("Attack")] 
     [SerializeField] private float attackRadius;
     [SerializeField] private float secondaryAttackSize;
-    [SerializeField] private bool primaryAttackHasAOE = false;
     private Action primaryAttack;
     private Action secondaryAttack;
     private Rigidbody2D rb;
 
     private UniversalTimer primaryCD;
     private UniversalTimer secondaryCD;
-    private GameObject parent;
     private bool start;
 
     private Vector2 OBJSCALE;
     private Action reset;
+    private RaycastHit2D[] a;
     
     
-    // Start is called before the first frame update
+    
     void Start()
     {
         reset += ResetPresets;
         OBJSCALE = transform.localScale;
         start = true;
-        parent = GameObject.Find("Player");
         InputSystemController.instance.primaryAction += Primary;
         InputSystemController.instance.secondaryAction += Secondary;
         primaryCD = new UniversalTimer();
@@ -43,14 +42,18 @@ public class WeaponScript : MonoBehaviour
         secondaryCD = new UniversalTimer();
         secondaryCD.Reset();
     }
+    private void Update()
+    {
+        Vector2 a = new Vector2(HandMovement.instance.dir2.y, HandMovement.instance.dir2.x * -1);
+        if (HandMovement.instance.armMovesWithMovement)
+        {
+            a = new Vector2(HandMovement.instance.dir.y, HandMovement.instance.dir.x * -1);
+        }
+        BoxCastDrawer.BoxCastAndDraw(transform.position, transform.localScale * secondaryAttackSize, 0, a, 15);  
+        
+    }
 
     
-
-    // Primary/Secondary Attack ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    //public static RaycastHit2D CircleCast()
-    //RaycastHit2D CircleCastAll for AOE attacks
-    //RaycastHit2D CircleCast for single attacks
     private void ResetPresets()
     {
         transform.localScale = OBJSCALE;
@@ -62,32 +65,18 @@ public class WeaponScript : MonoBehaviour
         if (primaryCD.TimerDone)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
-            GameObject other;
             StartCoroutine(primaryCD.Timer(.4f));
-            if (primaryAttackHasAOE)
+            RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,transform.position * PlayerController.instance.direction, 0, LayerMask.GetMask("Enemy"));
+            for (int i = 0; i < a.Length; i++)
             {
-                RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
-                for (int i = 0; i < a.Length; i++)
-                {
-                    print(a[i].collider);
-                    Destroy(a[i].collider.gameObject);
-                }
+             print(a[i].collider);
+             Destroy(a[i].collider.gameObject);
             }
-            else if(!primaryAttackHasAOE)
-            {
-                RaycastHit2D a = Physics2D.CircleCast(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
-                print(a.collider);
-                Destroy(a.collider.gameObject);
-            }
+            StartCoroutine(new UniversalTimer().Timer(0.2f, reset));   
         }
-        StartCoroutine(new UniversalTimer().Timer(0.2f, reset));
     }
     
-
-    // private void Secondary()
-    // {
-    //     StartCoroutine(Secondary1());
-    // }
+    
     private void Secondary()
     {
         if (secondaryCD.TimerDone && primaryCD.TimerDone)
@@ -97,35 +86,20 @@ public class WeaponScript : MonoBehaviour
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCoroutine(secondaryCD.Timer(1.5f));
             StartCoroutine(primaryCD.Timer(.5f));
-            //RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackRadius,new Vector2(NegOrPos(transform.position.x), transform.position.y), reach, LayerMask.GetMask("Enemy"));
-            RaycastHit2D[] a = Physics2D.BoxCastAll(new Vector3((0.5f* secondaryAttackSize) * PlayerController.instance.direction + transform.position.x, transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y), 0, new Vector2(NegOrPos(transform.position.x), transform.position.y), 0, LayerMask.GetMask("Enemy"));
+            a = Physics2D.BoxCastAll(transform.position, transform.localScale * secondaryAttackSize, 0, new Vector2(HandMovement.instance.dir.y, HandMovement.instance.dir.x * -1), 15, LayerMask.GetMask("Enemy"), 0);
             print(a.Length);
             for (int i = 0; i < a.Length; i++)
             {
                 Destroy(a[i].collider.gameObject);
             }
+            StartCoroutine(new UniversalTimer().Timer(0.2f, reset));
         }
-        StartCoroutine(new UniversalTimer().Timer(0.2f, reset));
     }
 
-    private float NegOrPos(float a)
-    {
-        return a / math.abs(a);
-    }
+   
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-        if(start){
-            Gizmos.DrawWireCube(
-                new Vector3((0.5f * secondaryAttackSize) * PlayerController.instance.direction + transform.position.x,
-                    transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y));
-        }
-        else
-        {
-            Gizmos.DrawWireCube(
-                new Vector3((0.5f * secondaryAttackSize) + transform.position.x,
-                    transform.position.y), new Vector2(secondaryAttackSize, transform.localScale.y));
-        }
     }
 }
