@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandMovement : MonoBehaviour
+public class HandScript : MonoBehaviour
 {
     // Update is called once per frame
-    public bool armMovesWithMovement = false;
+    
     public Vector3 dir;
     public Vector3 dir2;
-    public static HandMovement instance;
+    public static HandScript instance;
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class HandMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!armMovesWithMovement)
+        if (!PlayerController.instance.armMovesWithMovement)
         {
             if (!InputSystemController.AimInput().Equals(new Vector3(0, 0, 0)))
             {

@@ -44,10 +44,10 @@ public class WeaponScript : MonoBehaviour
     }
     private void Update()
     {
-        Vector2 a = new Vector2(HandMovement.instance.dir2.y, HandMovement.instance.dir2.x * -1);
-        if (HandMovement.instance.armMovesWithMovement)
+        Vector2 a = new Vector2(HandScript.instance.dir2.y, HandScript.instance.dir2.x * -1);
+        if (PlayerController.instance.armMovesWithMovement)
         {
-            a = new Vector2(HandMovement.instance.dir.y, HandMovement.instance.dir.x * -1);
+            a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
         }
         BoxCastDrawer.BoxCastAndDraw(transform.position, transform.localScale * secondaryAttackSize, 0, a, 15);  
         
@@ -86,7 +86,7 @@ public class WeaponScript : MonoBehaviour
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCoroutine(secondaryCD.Timer(1.5f));
             StartCoroutine(primaryCD.Timer(.5f));
-            a = Physics2D.BoxCastAll(transform.position, transform.localScale * secondaryAttackSize, 0, new Vector2(HandMovement.instance.dir.y, HandMovement.instance.dir.x * -1), 15, LayerMask.GetMask("Enemy"), 0);
+            a = Physics2D.BoxCastAll(transform.position, transform.localScale * secondaryAttackSize, 0, new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1), 15, LayerMask.GetMask("Enemy"), 0);
             print(a.Length);
             for (int i = 0; i < a.Length; i++)
             {

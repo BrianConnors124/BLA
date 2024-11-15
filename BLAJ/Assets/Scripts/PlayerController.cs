@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
     public static PlayerController instance;
+    [Header("ArmStuffs")]
+    public bool armAttached;
+    public bool armMovesWithMovement;
     
     
     [Header("Movement")] 
@@ -48,7 +51,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Raycast")] 
     [SerializeField] private float lengthOfRay;
-    public float lengthOfRay2;
     
     
     
@@ -69,6 +71,17 @@ public class PlayerController : MonoBehaviour
         dashDistancePH = dashDistance;
         dashDistance = 0;
         jumpAmountPH = extraJumps;
+        
+        if (armAttached == false)
+        {
+            GameObject.Find("Shoulder").SetActive(false);
+            GameObject.Find("ShoulderFreeMove").SetActive(true);
+        }
+        else
+        {
+            GameObject.Find("Shoulder").SetActive(true);
+            GameObject.Find("ShoulderFreeMove").SetActive(false);
+        }
     }
     private void Actions()
     {
