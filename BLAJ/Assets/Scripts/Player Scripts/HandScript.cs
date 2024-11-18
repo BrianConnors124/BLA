@@ -14,6 +14,18 @@ public class HandScript : MonoBehaviour
     private void Start()
     {
         instance = this;
+        if (!PlayerController.instance.armMovesWithMovement)
+        { 
+            var input = InputSystemController.AimInput(); 
+            dir2 = Vector3.up * input.x + Vector3.left * input.y; 
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, dir2);
+        }
+        else
+        { 
+            var input = InputSystemController.MovementInput(); 
+            dir = Vector3.up * input.x + Vector3.left * input.y; 
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);     
+        }  
     }
 
 

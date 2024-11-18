@@ -98,4 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRadius: 0.44
-  secondaryAttackSize: 22.8
+  secondaryAttackSize: 17
