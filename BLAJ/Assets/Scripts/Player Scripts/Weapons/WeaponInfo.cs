@@ -16,4 +16,6 @@ public class WeaponInfo : ScriptableObject
     public float baseReach;
     public float primaryCD;
     public float secondaryCD;
+    public float knockback;
+    public float stun;
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -17,9 +16,9 @@ public class EnemyController : MonoBehaviour
     private float npcMovementSpeed;
 
     public EnemyController instance;
-    
-    
-    
+
+
+    public bool takingDamage = false;
     private GameObject _player;
     private Vector2 _origPos;
     private Rigidbody2D rb;
@@ -81,6 +80,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         obstacleSensor =
             new Vector2(transform.position.x,
                 transform.position.y); //testing to see if there is a collider in the direction of the enemy's movement
@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour
         if (limitTest && sensor && !similarX)
         {
             pathBlocked = true;
-            rb.velocity = new Vector2(0, rb.velocityY);
+            Move(0, rb.velocityY);
         }
         else
         {
@@ -137,7 +137,7 @@ public class EnemyController : MonoBehaviour
                     //the enemy should moving right
                     if (!pathBlocked && !jumped)
                     {
-                        rb.velocity = new Vector2(npcMovementSpeed * Time.timeScale, rb.velocity.y); //applying the velocity
+                        Move(npcMovementSpeed * Time.timeScale, rb.velocity.y);//applying the velocity
                         similarX = false;
                     }
                 }
@@ -146,8 +146,7 @@ public class EnemyController : MonoBehaviour
                     //the enemy should moving left
                     if (!pathBlocked && !jumped)
                     {
-                        rb.velocity =
-                            new Vector2(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y); //applying the velocity
+                        Move(npcMovementSpeed * Time.timeScale * -1, rb.velocity.y); //applying the velocity
                         similarX = false; /*similarX is used to see if the player and enemy have an "distance" value of:  -1.08 < x < 1.08 , if so then this will be set to true,
                                                   but in this case it isn't true so it is set to false. This is to prohibit the enemy from continuously walking into the player when it is already close enough. */
                     }
@@ -157,7 +156,7 @@ public class EnemyController : MonoBehaviour
                     if (!pathBlocked && !jumped)
                     {
                         similarX = true; //as previously stated this is set to true because "distance" is not greater than 1.08 nor is it less than -1.08 meaning it fits the inequality of -1.08 < x < 1.08 so it shouldn't move anymore
-                        rb.velocity = new Vector2(0, rb.velocity.y); //preventing anymore movement along the X axis
+                        Move(0, rb.velocity.y); //preventing anymore movement along the X axis
                         //similarX is used to prevent the enemy from jumping when under the player, however I didn't set the Y velocity to zero because if the enemy is falling I want it to fall onto solid ground instead of staying in the air
                     }
                 }
@@ -210,9 +209,9 @@ public class EnemyController : MonoBehaviour
             if (!pathBlocked && !jumped)
             {
                 //if the enemy x position is less than the original x position then it will apply a positive velocity and wait until the position is greater than original x position
-                rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+                Move( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
                 yield return new WaitUntil(() => transform.position.x > _origPos.x);
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                Move(0, rb.velocity.y);
             }
         } else if(transform.position.x > _origPos.x)
         {
@@ -221,31 +220,45 @@ public class EnemyController : MonoBehaviour
             if (!pathBlocked && !jumped)
             {
                 //if the enemy x position is greater than the original position then it will apply a negative velocity and wait until the position is less than original position
-                rb.velocity = new Vector2(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+                Move(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
                 yield return new WaitUntil(() => transform.position.x < _origPos.x); 
-                rb.velocity = new Vector2(0, rb.velocity.y); }
+                Move(0, rb.velocity.y); }
         }  
     }
     
     //jumping ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        Move(rb.velocity.x, jumpHeight);
     }
     
     //jumping ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    public void DamageDelt(float d)
+    
+    
+    //Extra ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private int PlayerDirection()
     {
-        health -= d;
-        if (health <= 0)
+        int t = 1;
+
+        if (transform.position.x < _player.transform.position.x)
         {
-            Destroy(gameObject);
+            t = -1;
         }
-        Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
+        
+        return t;
     }
 
-    //Extra ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private void Move(float x, float y)
+    { 
+        if(!takingDamage)
+            rb.velocity = new Vector2(x, y);
+    }
+    
+    private void InflictKnockBack(float a)
+    {
+        rb.velocity = new Vector2(a * PlayerDirection(), a);
+    }
+
     private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
     private void EnemyFaceRight(bool movingRight)
     {
@@ -265,6 +278,27 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine((Vector3) obstacleSensor, new Vector3(obstacleSensor.x + lengthOfRay, obstacleSensor.y));
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
         //Gizmos.DrawLine(transform.position, playerDirection);
+    }
+    
+    public void DamageDelt(float d, float knockback, float stun)
+    {
+        takingDamage = true;
+        health -= d;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        GetComponent<SpriteRenderer>().color = Color.magenta;
+        InflictKnockBack(knockback);
+        StartCoroutine(new UniversalTimer().Timer(stun, ResetTakingDamage));
+        
+        
+        Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
+    }
+
+    void ResetTakingDamage()
+    {
+        takingDamage = false;
     }
 }
             

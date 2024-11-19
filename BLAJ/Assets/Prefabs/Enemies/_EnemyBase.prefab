@@ -203,11 +203,12 @@ MonoBehaviour:
   info: {fileID: 0}
   health: 0
   instance: {fileID: 0}
+  takingDamage: 0
   hostile: 0
   cautious: 0
   passive: 1
   pathBlocked: 0
   groundRayLength: 0
   jumped: 0
-  lengthOfRay: 0
+  lengthOfRay: 1.12
   distanceToStopBeforePlayer: 4

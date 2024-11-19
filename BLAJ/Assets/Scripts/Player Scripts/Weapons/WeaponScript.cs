@@ -22,6 +22,8 @@ public class WeaponScript : MonoBehaviour
     private float damage;
     private string name;
     private string description;
+    private float knockback;
+    private float stun;
     
 
     [Header("Timer")]
@@ -55,6 +57,8 @@ public class WeaponScript : MonoBehaviour
         damage = obj.baseDamage;
         attackSize = obj.baseReach / 10;
         description = obj.description;
+        knockback = obj.knockback;
+        stun = obj.stun;
     }
     
     private void Actions()
@@ -85,7 +89,7 @@ public class WeaponScript : MonoBehaviour
             StartCooldowns();
             Vector2 b = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
             RaycastHit2D a = Physics2D.BoxCast(transform.position,new Vector2(2,2) * attackSize, 0, b,0, LayerMask.GetMask("Enemy"));
-            a.collider.GetComponent<EnemyController>().DamageDelt(damage);
+            a.collider.GetComponent<EnemyController>().DamageDelt(damage, knockback, stun);
             StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));  
         }
     }
@@ -101,7 +105,7 @@ public class WeaponScript : MonoBehaviour
             hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy"));
             for (int i = 0; i < hit.Length; i++)
             {
-                hit[i].collider.GetComponent<EnemyController>().DamageDelt(damage * 1.2f);
+                hit[i].collider.GetComponent<EnemyController>().DamageDelt(damage * 1.2f, knockback, stun);
             }
             StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));
         }
