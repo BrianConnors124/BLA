@@ -85,13 +85,9 @@ public class WeaponScript : MonoBehaviour
         if (primaryCDT.TimerDone)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
-            StartCoroutine(primaryCDT.Timer(primaryCD));
-            RaycastHit2D[] a = Physics2D.CircleCastAll(transform.position, attackSize,transform.position * PlayerController.instance.direction, attackSize, LayerMask.GetMask("Enemy"));
-            for (int i = 0; i < a.Length; i++)
-            {
-             print(a[i].collider);
-             Destroy(a[i].collider.gameObject);
-            }
+            StartCooldowns();
+            RaycastHit2D a = Physics2D.CircleCast(transform.position, attackSize,transform.position * PlayerController.instance.direction, attackSize, LayerMask.GetMask("Enemy"));
+            a.collider.GetComponent<EnemyController>().instance.DamageDelt(damage);
             // StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));   
         }
     }
@@ -102,8 +98,7 @@ public class WeaponScript : MonoBehaviour
         if (secondaryCDT.TimerDone && primaryCDT.TimerDone)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
-            StartCoroutine(secondaryCDT.Timer(secondaryCD));
-            StartCoroutine(primaryCDT.Timer(primaryCD));
+            StartCooldowns();
             Vector2 a = new Vector2(HandScript.instance.dir2.y, HandScript.instance.dir2.x * -1);
             if (PlayerController.instance.armMovesWithMovement)
             {
@@ -113,13 +108,17 @@ public class WeaponScript : MonoBehaviour
             print(hit.Length);
             for (int i = 0; i < hit.Length; i++)
             {
-                Destroy(hit[i].collider.gameObject);
+                hit[i].collider.GetComponent<EnemyController>().instance.DamageDelt(damage);
             }
             // StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));
         }
     }
 
-   
+    private void StartCooldowns()
+    {
+        StartCoroutine(primaryCDT.Timer(primaryCD));
+        StartCoroutine(secondaryCDT.Timer(secondaryCD));
+    }
 
     private void OnDrawGizmos()
     {
