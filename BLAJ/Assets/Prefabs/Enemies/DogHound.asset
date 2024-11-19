@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6611b0bf9d0d90a42bd4ce9e9efccf9d, type: 3}
-  m_Name: Hammer
+  m_Script: {fileID: 11500000, guid: a2ea958cbc28d194aaec52cfb6d7d1f3, type: 3}
+  m_Name: DogHound
   m_EditorClassIdentifier: 
-  weaponName: Hammer
-  description: A thorned object given to you by zues
-  artWork: {fileID: 0}
-  baseDamage: 12.5
-  baseReach: 5
-  primaryCD: 0.5
-  secondaryCD: 1
+  name: DogHound
+  description: The gaurd for the depths of hell
+  health: 100
+  jumpHeight: 24
+  movementSpeed: 4
+  damage: 20

@@ -44,7 +44,7 @@ public class WeaponScript : MonoBehaviour
         Actions();
         Presets();
         StartCoroutine(new UniversalTimer().Timer(.5f, Print));
-        
+        reset += ResetSprite;
     }
 
     private void Presets()
@@ -53,7 +53,7 @@ public class WeaponScript : MonoBehaviour
         primaryCD = obj.primaryCD;
         secondaryCD = obj.secondaryCD;
         damage = obj.baseDamage;
-        attackSize = obj.baseReach;
+        attackSize = obj.baseReach / 10;
         description = obj.description;
     }
     
@@ -68,12 +68,9 @@ public class WeaponScript : MonoBehaviour
     }
     private void Update()
     {
-        Vector2 a = new Vector2(HandScript.instance.dir2.y, HandScript.instance.dir2.x * -1);
-        if (PlayerController.instance.armMovesWithMovement)
-        {
-            a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
-        }
-        BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(2,2) * attackSize, 0, a, attackSize * 3);  
+        Vector2  a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
+        BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(2,2) * attackSize, 0, a, attackSize * 5 );  
+        BoxCastDrawer.BoxCastAndDraw(transform.position,new Vector2(2,2) * attackSize, 0, a,0);  
         
     }
 
@@ -86,9 +83,10 @@ public class WeaponScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCooldowns();
-            RaycastHit2D a = Physics2D.CircleCast(transform.position, attackSize,transform.position * PlayerController.instance.direction, attackSize, LayerMask.GetMask("Enemy"));
-            a.collider.GetComponent<EnemyController>().instance.DamageDelt(damage);
-            // StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));   
+            Vector2 b = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
+            RaycastHit2D a = Physics2D.BoxCast(transform.position,new Vector2(2,2) * attackSize, 0, b,0, LayerMask.GetMask("Enemy"));
+            a.collider.GetComponent<EnemyController>().DamageDelt(damage);
+            StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));  
         }
     }
     
@@ -99,19 +97,19 @@ public class WeaponScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCooldowns();
-            Vector2 a = new Vector2(HandScript.instance.dir2.y, HandScript.instance.dir2.x * -1);
-            if (PlayerController.instance.armMovesWithMovement)
-            {
-                a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
-            }
-            hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy"), 0);
-            print(hit.Length);
+            Vector2 a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
+            hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy"));
             for (int i = 0; i < hit.Length; i++)
             {
-                hit[i].collider.GetComponent<EnemyController>().instance.DamageDelt(damage);
+                hit[i].collider.GetComponent<EnemyController>().DamageDelt(damage * 1.2f);
             }
-            // StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));
+            StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));
         }
+    }
+
+    private void ResetSprite()
+    {
+        GetComponent<SpriteRenderer>().color = Color.cyan;
     }
 
     private void StartCooldowns()

@@ -12,8 +12,8 @@ public class WeaponInfo : ScriptableObject
 
     public Sprite artWork;
     
-    public int baseDamage;
-    public int baseReach;
+    public float baseDamage;
+    public float baseReach;
     public float primaryCD;
     public float secondaryCD;
 }

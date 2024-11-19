@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     [Header("ArmStuffs")]
     public bool armAttached;
-    public bool armMovesWithMovement;
+    
     
     
     [Header("Movement")] 
