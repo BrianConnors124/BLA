@@ -102,7 +102,7 @@ public class WeaponScript : MonoBehaviour
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCooldowns();
             Vector2 a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
-            hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy"));
+            hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy" ));
             for (int i = 0; i < hit.Length; i++)
             {
                 hit[i].collider.GetComponent<EnemyController>().DamageDelt(damage * 1.2f, knockback, stun);

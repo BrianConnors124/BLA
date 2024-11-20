@@ -16,8 +16,6 @@ public class EnemyController : MonoBehaviour
     private float jumpHeight;
     private float npcMovementSpeed;
 
-    public EnemyController instance;
-
     public float d;
     public bool takingDamage = false;
     private GameObject _player;
@@ -66,27 +64,20 @@ public class EnemyController : MonoBehaviour
     }
 
 
-
-
-
-    void DrawLines()
-    {
-        Line.Draw(new Vector2(transform.position.x + ((transform.localScale.x / 2)) * PlayerDirection() * -1, transform.position.y), Vector2.down, groundRayLength, Color.black);
-    }
+    
     
     
     //return to beginning position ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private void FixedUpdate()
     {
-        DrawLines();
         obstacleSensor =
             new Vector2(transform.position.x,
                 transform.position.y); //testing to see if there is a collider in the direction of the enemy's movement
 
 
         var limitTest = Physics2D.Raycast(jumpLimit, Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
-        var sensor = Physics2D.Raycast(obstacleSensor, Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"));
+        var sensor = Line.CreateAndDraw(obstacleSensor, Vector2.right, lengthOfRay, LayerMask.GetMask("WorldObj"), Color.black);
         
         if (!limitTest && sensor && !similarX && isTouchingGround())
         {
