@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -17,9 +18,10 @@ public class EnemyController : MonoBehaviour
 
     public EnemyController instance;
 
-
+    public float d;
     public bool takingDamage = false;
     private GameObject _player;
+    private bool returning;
     private Vector2 _origPos;
     private Rigidbody2D rb;
     private bool checkingPos = false;
@@ -49,7 +51,8 @@ public class EnemyController : MonoBehaviour
         Presets();
         _origPos = transform.position;
         lengthOfRay *= transform.localScale.x;
-        groundRayLength  = DistFromGround();
+        groundRayLength  = transform.localScale.y + .04f;
+        d = (float) Math.Sqrt(Math.Pow(transform.localScale.x + 0.4f, 2) + Math.Pow(transform.localScale.y + 0.4f, 2));
     }
 
     void Presets()
@@ -61,26 +64,22 @@ public class EnemyController : MonoBehaviour
         jumpHeight = info.jumpHeight;
         npcMovementSpeed = info.movementSpeed;
     }
-    
-    //finding the ground from the center of the enemy
 
 
 
-    private float DistFromGround()
+
+
+    void DrawLines()
     {
-        
-        float dist = transform.localScale.y + .04f; 
-        
-        return dist;
+        Line.Draw(new Vector2(transform.position.x + ((transform.localScale.x / 2)) * PlayerDirection() * -1, transform.position.y), Vector2.down, groundRayLength, Color.black);
     }
-    
     
     
     //return to beginning position ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private void FixedUpdate()
     {
-
+        DrawLines();
         obstacleSensor =
             new Vector2(transform.position.x,
                 transform.position.y); //testing to see if there is a collider in the direction of the enemy's movement
@@ -200,7 +199,9 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator Return()//this is used to return the enemy back to its original position once the player leaves the trigger collider
     {
+        returning = true;
         GetComponent<SpriteRenderer>().color = Color.green;
+        rb.velocity = new Vector2(0, 0);
         
         if (transform.position.x < _origPos.x)
         {
@@ -209,9 +210,10 @@ public class EnemyController : MonoBehaviour
             if (!pathBlocked && !jumped)
             {
                 //if the enemy x position is less than the original x position then it will apply a positive velocity and wait until the position is greater than original x position
-                Move( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+                rb.velocity = new Vector2( npcMovementSpeed * Time.timeScale,  rb.velocity.y);
                 yield return new WaitUntil(() => transform.position.x > _origPos.x);
-                Move(0, rb.velocity.y);
+                returning = false;
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
         } else if(transform.position.x > _origPos.x)
         {
@@ -220,16 +222,25 @@ public class EnemyController : MonoBehaviour
             if (!pathBlocked && !jumped)
             {
                 //if the enemy x position is greater than the original position then it will apply a negative velocity and wait until the position is less than original position
-                Move(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
-                yield return new WaitUntil(() => transform.position.x < _origPos.x); 
-                Move(0, rb.velocity.y); }
+                rb.velocity = new Vector2(-1 * npcMovementSpeed * Time.timeScale,  rb.velocity.y);
+                yield return new WaitUntil(() => transform.position.x < _origPos.x);
+                returning = false;
+                rb.velocity = new Vector2(0, rb.velocity.y); }
         }  
     }
-    
+
+    private void Update()
+    {
+        if (!LedgeDetection())
+        {
+            Return();
+        }
+    }
+
     //jumping ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void Jump()
     {
-        Move(rb.velocity.x, jumpHeight);
+        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
     }
     
     //jumping ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,9 +260,11 @@ public class EnemyController : MonoBehaviour
     }
 
     private void Move(float x, float y)
-    { 
-        if(!takingDamage)
-            rb.velocity = new Vector2(x, y);
+    {
+        if (!takingDamage && LedgeDetection() && !returning)
+        {
+            rb.velocity = new Vector2(x, y);   
+        }
     }
     
     private void InflictKnockBack(float a)
@@ -260,6 +273,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
+    private bool LedgeDetection() => Physics2D.Raycast(new Vector2(transform.position.x + ((transform.localScale.x / 2)) * PlayerDirection() * -1, transform.position.y), Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
     private void EnemyFaceRight(bool movingRight)
     {
         //This is flipping the ray left and right based on the direction of the enemy movement
@@ -277,6 +291,7 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine((Vector3) jumpLimit, new Vector3(jumpLimit.x + lengthOfRay, jumpLimit.y));
         Gizmos.DrawLine((Vector3) obstacleSensor, new Vector3(obstacleSensor.x + lengthOfRay, obstacleSensor.y));
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
+        
         //Gizmos.DrawLine(transform.position, playerDirection);
     }
     

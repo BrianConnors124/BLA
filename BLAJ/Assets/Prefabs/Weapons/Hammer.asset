@@ -19,5 +19,5 @@ MonoBehaviour:
   baseReach: 5
   primaryCD: 0.5
   secondaryCD: 1
-  knockback: 12
+  knockback: 15
   stun: 0.1
