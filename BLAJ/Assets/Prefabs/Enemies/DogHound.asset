@@ -18,3 +18,4 @@ MonoBehaviour:
   jumpHeight: 24
   movementSpeed: 4
   damage: 20
+  baseReach: 2

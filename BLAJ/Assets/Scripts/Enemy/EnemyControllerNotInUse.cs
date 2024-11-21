@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyControllerNotInUse : MonoBehaviour
 {
     [Header("Info")] 
     public EnemyInfo info;
@@ -258,10 +258,6 @@ public class EnemyController : MonoBehaviour
         }
     }
     
-    private void InflictKnockBack(float a)
-    {
-        rb.velocity = new Vector2(a * PlayerDirection(), a);
-    }
 
     private bool isTouchingGround() => Physics2D.Raycast(transform.position, Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
     private bool LedgeDetection() => Physics2D.Raycast(new Vector2(transform.position.x + ((transform.localScale.x / 2)) * PlayerDirection() * -1, transform.position.y), Vector2.down, groundRayLength, LayerMask.GetMask("WorldObj"));
@@ -284,6 +280,11 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundRayLength));
         
         //Gizmos.DrawLine(transform.position, playerDirection);
+    }
+    
+    private void InflictKnockBack(float a)
+    {
+        rb.velocity = new Vector2(a * PlayerDirection(), a);
     }
     
     public void DamageDelt(float d, float knockback, float stun)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5148534302859306127}
   - component: {fileID: 3451296002312537542}
   - component: {fileID: 8438578446951447443}
-  - component: {fileID: 1838546797034224324}
+  - component: {fileID: 8842128958976194956}
   m_Layer: 8
   m_Name: _EnemyBase
   m_TagString: Untagged
@@ -188,7 +188,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 13.88
---- !u!114 &1838546797034224324
+--- !u!114 &8842128958976194956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,18 +197,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 577141252326594325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94461ce56118a0045bc05454c68fdbad, type: 3}
+  m_Script: {fileID: 11500000, guid: 1421b3fa3daaf3141a1be1ad2048e32e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: {fileID: 0}
+  info: {fileID: 11400000, guid: 141633618d084354ba8960c82230cc01, type: 2}
   health: 0
-  instance: {fileID: 0}
   takingDamage: 0
-  hostile: 0
-  cautious: 0
-  passive: 1
-  pathBlocked: 0
-  groundRayLength: 0
-  jumped: 0
-  lengthOfRay: 1.12
-  distanceToStopBeforePlayer: 4

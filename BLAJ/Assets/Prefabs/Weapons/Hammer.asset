@@ -15,9 +15,9 @@ MonoBehaviour:
   weaponName: Hammer
   description: A thorned object given to you by zues
   artWork: {fileID: 0}
-  baseDamage: 10
+  baseDamage: 1
   baseReach: 5
   primaryCD: 0.5
   secondaryCD: 1
   knockback: 15
-  stun: 0.1
+  stun: 0.5

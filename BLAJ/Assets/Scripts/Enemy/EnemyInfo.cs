@@ -10,4 +10,5 @@ public class EnemyInfo : ScriptableObject
     public float jumpHeight;
     public float movementSpeed;
     public float damage;
+    public float baseReach;
 }
