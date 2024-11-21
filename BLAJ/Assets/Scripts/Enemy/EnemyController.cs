@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    #region Data
+
+    
+
+    
     [Header("Info")] 
     public EnemyInfo info;
     private string name;
@@ -21,16 +26,18 @@ public class EnemyController : MonoBehaviour
     private bool returning;
     private bool playerInProximity;
     private bool takingDamage;
+    private bool stunned;
     private float reach;
     private bool canMove;
     
     
     [Header("Misc")]
     private Rigidbody2D rb;
-
+#endregion
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
         startingPos = transform.position;
         SetInfo();
@@ -56,12 +63,11 @@ public class EnemyController : MonoBehaviour
             Move(npcMovementSpeed * LeftOrRight(transform.position.x, player.transform.position.x), rb.velocity.y);
         }
         
-        if (!takingDamage && IsTouchingGround() && (!Proximity() || !ThereIsAFloor()))
+        if (IsTouchingGround() && (!ThereIsAFloor() || !Proximity() || stunned))
         { 
             Move(0,0);
         }   
         
-
         if (ForwardObjDetection() && !ForwardObjTooHigh() && IsTouchingGround() && rb.velocityX != 0 && !takingDamage)
         {
             Move(rb.velocityX, jumpHeight);
@@ -107,7 +113,6 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player = other.gameObject;
             playerInProximity = true;
         }
     }
@@ -123,6 +128,7 @@ public class EnemyController : MonoBehaviour
             Destroy(gameObject);
         }
         InflictKnockBack(knockback);
+        StartCoroutine(new UniversalTimer().Timer(.1f, () => stunned = true));
         StartCoroutine(new UniversalTimer().Timer(stun, ResetStun));
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
@@ -133,19 +139,29 @@ public class EnemyController : MonoBehaviour
     }
     void ResetStun()
     {
+        stunned = false;
         takingDamage = false;
     }
+
+    #region Raycast
+
     
 
+    
     [Header("Raycast")] int RAYCAST;
     private RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
     private RaycastHit2D ForwardObjDetection() => Line.CreateAndDraw(transform.position, new Vector2(1,0), transform.localScale.x * 1.43f * Direction(), LayerMask.GetMask("WorldObj"), Color.green);
     private RaycastHit2D ForwardObjTooHigh() => Line.CreateAndDraw(transform.position + new Vector3(0,transform.localScale.y, 0), new Vector2(1,0), transform.localScale.x * 1.43f * Direction(), LayerMask.GetMask("WorldObj"), Color.green);
     
-    private RaycastHit2D IsTouchingGround() => Line.CreateAndDraw(transform.position, Vector2.down, transform.localScale.y * 1.14f, LayerMask.GetMask("WorldObj"), Color.cyan);
+    private RaycastHit2D IsTouchingGround() => Line.CreateAndDraw(transform.position, Vector2.down, transform.localScale.y * 1.009f, LayerMask.GetMask("WorldObj"), Color.cyan);
     private RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + (reach * LeftOrRight(transform.position.x, player.transform.position.x)), transform.position.y), Vector2.down, transform.localScale.y * 3, LayerMask.GetMask("WorldObj"), Color.red);
+    #endregion
+
+    #region Misc
+
     
 
+   
     [Header("Miscelaneous")] int MISCELANEOUS;
     private int LeftOrRight(float origin, float other)
     {
@@ -175,5 +191,5 @@ public class EnemyController : MonoBehaviour
 
         return i;
     }
-    
+     #endregion
 }
