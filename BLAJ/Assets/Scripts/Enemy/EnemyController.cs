@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
             Move(npcMovementSpeed * LeftOrRight(transform.position.x, player.transform.position.x), rb.velocity.y);
         }
         
-        if (!takingDamage && IsTouchingGround() && !Proximity() || !ThereIsAFloor())
+        if (!takingDamage && IsTouchingGround() && (!Proximity() || !ThereIsAFloor()))
         { 
             Move(0,0);
         }   
@@ -75,6 +75,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator ReturnToOrigin()
     {
+        yield return new WaitUntil(() => IsTouchingGround());
         rb.velocity = new Vector2(npcMovementSpeed * LeftOrRight(transform.position.x, startingPos.x), rb.velocity.y);
         if (LeftOrRight(transform.position.x, startingPos.x) == 1)
         {
