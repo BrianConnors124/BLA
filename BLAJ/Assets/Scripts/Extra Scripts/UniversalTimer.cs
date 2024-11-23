@@ -7,45 +7,19 @@ using UnityEngine;
 
 public class UniversalTimer
 {
-    public float timer = 0;
+    public float timer;
     private float timerLength;
-    
-    int firstTimeUse;
 
-    public bool TimerDone => timer.Equals(0);
+    public bool TimerDone => timer <= 0;
 
 
     public void Reset()
     {
         timer = 0;
     }
-    public IEnumerator Timer(float Length, int Repeat, Action Commit)
+    public void Reset(float Length)
     {
-        for (int i = 0; i < Repeat; i++)
-        {
-            timer = Length; 
-            while (timer > 0)
-            {
-                timer -= Time.deltaTime;
-                timer = Mathf.Clamp(timer, 0, Length);
-                yield return new WaitForEndOfFrame();
-            }
-            if(timer <= 0)
-                Commit.Invoke();
-        }
-    }
-    public IEnumerator Timer(float Length, int Repeat)
-    {
-        for (int i = 0; i < Repeat; i++)
-        {
-            timer = Length; 
-            while (timer > 0)
-            {
-                timer -= Time.deltaTime;
-                timer = Mathf.Clamp(timer, 0, Length);
-                yield return new WaitForEndOfFrame();
-            }
-        }
+        timer = Length;
     }
     public IEnumerator Timer(float Length, Action Commit)
     {
@@ -53,11 +27,9 @@ public class UniversalTimer
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            timer = Mathf.Clamp(timer, 0, Length);
             yield return new WaitForEndOfFrame();
         }
-        if(timer <= 0)
-            Commit.Invoke();
+        Commit.Invoke();
     }
     
     public IEnumerator Timer(float Length)
@@ -66,7 +38,6 @@ public class UniversalTimer
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            timer = Mathf.Clamp(timer, 0, Length);
             yield return new WaitForEndOfFrame();
         }
     }

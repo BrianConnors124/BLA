@@ -20,4 +20,4 @@ MonoBehaviour:
   primaryCD: 0.5
   secondaryCD: 1
   knockback: 15
-  stun: 0.5
+  stun: 1

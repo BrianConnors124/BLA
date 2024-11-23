@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -25,15 +26,22 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     private bool returning;
     private bool playerInProximity;
-    private bool takingDamage;
+    public bool takingDamage;
     private bool stunned;
     private float reach;
     private bool canMove;
+    private UniversalTimer stunLength;
+    
     
     
     [Header("Misc")]
     private Rigidbody2D rb;
 #endregion
+
+    #region Start
+
+
+
 
     private void Start()
     {
@@ -41,6 +49,7 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         startingPos = transform.position;
         SetInfo();
+        stunLength = new UniversalTimer();
     }
 
     void SetInfo()
@@ -53,24 +62,27 @@ public class EnemyController : MonoBehaviour
         npcMovementSpeed = info.movementSpeed;
         reach = info.baseReach;
     }
+#endregion
 
-    
-    //This will be used for movement
+    #region Movement
     private void FixedUpdate()
     {
-        if (playerInProximity && !PlayerOutOfSight() && !takingDamage && IsTouchingGround() && Proximity() && ThereIsAFloor())
+        if (!takingDamage)
         {
-            Move(npcMovementSpeed * LeftOrRight(transform.position.x, player.transform.position.x), rb.velocity.y);
-        }
+            if (playerInProximity && !PlayerOutOfSight() && IsTouchingGround() && Proximity() && ThereIsAFloor())
+            {
+                Move(npcMovementSpeed * LeftOrRight(transform.position.x, player.transform.position.x), rb.velocity.y);
+            }
         
-        if (IsTouchingGround() && (!ThereIsAFloor() || !Proximity() || stunned))
-        { 
-            Move(0,0);
-        }   
+            if (IsTouchingGround() && (!ThereIsAFloor() || !Proximity()))
+            { 
+                Move(0,0);
+            }   
         
-        if (ForwardObjDetection() && !ForwardObjTooHigh() && IsTouchingGround() && rb.velocityX != 0 && !takingDamage)
-        {
-            Move(rb.velocityX, jumpHeight);
+            if (ForwardObjDetection() && !ForwardObjTooHigh() && IsTouchingGround() && rb.velocityX != 0)
+            {
+                Move(rb.velocityX, jumpHeight);
+            }   
         }
     }
 
@@ -81,6 +93,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator ReturnToOrigin()
     {
+        yield return new WaitUntil(() => !takingDamage);
         yield return new WaitUntil(() => IsTouchingGround());
         rb.velocity = new Vector2(npcMovementSpeed * LeftOrRight(transform.position.x, startingPos.x), rb.velocity.y);
         if (LeftOrRight(transform.position.x, startingPos.x) == 1)
@@ -98,6 +111,12 @@ public class EnemyController : MonoBehaviour
         }
         
     }
+#endregion
+
+    #region RayCasts
+
+    
+
     
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -113,10 +132,17 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            StopCoroutine(ReturnToOrigin());
             playerInProximity = true;
         }
     }
+#endregion
 
+    #region Damage
+
+    
+
+    
     [Header("Damage")] int DAMAGE;
     
     public void DamageDelt(float d, float knockback, float stun)
@@ -127,21 +153,18 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        InflictKnockBack(knockback);
-        StartCoroutine(new UniversalTimer().Timer(.1f, () => stunned = true));
-        StartCoroutine(new UniversalTimer().Timer(stun, ResetStun));
+        StartCoroutine(DoKnockBack(knockback));
+        StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
-    
-    private void InflictKnockBack(float a)
+    private IEnumerator DoKnockBack(float playerKnockBack)
     {
-        rb.velocity = new Vector2(a * -LeftOrRight(transform.position.x, player.transform.position.x), a);
+        rb.velocity = new Vector2(playerKnockBack * -LeftOrRight(transform.position.x, player.transform.position.x), playerKnockBack);
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitUntil(() => IsTouchingGround());
+        rb.velocity = new Vector2(0, 0);
     }
-    void ResetStun()
-    {
-        stunned = false;
-        takingDamage = false;
-    }
+    #endregion
 
     #region Raycast
 
