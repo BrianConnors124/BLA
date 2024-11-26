@@ -119,7 +119,18 @@
                 {
                     "name": "",
                     "id": "16b8675c-5749-451f-9b37-cf23301091e3",
-                    "path": "<Keyboard>/anyKey",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "945c8f11-4cf5-4e01-b09e-cd2987fd5d2f",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -140,6 +151,17 @@
                 },
                 {
                     "name": "",
+                    "id": "e0bf660e-e698-4879-b1d5-3ca30e0ffcdf",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8a3a0bdf-3af5-459f-a0cf-1fe0d7022e51",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
@@ -151,8 +173,30 @@
                 },
                 {
                     "name": "",
+                    "id": "2d31f2ae-8f6b-4e95-bb10-8b66dd5be543",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Primary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f7f4d785-d20f-436a-b9b7-5fbf1ffba0e1",
                     "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Secondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c52c7b58-656e-4e12-bf3c-292aca6bdfca",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
