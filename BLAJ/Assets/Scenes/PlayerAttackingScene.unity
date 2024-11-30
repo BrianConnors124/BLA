@@ -891,11 +891,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 87.27689
+      value: 87.416
       objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.790643
+      value: -12.1849
       objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalPosition.z
@@ -989,6 +989,10 @@ PrefabInstance:
     - target: {fileID: 6357823957018134140, guid: e466ea05cb3152745b029045934cab3b, type: 3}
       propertyPath: armAttached
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6357823957018134140, guid: e466ea05cb3152745b029045934cab3b, type: 3}
+      propertyPath: endJumpMultiplier
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6357823957018134140, guid: e466ea05cb3152745b029045934cab3b, type: 3}
       propertyPath: armMovesWithMovement

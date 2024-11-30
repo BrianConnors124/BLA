@@ -31,6 +31,8 @@ public class EnemyController : MonoBehaviour
     private float reach;
     private bool canMove;
     private UniversalTimer stunLength;
+    private bool resetJump;
+    private UniversalTimer jumpCD;
     
     
     
@@ -43,6 +45,11 @@ public class EnemyController : MonoBehaviour
 
 
 
+    private void Awake()
+    {
+        GetComponent<Animator>().runtimeAnimatorController = info.animatorController;
+    }
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -50,6 +57,8 @@ public class EnemyController : MonoBehaviour
         startingPos = transform.position;
         SetInfo();
         stunLength = new UniversalTimer();
+        jumpCD = new UniversalTimer();
+        StartCoroutine(jumpCD.Timer(2)); 
     }
 
     void SetInfo()
@@ -59,29 +68,55 @@ public class EnemyController : MonoBehaviour
         description = info.description;
         damage = info.damage;
         jumpHeight = info.jumpHeight;
-        npcMovementSpeed = info.movementSpeed;
-        reach = info.baseReach;
+        npcMovementSpeed = info.movementSpeed * transform.localScale.x;
+        reach = info.baseReach * transform.localScale.x * 0.5f;
     }
 #endregion
 
     #region Movement
     private void FixedUpdate()
     {
-        if (!takingDamage)
+        if (!takingDamage && IsTouchingGround())
         {
-            if (playerInProximity && !PlayerOutOfSight() && IsTouchingGround() && Proximity() && ThereIsAFloor())
-            {
-                Move(npcMovementSpeed * LeftOrRight(transform.position.x, player.transform.position.x), rb.velocity.y);
+            if(Mathf.Abs(rb.velocityX) >= 0.3f){
+                if (playerInProximity && !PlayerOutOfSight() && OutOfReach() &&
+                    ThereIsAFloorMovement())
+                {
+                    Move(npcMovementSpeed * PlayerDirection(), rb.velocity.y);
+                }
+
+                if ((!ThereIsAFloorMovement() || !OutOfReach()))
+                {
+                    Move(0, rb.velocityY);
+                }
             }
-        
-            if (IsTouchingGround() && (!ThereIsAFloor() || !Proximity()))
-            { 
-                Move(0,0);
-            }   
-        
-            if (ForwardObjDetection() && !ForwardObjTooHigh() && IsTouchingGround() && rb.velocityX != 0)
+            else
             {
-                Move(rb.velocityX, jumpHeight);
+                if (playerInProximity && !PlayerOutOfSight() && OutOfReach() &&
+                    ThereIsAFloorPlayer())
+                {
+                    Move(npcMovementSpeed * PlayerDirection(), rb.velocity.y);
+                }
+
+                if ((!ThereIsAFloorPlayer() || !OutOfReach()))
+                {
+                    Move(0, rb.velocityY);
+                } 
+            } 
+            
+        
+            if (ForwardObjDetection() && !ForwardObjTooHigh() && jumpCD.TimerDone)
+            {
+                if(Mathf.Abs(rb.velocityX) >= 0.3f && !resetJump)
+                {
+                    Move(rb.velocityX, jumpHeight);
+                    StartCoroutine(jumpCD.Timer(2));   
+                } else
+                {
+                    resetJump = true;
+                    Move(npcMovementSpeed * -LeftOrRight(transform.position.x, ForwardObjDetection().collider.GetComponent<Transform>().position.x), rb.velocityY);
+                    StartCoroutine(SituateJump());
+                }
             }   
         }
     }
@@ -91,6 +126,12 @@ public class EnemyController : MonoBehaviour
         rb.velocity = new Vector2(x, y);
     }
 
+    private IEnumerator SituateJump()
+    {
+        yield return new WaitUntil(() => ForwardObjDetection().collider == null);
+        resetJump = false;
+        Move(npcMovementSpeed * PlayerDirection(), rb.velocityY);
+    }
     private IEnumerator ReturnToOrigin()
     {
         yield return new WaitUntil(() => !takingDamage);
@@ -113,7 +154,7 @@ public class EnemyController : MonoBehaviour
     }
 #endregion
 
-    #region RayCasts
+    #region TriggerEnter/Exit
 
     
 
@@ -155,6 +196,7 @@ public class EnemyController : MonoBehaviour
         }
         StartCoroutine(DoKnockBack(knockback));
         StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
+        StartCoroutine(jumpCD.Timer(4));
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
     private IEnumerator DoKnockBack(float playerKnockBack)
@@ -173,11 +215,13 @@ public class EnemyController : MonoBehaviour
     
     [Header("Raycast")] int RAYCAST;
     private RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
-    private RaycastHit2D ForwardObjDetection() => Line.CreateAndDraw(transform.position, new Vector2(1,0), transform.localScale.x * 1.43f * Direction(), LayerMask.GetMask("WorldObj"), Color.green);
-    private RaycastHit2D ForwardObjTooHigh() => Line.CreateAndDraw(transform.position + new Vector3(0,transform.localScale.y, 0), new Vector2(1,0), transform.localScale.x * 1.43f * Direction(), LayerMask.GetMask("WorldObj"), Color.green);
+    //private RaycastHit2D ForwardObjDetection() => Line.CreateAndDraw(transform.position, new Vector2(1,0), transform.localScale.x * reach * 0.5f * PlayerDirection(), LayerMask.GetMask("WorldObj"), Color.green);
+    private RaycastHit2D ForwardObjDetection() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()), transform.position.y), new Vector2(transform.localScale.x, transform.localScale.y * .94f), 0, Vector2.right, 0, LayerMask.GetMask("WorldObj"));
+    private RaycastHit2D ForwardObjTooHigh() => Line.CreateAndDraw(transform.position + new Vector3(0,transform.localScale.y * .6f, 0), Vector2.right, transform.localScale.x * reach * 0.5f * PlayerDirection(), LayerMask.GetMask("WorldObj"), Color.green);
     
-    private RaycastHit2D IsTouchingGround() => Line.CreateAndDraw(transform.position, Vector2.down, transform.localScale.y * 1.009f, LayerMask.GetMask("WorldObj"), Color.cyan);
-    private RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + (reach * LeftOrRight(transform.position.x, player.transform.position.x)), transform.position.y), Vector2.down, transform.localScale.y * 3, LayerMask.GetMask("WorldObj"), Color.red);
+    private RaycastHit2D IsTouchingGround() => Line.CreateAndDraw(transform.position, Vector2.down, transform.localScale.y * 0.55f, LayerMask.GetMask("WorldObj"), Color.cyan);
+    private RaycastHit2D ThereIsAFloorMovement() => Line.CreateAndDraw(new Vector2(transform.position.x + (reach * MovementDirection() * transform.localScale.x * 0.5f), transform.position.y), Vector2.down, transform.localScale.y * 1.5f, LayerMask.GetMask("WorldObj"), Color.red);
+    private RaycastHit2D ThereIsAFloorPlayer() => Line.CreateAndDraw(new Vector2(transform.position.x + (reach * PlayerDirection() * transform.localScale.x * 0.5f), transform.position.y), Vector2.down, transform.localScale.y * 1.5f, LayerMask.GetMask("WorldObj"), Color.red);
     #endregion
 
     #region Misc
@@ -201,18 +245,44 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private bool Proximity() => (player.transform.position.x - transform.position.x > transform.localScale.x * reach || player.transform.position.x - transform.position.x < transform.localScale.x * -reach);
-
-    private int Direction()
+    private int PlayerDirection()
     {
-        int i = 1;
-
-        if (rb.velocity.x < 0)
+        if (transform.position.x < player.transform.position.x)
         {
-            i = -1;
+            return 1;
+        }
+        if (transform.position.x > player.transform.position.x)
+        {
+            return -1;
         }
 
-        return i;
+        return 1;
+
     }
-     #endregion
+
+    private bool OutOfReach() => (Mathf.Abs(player.transform.position.x - transform.position.x) > transform.localScale.x * reach);
+    private bool Walking() => rb.velocity.x != 0;
+    private int MovementDirection()
+    {
+        if (rb.velocityX < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            return -1;
+        }
+        if (rb.velocityX > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            return 1;
+        }
+
+        return 1;
+    }
+
+    private void Update()
+    {
+        MovementDirection();
+        GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), false, takingDamage);
+    }
+
+    #endregion
 }
