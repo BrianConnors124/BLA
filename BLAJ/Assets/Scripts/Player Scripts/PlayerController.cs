@@ -14,8 +14,12 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     [Header("ArmStuffs")]
     public bool armAttached;
-    
-    
+
+    [Header("Healh")] 
+    [SerializeField] private float health;
+    private UniversalTimer stunLength;
+    private bool stunned;
+    private bool knockedBack;
     
     [Header("Movement")] 
     [SerializeField] private float speed;
@@ -93,21 +97,21 @@ public class PlayerController : MonoBehaviour
     private void ActivateTimers()
     {
         jumpCooldown = new UniversalTimer();
-        jumpCooldown.Reset();
         dashDuration = new UniversalTimer();
-        dashDuration.Reset();
         dashCooldown = new UniversalTimer();
-        dashCooldown.Reset();
         groundCheck = new UniversalTimer();
-        groundCheck.Reset();
+        stunLength = new UniversalTimer();
     }
     // Movement (Velocity workings) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     void FixedUpdate()
     {
-        if(!TouchingGround())
-            rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speedInAir * Time.deltaTime * 100, rb.velocity.y);
-        if(TouchingGround())
-            rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);
+        if (!stunned && !knockedBack)
+        {
+            if(!TouchingGround())
+                rb.velocity = new Vector2( (InputSystemController.MovementInput().x) * speedInAir * Time.deltaTime * 100, rb.velocity.y);
+            if(TouchingGround())
+                rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);   
+        }
         
         if (!TouchingGround())
             coyoteTime -= Time.deltaTime;
@@ -189,6 +193,37 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForEndOfFrame();
+    }
+    //Damage~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    
+    public void DamageDelt(float d, float knockback, float stun, GameObject enemy)
+    {
+        health -= d;
+        if (health <= 0)
+        {
+            print("Player Has Died");
+        }
+
+        if (knockback != 0)
+        {
+            StartCoroutine(DoKnockBack(knockback, enemy));
+        }
+        if (stun != 0)
+        {
+            stunned = true;
+            StartCoroutine(stunLength.Timer(stun, () => stunned = false));
+        }
+    }
+    
+    private IEnumerator DoKnockBack(float enemyKnockBack, GameObject enemy)
+    {
+        knockedBack = true;
+        rb.velocity = new Vector2(enemyKnockBack * -Line.LeftOrRight(transform.position.x, enemy.transform.position.x ), enemyKnockBack);
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitUntil(() => TouchingGround());
+        knockedBack = false;
+        rb.velocity = new Vector2(0, 0);
     }
     
     

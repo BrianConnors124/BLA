@@ -16,10 +16,9 @@ public class EnemyAnimator : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void UpdateAnimator(bool walking, bool attacking, bool takingDamage)
+    public void UpdateAnimator(bool walking, bool takingDamage)
     {
         animator.SetBool("Walking", walking);
-        animator.SetBool("Attacking", attacking);
         animator.SetBool("TakingDamage", takingDamage);
     }
 }

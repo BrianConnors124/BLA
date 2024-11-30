@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -19,6 +20,9 @@ public class EnemyController : MonoBehaviour
     private float jumpHeight;
     private float npcMovementSpeed;
     private float damage;
+    private float knockBack;
+    private float stun;
+    private float primaryCooldown;
 
 
     [Header("Mechanics")]
@@ -33,6 +37,8 @@ public class EnemyController : MonoBehaviour
     private UniversalTimer stunLength;
     private bool resetJump;
     private UniversalTimer jumpCD;
+    private bool attacking;
+    private UniversalTimer primaryCD;
     
     
     
@@ -57,6 +63,7 @@ public class EnemyController : MonoBehaviour
         startingPos = transform.position;
         SetInfo();
         stunLength = new UniversalTimer();
+        primaryCD = new UniversalTimer();
         jumpCD = new UniversalTimer();
         StartCoroutine(jumpCD.Timer(2)); 
     }
@@ -69,14 +76,17 @@ public class EnemyController : MonoBehaviour
         damage = info.damage;
         jumpHeight = info.jumpHeight;
         npcMovementSpeed = info.movementSpeed * transform.localScale.x;
-        reach = info.baseReach * transform.localScale.x * 0.5f;
+        reach = info.baseReach * transform.localScale.x / 5;
+        stun = info.stun;
+        knockBack = info.knockBack;
+        primaryCooldown = info.primaryCD;
     }
 #endregion
 
     #region Movement
     private void FixedUpdate()
     {
-        if (!takingDamage && IsTouchingGround())
+        if (!takingDamage && IsTouchingGround() && !attacking)
         {
             if(Mathf.Abs(rb.velocityX) >= 0.3f){
                 if (playerInProximity && !PlayerOutOfSight() && OutOfReach() &&
@@ -88,6 +98,7 @@ public class EnemyController : MonoBehaviour
                 if ((!ThereIsAFloorMovement() || !OutOfReach()))
                 {
                     Move(0, rb.velocityY);
+                    StartCoroutine(Attack());
                 }
             }
             else
@@ -101,6 +112,7 @@ public class EnemyController : MonoBehaviour
                 if ((!ThereIsAFloorPlayer() || !OutOfReach()))
                 {
                     Move(0, rb.velocityY);
+                    StartCoroutine(Attack());
                 } 
             } 
             
@@ -114,7 +126,7 @@ public class EnemyController : MonoBehaviour
                 } else
                 {
                     resetJump = true;
-                    Move(npcMovementSpeed * -LeftOrRight(transform.position.x, ForwardObjDetection().collider.GetComponent<Transform>().position.x), rb.velocityY);
+                    Move(npcMovementSpeed * -Line.LeftOrRight(transform.position.x, ForwardObjDetection().collider.GetComponent<Transform>().position.x), rb.velocityY);
                     StartCoroutine(SituateJump());
                 }
             }   
@@ -136,15 +148,15 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitUntil(() => !takingDamage);
         yield return new WaitUntil(() => IsTouchingGround());
-        rb.velocity = new Vector2(npcMovementSpeed * LeftOrRight(transform.position.x, startingPos.x), rb.velocity.y);
-        if (LeftOrRight(transform.position.x, startingPos.x) == 1)
+        rb.velocity = new Vector2(npcMovementSpeed * Line.LeftOrRight(transform.position.x, startingPos.x), rb.velocity.y);
+        if (Line.LeftOrRight(transform.position.x, startingPos.x) == 1)
         {
             yield return new WaitUntil(() => transform.position.x > startingPos.x);
             rb.velocity = new Vector2(0, rb.velocity.y);
             returning = false;
             yield break;
         }
-        if (LeftOrRight(transform.position.x, startingPos.x) == -1)
+        if (Line.LeftOrRight(transform.position.x, startingPos.x) == -1)
         {
             yield return new WaitUntil(() => transform.position.x < startingPos.x);
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -201,10 +213,28 @@ public class EnemyController : MonoBehaviour
     }
     private IEnumerator DoKnockBack(float playerKnockBack)
     {
-        rb.velocity = new Vector2(playerKnockBack * -LeftOrRight(transform.position.x, player.transform.position.x), playerKnockBack);
+        rb.velocity = new Vector2(playerKnockBack * -Line.LeftOrRight(transform.position.x, player.transform.position.x), playerKnockBack);
         yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => IsTouchingGround());
         rb.velocity = new Vector2(0, 0);
+    }
+
+
+
+
+    [Header("Dealing Damage")] int DEALING;
+    
+    private IEnumerator Attack()
+    {
+        if (primaryCD.TimerDone)
+        {
+            GetComponent<Animator>().SetTrigger("Attacking");
+            StartCoroutine(primaryCD.Timer(primaryCooldown));
+            yield return new WaitForSeconds(0.2f);
+            RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(reach * PlayerDirection()), transform.position.y),transform.localScale/2, 0, new Vector2(PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
+            if (a.collider != null)
+                a.collider.GetComponent<PlayerController>().DamageDelt(damage, knockBack, stun, gameObject);
+        }
     }
     #endregion
 
@@ -230,20 +260,6 @@ public class EnemyController : MonoBehaviour
 
    
     [Header("Miscelaneous")] int MISCELANEOUS;
-    private int LeftOrRight(float origin, float other)
-    {
-        if (origin < other)
-        {
-            return 1;
-        } else if (origin > other)
-        {
-            return -1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
 
     private int PlayerDirection()
     {
@@ -281,7 +297,7 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         MovementDirection();
-        GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), false, takingDamage);
+        GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), takingDamage);
     }
 
     #endregion

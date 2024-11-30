@@ -144,4 +144,21 @@ public static class Line
     {
         return (float)Math.Sqrt((Math.Pow(endPoint.x - origin.x, 2) + Math.Pow(endPoint.y - origin.y, 2)) + Math.Pow(endPoint.z - origin.z, 2));
     }
+
+    public static int LeftOrRight(float origin, float other)
+    {
+        if (origin < other)
+        {
+            return 1;
+        }
+        else if (origin > other)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 }

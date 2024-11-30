@@ -14,5 +14,8 @@ public class EnemyInfo : ScriptableObject
     public float movementSpeed;
     public float damage;
     public float baseReach;
+    public float stun;
+    public float knockBack;
     public AnimatorController animatorController;
+    public float primaryCD;
 }
