@@ -18,4 +18,5 @@ public class EnemyInfo : ScriptableObject
     public float knockBack;
     public AnimatorController animatorController;
     public float primaryCD;
+    public bool bossType;
 }

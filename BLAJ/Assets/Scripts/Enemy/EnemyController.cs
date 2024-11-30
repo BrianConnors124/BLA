@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     private bool returning;
     private bool playerInProximity;
-    public bool takingDamage;
+    private bool takingDamage;
     private bool stunned;
     private float reach;
     private bool canMove;
@@ -38,6 +38,7 @@ public class EnemyController : MonoBehaviour
     private bool resetJump;
     private UniversalTimer jumpCD;
     private bool attacking;
+    private bool boss;
     private UniversalTimer primaryCD;
     
     
@@ -75,11 +76,12 @@ public class EnemyController : MonoBehaviour
         description = info.description;
         damage = info.damage;
         jumpHeight = info.jumpHeight;
-        npcMovementSpeed = info.movementSpeed * transform.localScale.x;
+        npcMovementSpeed = info.movementSpeed;
         reach = info.baseReach * transform.localScale.x / 5;
         stun = info.stun;
         knockBack = info.knockBack;
         primaryCooldown = info.primaryCD;
+        boss = info.bossType;
     }
 #endregion
 
@@ -206,8 +208,16 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        StartCoroutine(DoKnockBack(knockback));
-        StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
+
+        if (!boss)
+        {
+            StartCoroutine(DoKnockBack(knockback));
+            StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
+        }
+        else
+        {
+            takingDamage = false;
+        }
         StartCoroutine(jumpCD.Timer(4));
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
@@ -231,7 +241,7 @@ public class EnemyController : MonoBehaviour
             GetComponent<Animator>().SetTrigger("Attacking");
             StartCoroutine(primaryCD.Timer(primaryCooldown));
             yield return new WaitForSeconds(0.2f);
-            RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(reach * PlayerDirection()), transform.position.y),transform.localScale/2, 0, new Vector2(PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
+            RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(reach * PlayerDirection()), transform.position.y),new Vector2(transform.localScale.x/2,transform.localScale.y), 0, new Vector2(PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
             if (a.collider != null)
                 a.collider.GetComponent<PlayerController>().DamageDelt(damage, knockBack, stun, gameObject);
         }

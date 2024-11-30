@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2ea958cbc28d194aaec52cfb6d7d1f3, type: 3}
-  m_Name: DogHound
+  m_Name: Mummy Boss
   m_EditorClassIdentifier: 
-  name: DogHound
-  description: The gaurd for the depths of hell
-  health: 25
+  name: Mummy
+  description: Rose from the depths of the tomb, he seeks revenge from the ones whol
+    stole his riches.
+  health: 200
   jumpHeight: 24
-  movementSpeed: 4
-  damage: 20
-  baseReach: 2
-  animatorController: {fileID: 0}
+  movementSpeed: 2
+  damage: 25
+  baseReach: 1
+  stun: 2
+  knockBack: 30
+  animatorController: {fileID: 9100000, guid: ef8f77d1317694b4e8eb49726517a4bf, type: 2}
+  primaryCD: 4
+  bossType: 1
