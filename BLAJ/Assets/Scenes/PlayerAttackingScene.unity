@@ -659,7 +659,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Room
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8826134425972699895, guid: d633661c3e4bb6d4cbb7149693d27285, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1902782299494066667, guid: d633661c3e4bb6d4cbb7149693d27285, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -794,7 +799,7 @@ Transform:
   m_GameObject: {fileID: 1850341433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 95.2, y: -12.51, z: 0}
+  m_LocalPosition: {x: 95.18, y: -12.35, z: 0}
   m_LocalScale: {x: 1.8339391, y: 1.4065225, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -889,13 +894,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: _EnemyBase
       objectReference: {fileID: 0}
+    - target: {fileID: 4413820934050058949, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
+      propertyPath: m_Size.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413820934050058949, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.20947792
+      objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 87.416
+      value: 87.82
       objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.1849
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalPosition.z
@@ -927,6 +952,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726477476611375194, guid: 1678c8a5366fcdf409bacb14b26fdb52, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
