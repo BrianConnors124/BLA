@@ -20,7 +20,7 @@ MonoBehaviour:
   movementSpeed: 2
   damage: 10
   baseReach: 1
-  stun: 0.5
-  knockBack: 10
+  stun: 0
+  knockBack: 0
   animatorController: {fileID: 9100000, guid: ef8f77d1317694b4e8eb49726517a4bf, type: 2}
-  primaryCD: 1
+  primaryCD: 2
