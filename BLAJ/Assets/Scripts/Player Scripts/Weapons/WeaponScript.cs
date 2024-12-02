@@ -72,7 +72,7 @@ public class WeaponScript : MonoBehaviour
     }
     private void Update()
     {
-        Vector2  a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
+        Vector2  a = new Vector2(HandScript.instance.dir.y, 0);
         BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(2,2) * attackSize, 0, a, attackSize * 5 );  
         BoxCastDrawer.BoxCastAndDraw(transform.position,new Vector2(2,2) * attackSize, 0, a,0);  
         
@@ -87,7 +87,7 @@ public class WeaponScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCooldowns();
-            Vector2 b = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
+            Vector2 b = new Vector2(HandScript.instance.dir.y, 0);
             RaycastHit2D a = Physics2D.BoxCast(transform.position,new Vector2(2,2) * attackSize, 0, b,0, LayerMask.GetMask("Enemy"));
             StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));  
             if (a.collider != null)
@@ -103,7 +103,7 @@ public class WeaponScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCooldowns();
-            Vector2 a = new Vector2(HandScript.instance.dir.y, HandScript.instance.dir.x * -1);
+            Vector2 a = new Vector2(HandScript.instance.dir.y, 0);
             hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy" ));
             StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));
             for (int i = 0; i < hit.Length; i++)

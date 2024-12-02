@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     private float knockBack;
     private float stun;
     private float primaryCooldown;
+    public GameObject warningSign;
 
 
     [Header("Mechanics")]
@@ -77,7 +78,7 @@ public class EnemyController : MonoBehaviour
         damage = info.damage;
         jumpHeight = info.jumpHeight;
         npcMovementSpeed = info.movementSpeed;
-        reach = info.baseReach * transform.localScale.x / 5;
+        reach = info.baseReach * transform.localScale.x / 4;
         stun = info.stun;
         knockBack = info.knockBack;
         primaryCooldown = info.primaryCD;
@@ -88,7 +89,7 @@ public class EnemyController : MonoBehaviour
     #region Movement
     private void FixedUpdate()
     {
-        if (!takingDamage && IsTouchingGround() && !attacking)
+        if (!takingDamage && IsTouchingGround())
         {
             if(Mathf.Abs(rb.velocityX) >= 0.3f){
                 if (playerInProximity && !PlayerOutOfSight() && OutOfReach() &&
@@ -218,6 +219,8 @@ public class EnemyController : MonoBehaviour
         {
             takingDamage = false;
         }
+
+        StartCoroutine(DoDamageColor());
         StartCoroutine(jumpCD.Timer(4));
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
@@ -227,6 +230,15 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => IsTouchingGround());
         rb.velocity = new Vector2(0, 0);
+        
+    }
+
+    private IEnumerator DoDamageColor()
+    {
+        //GetComponent<SpriteRenderer>().color = new Color(224, 138, 138, 255);
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
 
@@ -234,16 +246,22 @@ public class EnemyController : MonoBehaviour
 
     [Header("Dealing Damage")] int DEALING;
     
+    
     private IEnumerator Attack()
     {
         if (primaryCD.TimerDone)
         {
-            GetComponent<Animator>().SetTrigger("Attacking");
+            attacking = true;
             StartCoroutine(primaryCD.Timer(primaryCooldown));
-            yield return new WaitForSeconds(0.2f);
+            warningSign.SetActive(true);
+            yield return new WaitForSeconds(0.4f);
+            warningSign.SetActive(false);
+            GetComponent<Animator>().SetTrigger("Attacking");
             RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(reach * PlayerDirection()), transform.position.y),new Vector2(transform.localScale.x/2,transform.localScale.y), 0, new Vector2(PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
             if (a.collider != null)
                 a.collider.GetComponent<PlayerController>().DamageDelt(damage, knockBack, stun, gameObject);
+            attacking = false;
+
         }
     }
     #endregion
@@ -286,8 +304,8 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    private bool OutOfReach() => (Mathf.Abs(player.transform.position.x - transform.position.x) > transform.localScale.x * reach);
-    private bool Walking() => rb.velocity.x != 0;
+    private bool OutOfReach() => (Mathf.Abs(player.transform.position.x - transform.position.x) > player.transform.localScale.x * reach);
+    private bool Walking() => rb.velocity.x != 0 && !attacking;
     private int MovementDirection()
     {
         if (rb.velocityX < 0)

@@ -15,13 +15,13 @@ MonoBehaviour:
   name: Mummy
   description: Rose from the depths of the tomb, he seeks revenge from the ones whol
     stole his riches.
-  health: 100
+  health: 200
   jumpHeight: 24
   movementSpeed: 2
   damage: 10
-  baseReach: 1
-  stun: 1
-  knockBack: 24
+  baseReach: 2
+  stun: 0
+  knockBack: 0
   animatorController: {fileID: 9100000, guid: ef8f77d1317694b4e8eb49726517a4bf, type: 2}
   primaryCD: 2
   bossType: 0

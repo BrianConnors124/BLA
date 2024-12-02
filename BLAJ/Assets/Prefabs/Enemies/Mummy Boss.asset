@@ -19,7 +19,7 @@ MonoBehaviour:
   jumpHeight: 24
   movementSpeed: 2
   damage: 25
-  baseReach: 1
+  baseReach: 2
   stun: 2
   knockBack: 30
   animatorController: {fileID: 9100000, guid: ef8f77d1317694b4e8eb49726517a4bf, type: 2}

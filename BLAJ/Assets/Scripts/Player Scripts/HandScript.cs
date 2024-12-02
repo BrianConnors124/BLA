@@ -16,7 +16,7 @@ public class HandScript : MonoBehaviour
         instance = this;
         var input = InputSystemController.MovementInput(); 
         dir = Vector3.up * input.x + Vector3.left * input.y; 
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(0, PlayerController.instance.direction, 0));
          
     }
 
@@ -27,7 +27,7 @@ public class HandScript : MonoBehaviour
         { 
             var input = InputSystemController.MovementInput(); 
             dir = Vector3.up * input.x + Vector3.left * input.y; 
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);     
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(0, PlayerController.instance.direction, 0));  
         }
         
     }
