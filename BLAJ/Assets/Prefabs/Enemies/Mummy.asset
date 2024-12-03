@@ -17,7 +17,7 @@ MonoBehaviour:
     stole his riches.
   health: 200
   jumpHeight: 24
-  movementSpeed: 2
+  movementSpeed: 2.4
   damage: 10
   baseReach: 1.5
   stun: 0

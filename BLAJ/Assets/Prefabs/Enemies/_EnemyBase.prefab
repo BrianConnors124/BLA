@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 11400000, guid: b871630229cc6314a91be46b2d2999fe, type: 2}
   warningSign: {fileID: 0}
+  attacking: 0
 --- !u!61 &4413820934050058949
 BoxCollider2D:
   m_ObjectHideFlags: 0

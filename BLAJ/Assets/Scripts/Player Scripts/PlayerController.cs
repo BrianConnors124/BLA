@@ -107,10 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!stunned && !knockedBack)
         {
-            if(!TouchingGround())
-                rb.velocity = new Vector2( (InputSystemController.MovementInput().x) * speedInAir * Time.deltaTime * 100, rb.velocity.y);
-            if(TouchingGround())
-                rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);   
+            rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);   
         }
         
         if (!TouchingGround())
