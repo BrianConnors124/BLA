@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     private float baseGrav;
     private bool extraJump;
     private UniversalTimer jumpCooldown;
-    private UniversalTimer groundCheck;
     
 
     [Header("Dash")] 
@@ -49,6 +48,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSlowDownInterval;
     private UniversalTimer dashDuration;
     private UniversalTimer dashCooldown;
+    
+    [Header("Animator Bools")] 
+    private bool walkingRight;
+    private bool walkingLeft;
+    private bool walking;
+    private bool takingDamage;
+    private bool jumping;
+    private bool attacking;
+    private bool idleLeft;
+    private bool idleRight;
+    private bool idle;
 
     
     
@@ -70,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private void ActivatePresets()
     {
+        lengthOfRay *= transform.localScale.y;
         baseGrav = rb.gravityScale;
         coyotePH = coyoteTime;
         dashDistancePH = dashDistance;
@@ -107,6 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!stunned && !knockedBack)
         {
+            walking = true;
             rb.velocity = new Vector2( (InputSystemController.MovementInput().x  + dashDistance) * speed * Time.deltaTime * 100, rb.velocity.y);   
         }
         
@@ -126,6 +138,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        jumping = true;
         StartCoroutine(jumpCooldown.Timer(jumpCD));
     }
     
@@ -238,15 +251,51 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, endPoint);
     }
 
-    private void Update()
+    private int UpdateFace()
     {
         if (InputSystemController.MovementInput().x < 0)
         {
-            direction = -1;
+            return -1;
         }
         if (InputSystemController.MovementInput().x > 0)
         {
-            direction = 1;
+            return  1;
         }
+
+        return 0;
+    }
+
+    private void Update()
+    {
+        direction = UpdateFace();
+        
+        if (walking)
+        {
+            if (direction == -1)
+            {
+                walkingLeft = true;
+                walkingRight = false;
+            }
+            else
+            {
+                walkingRight = true;
+                walkingLeft = false;
+            }
+        }
+        else
+        {
+            walkingRight = false;
+            walkingLeft = false;
+        }
+
+        if (rb.velocityY == 0)
+        {
+            jumping = false;
+        }
+        
+        
+        
+        
+        GetComponent<PlayerAnimation>().UpdateAnimator(walkingRight,walkingLeft,takingDamage,attacking,jumping);
     }
 }

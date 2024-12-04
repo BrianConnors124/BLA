@@ -32,7 +32,6 @@ public class WeaponScript : MonoBehaviour
     
     [Header("Misc")]
     private Rigidbody2D rb;
-    private Action reset;
     private RaycastHit2D[] hit;
     private Action primaryAttack;
     private Action secondaryAttack;
@@ -46,7 +45,6 @@ public class WeaponScript : MonoBehaviour
         Actions();
         Presets();
         StartCoroutine(new UniversalTimer().Timer(.5f, Print));
-        reset += ResetSprite;
     }
 
     private void Presets()
@@ -88,8 +86,7 @@ public class WeaponScript : MonoBehaviour
             GetComponent<SpriteRenderer>().color = Color.red;
             StartCooldowns();
             Vector2 b = new Vector2(HandScript.instance.dir.y, 0);
-            RaycastHit2D a = Physics2D.BoxCast(transform.position,new Vector2(2,2) * attackSize, 0, b,0, LayerMask.GetMask("Enemy"));
-            StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));  
+            RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(transform.position,new Vector2(2,2) * attackSize, 0, b,0, LayerMask.GetMask("Enemy"));
             if (a.collider != null)
                 a.collider.GetComponent<EnemyController>().DamageDelt(damage, knockback, stun);
             
@@ -105,7 +102,6 @@ public class WeaponScript : MonoBehaviour
             StartCooldowns();
             Vector2 a = new Vector2(HandScript.instance.dir.y, 0);
             hit = Physics2D.BoxCastAll(transform.position, new Vector2(1,1) * attackSize * 2, 0, a, attackSize * 5 , LayerMask.GetMask("Enemy" ));
-            StartCoroutine(new UniversalTimer().Timer((primaryCD / 2), reset));
             for (int i = 0; i < hit.Length; i++)
             {
                 if(hit[i].collider != null)
@@ -114,20 +110,10 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
-    private void ResetSprite()
-    {
-        GetComponent<SpriteRenderer>().color = Color.cyan;
-    }
-
     private void StartCooldowns()
     {
         StartCoroutine(primaryCDT.Timer(primaryCD));
         StartCoroutine(secondaryCDT.Timer(secondaryCD));
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, attackSize);
     }
 
     private void Print()

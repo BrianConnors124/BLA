@@ -72,6 +72,22 @@ public static class BoxCastDrawer
         Draw(hitInfo, origin, size, angle, direction, distance);
         return hitInfo;
     }
+    
+    public static RaycastHit2D[] BoxCastAllAndDraw(
+        Vector2 origin,
+        Vector2 size,
+        float angle,
+        Vector2 direction,
+        float distance = Mathf.Infinity,
+        int layerMask = Physics2D.AllLayers,
+        float minDepth = -Mathf.Infinity,
+        float maxDepth = Mathf.Infinity)
+    {
+        RaycastHit2D[] hitInfo = Physics2D.BoxCastAll(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
+        RaycastHit2D hit = Physics2D.BoxCast(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
+        Draw(hit, origin, size, angle, direction, distance);
+        return hitInfo;
+    }
 
     private static Vector2[] CreateOriginalBox(Vector2 origin, Vector2 size, float angle)
     {

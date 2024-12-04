@@ -342,7 +342,7 @@ public class EnemyController : MonoBehaviour
     private bool OutOfReachX() => Mathf.Abs(Mathf.Abs(transform.position.x) - Mathf.Abs(player.transform.position.x)) > reach;
     private bool OutOfReachY() => Mathf.Abs( Mathf.Abs(transform.position.y) - Mathf.Abs(player.transform.position.y)) > transform.localScale.y;
     
-    private bool Walking() => rb.velocity.x != 0 && !attacking;
+    private bool Walking() => rb.velocity.x != 0 && !attacking && !takingDamage;
     private int MovementDirection()
     {
         if (rb.velocityX < 0)
@@ -363,7 +363,7 @@ public class EnemyController : MonoBehaviour
     
     private void Update()
     {
-       if(!attacking)
+       if(Walking())
             MovementDirection();
        GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), takingDamage, attacking);
        
