@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         jumpCooldown = new UniversalTimer();
         dashDuration = new UniversalTimer();
         dashCooldown = new UniversalTimer();
-        groundCheck = new UniversalTimer();
+        //groundCheck = new UniversalTimer();
         stunLength = new UniversalTimer();
     }
     // Movement (Velocity workings) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
