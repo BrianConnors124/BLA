@@ -12,6 +12,7 @@ public class InputSystemController : MonoBehaviour
     
     [SerializeField] private InputActionReference walking;
     [SerializeField] private InputActionReference aiming;
+    [SerializeField] private InputActionReference jumping;
     
     
     
@@ -38,17 +39,18 @@ public class InputSystemController : MonoBehaviour
     
 
     public void HandleJump(InputAction.CallbackContext context)
-    { 
-            if (context.performed)
-            {
-                //Debug.Log("VAR");
-                jumpAction.Invoke();
-                //print("big jump");
-            }
-            else if (context.canceled)
-            {
-                endJump.Invoke();
-            }
+    {
+        if (context.performed)
+        {
+            //Debug.Log("VAR");
+            jumpAction.Invoke();
+            //print("big jump");
+        }
+    }
+
+    public static  int _HandleJump()
+    {
+        return (int) instance.jumping.action.ReadValue<float>();
     }
     public void HandleDash(InputAction.CallbackContext context)
     {
