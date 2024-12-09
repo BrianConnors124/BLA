@@ -1,75 +1,65 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 
 public class InputSystemController : MonoBehaviour
 {
 
     public static InputSystemController instance;
+
+
+    private UniversalTimer _queueTimer;
+    private enum Equeue{jump,attack,dash,nothing}
+
+    private Equeue queued;
+    [SerializeField] private InputActionReference Walk;
+    [SerializeField] private InputActionReference Jump;
+    [SerializeField] private InputActionReference Dash;
+    [SerializeField] private InputActionReference Attack;
     
-    [SerializeField] private InputActionReference walking;
-    [SerializeField] private InputActionReference aiming;
-    [SerializeField] private InputActionReference jumping;
     
-    
-    
-    public Action jumpAction;
-    public Action endJump;
-    public Action dashAction;
-    public Action primaryAction;
-    public Action secondaryAction;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public static Vector2 MovementInput()
+    private void Update()
     {
-        return instance.walking.action.ReadValue<Vector2>();
-    }
-    
-    public static Vector2 AimInput()
-    {
-        return instance.aiming.action.ReadValue<Vector2>();
-    }
-    
-
-    public void HandleJump(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            //Debug.Log("VAR");
-            jumpAction.Invoke();
-            //print("big jump");
-        }
+        if (HandleJump())
+            StartCoroutine(_queueTimer.Timer(0.1f, delegate { switch(queued){ case Equeue.nothing : break;}}));
+        if (HandleDash())
+            StartCoroutine(_queueTimer.Timer(0.1f, delegate { switch(queued){ case Equeue.nothing : break;}}));
+        if (HandleAttack())
+            StartCoroutine(_queueTimer.Timer(0.1f, delegate { switch(queued){ case Equeue.nothing : break;}}));
+        
+        print(queued);
     }
 
-    public static bool _HandleJump() => instance.jumping.action.ReadValue<float>() > 0;
-    public void HandleDash(InputAction.CallbackContext context)
+    private void SwitchQueue()
     {
-        if (dashAction != null)
-        {
-            dashAction.Invoke();
-        }
-        else
-        {
-            Debug.LogError("dashAction is not assigned a value");
-        }
+        
     }
     
-    public void HandlePrimary(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-            primaryAction.Invoke();
-    }
+    public static Vector2 MovementInput() => instance.Walk.action.ReadValue<Vector2>();
     
-    public void HandleSecondary(InputAction.CallbackContext context)
+    //public static bool HandleJump() => instance.Jump.action.ReadValue<float>() > 0;
+    public bool HandleJump()
     {
-        if(context.performed)
-            secondaryAction.Invoke();
+        switch (queued)
+        {
+            case Equeue.jump :
+                break;
+        }
+
+        return instance.Jump.action.ReadValue<float>() > 0;
     }
+    public static bool HandleDash() => instance.Dash.action.ReadValue<float>() > 0;
+    public static bool HandleAttack() => instance.Attack.action.ReadValue<float>() > 0;
+
 }

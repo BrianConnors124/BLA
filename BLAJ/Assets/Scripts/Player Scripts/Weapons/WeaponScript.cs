@@ -61,8 +61,6 @@ public class WeaponScript : MonoBehaviour
     
     private void Actions()
     {
-        InputSystemController.instance.primaryAction += Primary;
-        InputSystemController.instance.secondaryAction += Secondary;
         primaryCDT = new UniversalTimer();
         primaryCDT.Reset();
         secondaryCDT = new UniversalTimer();
