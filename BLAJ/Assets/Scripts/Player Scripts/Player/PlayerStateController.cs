@@ -21,6 +21,7 @@ public class PlayerStateController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private bool grounded => GameObject.Find("PlayerGroundCheck").GetComponent<BoxCollider2D>().IsTouchingLayers(LayerMask.GetMask("WorldObj"));

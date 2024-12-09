@@ -48,10 +48,7 @@ public class InputSystemController : MonoBehaviour
         }
     }
 
-    public static  int _HandleJump()
-    {
-        return (int) instance.jumping.action.ReadValue<float>();
-    }
+    public static bool _HandleJump() => instance.jumping.action.ReadValue<float>() > 0;
     public void HandleDash(InputAction.CallbackContext context)
     {
         if (dashAction != null)
