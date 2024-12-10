@@ -1,19 +1,18 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : PlayerState
+public class JumpState : PlayerState
 {
+    private Rigidbody2D rb;
     
-    
-    public IdleState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
+    public JumpState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
     {
+        rb = RB;
     }
     public override void EnterState()
     {
         base.EnterState();
-        player.SetVelocity(new Vector2(0,0));
+        player.SetVelocity(new Vector2(rb.velocityX,20));
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -29,15 +28,15 @@ public class IdleState : PlayerState
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;
         }
-        if (InputSystemController.MovementInput().magnitude > 0)
+        if (InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash)
         {
-            return PlayerStateMachine.EPlayerState.walking;
+            InputSystemController.instance.queued = InputSystemController.Equeue.dash;
+            return PlayerStateMachine.EPlayerState.dash;
         }
-        // if (InputSystemController.HandleDash())
-        // {
-        //     InputSystemController.instance.queued = InputSystemController.Equeue.dash;
-        //     return PlayerStateMachine.EPlayerState.dash;
-        // }
+        if (InputSystemController.MovementInput().magnitude == 0)
+        {
+            return PlayerStateMachine.EPlayerState.idle;
+        }
          
         return StateKey;
     }

@@ -101,9 +101,6 @@ public class PlayerController : MonoBehaviour
     private void Actions()
     {
         endDash += EndDash;
-        InputSystemController.instance.endJump += EndJump;
-        InputSystemController.instance.jumpAction += AttemptJump;
-        InputSystemController.instance.dashAction += Dash;  
     }
     private void ActivateTimers()
     {

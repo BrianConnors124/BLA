@@ -14,9 +14,9 @@ public class InputSystemController : MonoBehaviour
 
 
     private UniversalTimer _queueTimer;
-    private enum Equeue{jump,attack,dash,nothing}
+    public enum Equeue{nothing,jump,attack,dash}
 
-    private Equeue queued;
+    public Equeue queued;
     [SerializeField] private InputActionReference Walk;
     [SerializeField] private InputActionReference Jump;
     [SerializeField] private InputActionReference Dash;
@@ -27,39 +27,23 @@ public class InputSystemController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        _queueTimer = new UniversalTimer();
     }
 
     private void Update()
     {
-        if (HandleJump())
-            StartCoroutine(_queueTimer.Timer(0.1f, delegate { switch(queued){ case Equeue.nothing : break;}}));
-        if (HandleDash())
-            StartCoroutine(_queueTimer.Timer(0.1f, delegate { switch(queued){ case Equeue.nothing : break;}}));
-        if (HandleAttack())
-            StartCoroutine(_queueTimer.Timer(0.1f, delegate { switch(queued){ case Equeue.nothing : break;}}));
-        
-        print(queued);
-    }
-
-    private void SwitchQueue()
-    {
-        
+        if (queued == Equeue.jump)
+            StartCoroutine(_queueTimer.Timer(10, ChangeQueuedToNothing));
+        if (queued == Equeue.dash)
+            StartCoroutine(_queueTimer.Timer(10, ChangeQueuedToNothing));
+        if (queued == Equeue.attack)
+            StartCoroutine(_queueTimer.Timer(10, ChangeQueuedToNothing));
     }
     
     public static Vector2 MovementInput() => instance.Walk.action.ReadValue<Vector2>();
-    
-    //public static bool HandleJump() => instance.Jump.action.ReadValue<float>() > 0;
-    public bool HandleJump()
-    {
-        switch (queued)
-        {
-            case Equeue.jump :
-                break;
-        }
-
-        return instance.Jump.action.ReadValue<float>() > 0;
-    }
+    public bool HandleJump() => instance.Jump.action.ReadValue<float>() > 0;
     public static bool HandleDash() => instance.Dash.action.ReadValue<float>() > 0;
     public static bool HandleAttack() => instance.Attack.action.ReadValue<float>() > 0;
+    private void ChangeQueuedToNothing() => queued = Equeue.nothing;
 
 }
