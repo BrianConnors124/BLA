@@ -33,11 +33,6 @@ public class IdleState : PlayerState
         {
             return PlayerStateMachine.EPlayerState.walking;
         }
-        // if (InputSystemController.HandleDash())
-        // {
-        //     InputSystemController.instance.queued = InputSystemController.Equeue.dash;
-        //     return PlayerStateMachine.EPlayerState.dash;
-        // }
          
         return StateKey;
     }

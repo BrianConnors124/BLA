@@ -14,11 +14,17 @@ public class DashState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.SetVelocity(new Vector2(15,rb.velocityY));
+        player.StartDashCD();
+        rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (InputSystemController.MovementInput().magnitude > 0)
+        {
+            return PlayerStateMachine.EPlayerState.walking;
+        }
+        
         if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
         {
             InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
@@ -30,9 +36,10 @@ public class DashState : PlayerState
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;
         }
-        if (InputSystemController.MovementInput().magnitude > 0)
+        
+        if (InputSystemController.MovementInput().magnitude == 0 && player.IsTouchingGround())
         {
-            return PlayerStateMachine.EPlayerState.walking;
+            return PlayerStateMachine.EPlayerState.idle;
         }
          
         return StateKey;

@@ -12,6 +12,7 @@ public class JumpState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.StartJumpCD();
         player.SetVelocity(new Vector2(rb.velocityX,24));
     }
 
@@ -26,21 +27,16 @@ public class JumpState : PlayerState
         {
             return PlayerStateMachine.EPlayerState.walking;
         }
-        if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
-        {
-            InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
-            return PlayerStateMachine.EPlayerState.jump;
-        }
 
         if (InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
         {
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;
         }
-        if (InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash)
+        
+        if (InputSystemController.MovementInput().magnitude == 0 && player.IsTouchingGround())
         {
-            InputSystemController.instance.queued = InputSystemController.Equeue.dash;
-            return PlayerStateMachine.EPlayerState.dash;
+            return PlayerStateMachine.EPlayerState.idle;
         }
          
         return StateKey;

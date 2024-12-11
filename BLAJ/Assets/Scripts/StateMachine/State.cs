@@ -17,6 +17,7 @@ public abstract class State<EState> where EState : Enum
 
     public virtual void EnterState()
     {
+        Debug.Log(StateKey);
         animEnded = false;
     }
 
