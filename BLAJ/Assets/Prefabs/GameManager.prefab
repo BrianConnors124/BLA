@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8341593431485099170}
   - component: {fileID: 393418353396129373}
   - component: {fileID: 5083931605095552801}
-  - component: {fileID: 960658053625888806}
   - component: {fileID: 7661307748428257348}
   m_Layer: 0
   m_Name: GameManager
@@ -162,7 +161,7 @@ MonoBehaviour:
     m_ActionName: 'Movement/Walking[/XInputControllerWindows/leftStick,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 960658053625888806}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
         m_MethodName: HandleJump
         m_Mode: 0
@@ -178,7 +177,7 @@ MonoBehaviour:
     m_ActionName: 'Movement/Jump[/XInputControllerWindows/buttonSouth]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 960658053625888806}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
         m_MethodName: HandleDash
         m_Mode: 0
@@ -213,22 +212,6 @@ MonoBehaviour:
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &960658053625888806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3611580238400490735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b17a3b79fd9b644ca748c3a828e2858, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walking: {fileID: -2091348598716597423, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  jumping: {fileID: 7310677065945019850, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  dashing: {fileID: 5922499169187862635, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  zoomOut: {fileID: -4030069277412980263, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
 --- !u!114 &7661307748428257348
 MonoBehaviour:
   m_ObjectHideFlags: 0

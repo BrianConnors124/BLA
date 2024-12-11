@@ -33,11 +33,11 @@ public class InputSystemController : MonoBehaviour
     private void Update()
     {
         if (queued == Equeue.jump)
-            StartCoroutine(_queueTimer.Timer(10, ChangeQueuedToNothing));
+            StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
         if (queued == Equeue.dash)
-            StartCoroutine(_queueTimer.Timer(10, ChangeQueuedToNothing));
+            StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
         if (queued == Equeue.attack)
-            StartCoroutine(_queueTimer.Timer(10, ChangeQueuedToNothing));
+            StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
     }
     
     public static Vector2 MovementInput() => instance.Walk.action.ReadValue<Vector2>();

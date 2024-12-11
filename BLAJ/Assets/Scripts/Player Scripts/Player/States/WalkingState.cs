@@ -13,7 +13,13 @@ public class WalkingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.SetVelocity(new Vector2(InputSystemController.MovementInput().x * 100,rb.velocityY));
+        player.SetVelocity(new Vector2(10 * player.Magnitude(InputSystemController.MovementInput().x) ,rb.velocityY));
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        player.SetVelocity(new Vector2(10 * player.Magnitude(InputSystemController.MovementInput().x) ,rb.velocityY));
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()

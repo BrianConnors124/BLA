@@ -30,9 +30,9 @@ public class DashState : PlayerState
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;
         }
-        if (InputSystemController.MovementInput().magnitude == 0)
+        if (InputSystemController.MovementInput().magnitude > 0)
         {
-            return PlayerStateMachine.EPlayerState.idle;
+            return PlayerStateMachine.EPlayerState.walking;
         }
          
         return StateKey;

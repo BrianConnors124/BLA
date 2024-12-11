@@ -24,4 +24,5 @@ public class Entity : MonoBehaviour
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
     public void SetVelocity(Vector2 newVelocity) => _rb.velocity = newVelocity;
     public Vector2 Velocity => _rb.velocity;
+    public float Magnitude(float a) => Mathf.Abs(a) / a;
 }
