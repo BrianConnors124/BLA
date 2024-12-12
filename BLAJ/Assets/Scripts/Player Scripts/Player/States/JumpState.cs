@@ -9,21 +9,18 @@ public class JumpState : PlayerState
     {
         rb = RB;
     }
+
     public override void EnterState()
     {
         base.EnterState();
         player.StartJumpCD();
-        player.SetVelocity(new Vector2(rb.velocityX,24));
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
+        rb.velocity = new Vector2(rb.velocityX, 20);
+        //player.SetVelocity(new Vector2(rb.velocityX, 20));
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (InputSystemController.MovementInput().magnitude > 0)
+        if (InputSystemController.MovementInput().magnitude > 0 && player.IsTouchingGround())
         {
             return PlayerStateMachine.EPlayerState.walking;
         }
