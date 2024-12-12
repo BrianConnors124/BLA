@@ -8,16 +8,20 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     {
         player = entity;
         transform = player.transform;
+        rb = player.GetComponent<Rigidbody2D>();
     }
 
     protected Player player;
     private Transform transform;
+    private Rigidbody2D rb;
+    private bool currentFlip;
 
     public override void EnterState()
     {
         base.EnterState();
         Console.WriteLine(StateKey);
         player.Anim.Play(StateKey.ToString());
+        player.GetComponent<SpriteRenderer>().flipX = player.Flip(rb, currentFlip);
     }
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
@@ -27,6 +31,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public override void UpdateState()
     {
         base.UpdateState();
+        player.GetComponent<SpriteRenderer>().flipX = player.Flip(rb, currentFlip);
         player.Anim.Play(StateKey.ToString());
     }
 

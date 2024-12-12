@@ -13,14 +13,18 @@ public class JumpState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.StartJumpCD();
-        rb.velocity = new Vector2(rb.velocityX, 20);
-        //player.SetVelocity(new Vector2(rb.velocityX, 20));
+        rb.velocity = new Vector2(rb.velocityX, player.jumpHeight);
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (InputSystemController.MovementInput().magnitude > 0 && player.IsTouchingGround())
+        if (player.IsTouchingGround() && InputSystemController.MovementInput().magnitude > 0)
         {
             return PlayerStateMachine.EPlayerState.walking;
         }
@@ -31,10 +35,10 @@ public class JumpState : PlayerState
             return PlayerStateMachine.EPlayerState.attack;
         }
         
-        if (InputSystemController.MovementInput().magnitude == 0 && player.IsTouchingGround())
+        if (player.IsTouchingGround() && InputSystemController.MovementInput().magnitude == 0)
         {
             return PlayerStateMachine.EPlayerState.idle;
-        }
+        }  
          
         return StateKey;
     }

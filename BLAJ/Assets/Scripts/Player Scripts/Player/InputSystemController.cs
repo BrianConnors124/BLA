@@ -11,6 +11,7 @@ public class InputSystemController : MonoBehaviour
 {
 
     public static InputSystemController instance;
+    private bool queueActive;
 
 
     private UniversalTimer _queueTimer;
@@ -32,18 +33,34 @@ public class InputSystemController : MonoBehaviour
 
     private void Update()
     {
-        if (queued == Equeue.jump)
-            StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
-        if (queued == Equeue.dash)
-            StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
-        if (queued == Equeue.attack)
-            StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
+        if (!queueActive)
+        {
+            if (queued == Equeue.jump)
+            {
+                StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
+                queueActive = true;
+            }
+
+            if (queued == Equeue.dash)
+            {
+                StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
+                queueActive = true;
+            }
+            if (queued == Equeue.attack)
+            {
+                StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
+                queueActive = true;
+            }   
+        }
     }
     
     public static Vector2 MovementInput() => instance.Walk.action.ReadValue<Vector2>();
     public bool HandleJump() => instance.Jump.action.ReadValue<float>() > 0;
     public static bool HandleDash() => instance.Dash.action.ReadValue<float>() > 0;
     public static bool HandleAttack() => instance.Attack.action.ReadValue<float>() > 0;
-    private void ChangeQueuedToNothing() => queued = Equeue.nothing;
-
+    private void ChangeQueuedToNothing()
+    {
+        queued = Equeue.nothing;
+        queueActive = false;
+    }
 }

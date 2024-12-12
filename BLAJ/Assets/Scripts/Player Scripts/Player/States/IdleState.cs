@@ -18,7 +18,7 @@ public class IdleState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
+        if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
         {
             InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
             return PlayerStateMachine.EPlayerState.jump;

@@ -11,16 +11,6 @@ public class UniversalTimer
     private float timerLength;
 
     public bool TimerDone => timer <= 0;
-
-
-    public void Reset()
-    {
-        timer = 0;
-    }
-    public void Reset(float Length)
-    {
-        timer = Length;
-    }
     public IEnumerator Timer(float Length, Action Commit)
     {
         timer = Length; 
@@ -42,5 +32,14 @@ public class UniversalTimer
         }
     }
 
+    
+    public void Reset()
+    {
+        timer = 0;
+    }
+    public void Reset(float Length)
+    {
+        timer = Length;
+    }
  
 }

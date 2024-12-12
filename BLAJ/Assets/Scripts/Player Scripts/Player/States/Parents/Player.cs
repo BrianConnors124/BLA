@@ -9,10 +9,12 @@ public class Player : Entity
     public UniversalTimer jump;
     public UniversalTimer dash;
     
-    private float jumpCD;
+    public float jumpCD;
     private float dashCD;
+    public float dashDuration;
     public float dashSpeed;
     public float movementSpeed;
+    public float jumpHeight;
     
     
     
@@ -36,11 +38,8 @@ public class Player : Entity
         dashCD = playerInfo.dashCD;
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
-    }
-
-    public void StartJumpCD()
-    {
-        StartCoroutine(jump.Timer(jumpCD));
+        dashDuration = playerInfo.dashDuration;
+        jumpHeight = playerInfo.jumpHeight;
     }
     public void StartDashCD()
     {
@@ -52,6 +51,8 @@ public class PlayerInfo : ScriptableObject
 {
     public float movementSpeed;
     public float dashSpeed;
+    public float jumpHeight;
     public float jumpCD;
     public float dashCD;
+    public float dashDuration;
 }

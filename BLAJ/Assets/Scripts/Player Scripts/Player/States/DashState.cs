@@ -15,31 +15,40 @@ public class DashState : PlayerState
     {
         base.EnterState();
         player.StartDashCD();
+        stateTimer = player.dashDuration;
         rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (InputSystemController.MovementInput().magnitude > 0)
+        if (TimerDone())
         {
-            return PlayerStateMachine.EPlayerState.walking;
-        }
-        
-        if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
-        {
-            InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
-            return PlayerStateMachine.EPlayerState.jump;
-        }
+            if (player.IsTouchingGround() && InputSystemController.MovementInput().magnitude > 0)
+            {
+                return PlayerStateMachine.EPlayerState.walking;
+            }
+            
+            if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
+            {
+                InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
+                return PlayerStateMachine.EPlayerState.jump;
+            }
 
-        if (InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
-        {
-            InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
-            return PlayerStateMachine.EPlayerState.attack;
-        }
-        
-        if (InputSystemController.MovementInput().magnitude == 0 && player.IsTouchingGround())
-        {
-            return PlayerStateMachine.EPlayerState.idle;
+            if (InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
+            {
+                InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
+                return PlayerStateMachine.EPlayerState.attack;
+            }
+            
+            if (InputSystemController.MovementInput().magnitude == 0)
+            {
+                return PlayerStateMachine.EPlayerState.idle;
+            }  
         }
          
         return StateKey;
