@@ -15,6 +15,6 @@ MonoBehaviour:
   movementSpeed: 6
   dashSpeed: 30
   jumpHeight: 20
-  jumpCD: 1
+  attackCD: 1
   dashCD: 2
   dashDuration: 0.15

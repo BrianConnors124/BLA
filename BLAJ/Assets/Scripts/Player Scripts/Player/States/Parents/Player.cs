@@ -6,11 +6,11 @@ public class Player : Entity
 {
     public PlayerStateMachine _stateMachine;
     public PlayerInfo playerInfo;
-    public UniversalTimer jump;
+    public UniversalTimer attack;
     public UniversalTimer dash;
     
-    public float jumpCD;
     private float dashCD;
+    private float attackCD;
     public float dashDuration;
     public float dashSpeed;
     public float movementSpeed;
@@ -22,19 +22,19 @@ public class Player : Entity
     {
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
-        _stateMachine.Initialize(this, _rb, _anim);
+        _stateMachine.Initialize(this, _rb);
         SetTimers();
         SetPresets();
     }
 
     private void SetTimers()
     {
-        jump = new UniversalTimer();
+        attack = new UniversalTimer();
         dash = new UniversalTimer();
     }
     private void SetPresets()
     {
-        jumpCD = playerInfo.jumpCD;
+        attackCD = playerInfo.attackCD;
         dashCD = playerInfo.dashCD;
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
@@ -45,6 +45,10 @@ public class Player : Entity
     {
         StartCoroutine(dash.Timer(dashCD));
     }
+    public void StartAttackCD()
+    {
+        StartCoroutine(attack.Timer(attackCD));
+    }
 }
 [CreateAssetMenu(menuName = "Players/NewPlayer", fileName = "NewPlayer")]
 public class PlayerInfo : ScriptableObject
@@ -52,7 +56,7 @@ public class PlayerInfo : ScriptableObject
     public float movementSpeed;
     public float dashSpeed;
     public float jumpHeight;
-    public float jumpCD;
+    public float attackCD;
     public float dashCD;
     public float dashDuration;
 }

@@ -27,18 +27,15 @@ public class WalkingState : PlayerState
     {
         if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
         {
-            InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
             return PlayerStateMachine.EPlayerState.jump;
         }
 
-        if (InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
+        if (player.attack.TimerDone && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
         {
-            InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;
         }
         if (player.IsTouchingGround() && player.dash.TimerDone && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash)
         {
-            InputSystemController.instance.queued = InputSystemController.Equeue.dash;
             return PlayerStateMachine.EPlayerState.dash;
         }
         if (InputSystemController.MovementInput().magnitude == 0)

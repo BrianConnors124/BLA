@@ -6,7 +6,7 @@ public class PlayerStateMachine : StateMachine<PlayerStateMachine.EPlayerState>
 {
     public enum EPlayerState{idle, walking, attack, dash, jump, block, falling}
 
-    public void Initialize(Player player, Rigidbody2D RB, Animator Anim)
+    public void Initialize(Player player, Rigidbody2D RB)
     {
         //States.Add();
         States.Add(EPlayerState.idle, new IdleState(EPlayerState.idle, player));

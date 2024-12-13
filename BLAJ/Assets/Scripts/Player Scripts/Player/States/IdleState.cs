@@ -24,7 +24,7 @@ public class IdleState : PlayerState
             return PlayerStateMachine.EPlayerState.jump;
         }
 
-        if (InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
+        if (player.attack.TimerDone && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
         {
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;

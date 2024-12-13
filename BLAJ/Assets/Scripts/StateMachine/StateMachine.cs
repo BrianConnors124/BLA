@@ -8,6 +8,8 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     protected State<EState> CurrentState;
     protected State<EState> LastState;
+    protected bool animEnded;
+    
 
     public State<EState> GetCurrentState() => CurrentState;
     public State<EState> GetLastState() => LastState;
@@ -42,5 +44,10 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         CurrentState.EnterState();
         StateChange?.Invoke(CurrentState);
         IsTransitioningState = false;
+    }
+    
+    public virtual void AnimEndTrigger()
+    {
+        CurrentState.AnimEndTrigger();
     }
 }
