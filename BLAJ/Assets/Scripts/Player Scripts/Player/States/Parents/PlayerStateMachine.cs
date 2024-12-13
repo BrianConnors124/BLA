@@ -13,7 +13,7 @@ public class PlayerStateMachine : StateMachine<PlayerStateMachine.EPlayerState>
         States.Add(EPlayerState.walking, new WalkingState(EPlayerState.walking, player, GetComponent<Rigidbody2D>()));
         States.Add(EPlayerState.jump, new JumpState(EPlayerState.jump, player, GetComponent<Rigidbody2D>()));
         States.Add(EPlayerState.dash, new DashState(EPlayerState.dash, player, GetComponent<Rigidbody2D>()));
-        States.Add(EPlayerState.attack, new DashState(EPlayerState.attack, player, GetComponent<Rigidbody2D>()));
+        States.Add(EPlayerState.attack, new AttackState(EPlayerState.attack, player, GetComponent<Rigidbody2D>()));
         CurrentState = States[EPlayerState.idle];
     }
     

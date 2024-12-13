@@ -37,6 +37,6 @@ public class Entity : MonoBehaviour
         return currentFlip;
     }
 
-    public bool IsTouchingGround() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.47f), new Vector2(hitBox.x, 0.2f), 0,
+    public bool IsTouchingGround() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.55f), new Vector2(hitBox.x - 0.1f, 0.2f), 0,
         Vector2.down, 0, LayerMask.GetMask("WorldObj"));
 }
