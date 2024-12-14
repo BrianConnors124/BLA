@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class WalkingState : PlayerState
+public class Player_WalkingState : PlayerState
 {
     private Rigidbody2D rb;
     
-    public WalkingState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
+    public Player_WalkingState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
     {
         rb = RB;
     }
@@ -30,11 +30,11 @@ public class WalkingState : PlayerState
             return PlayerStateMachine.EPlayerState.jump;
         }
 
-        if (player.attack.TimerDone && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
+        if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
         {
             return PlayerStateMachine.EPlayerState.attack;
         }
-        if (player.IsTouchingGround() && player.dash.TimerDone && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash)
+        if (player.DashReady() && player.IsTouchingGround() && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash)
         {
             return PlayerStateMachine.EPlayerState.dash;
         }

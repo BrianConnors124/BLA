@@ -1,10 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
     protected Rigidbody2D _rb;
     protected Animator _anim;
-    protected Vector2 hitBox;
+    public Vector2 hitBox;
 
     [SerializeField] protected float _moveSpeed;
     public float MoveSpeed => _moveSpeed;
@@ -27,12 +28,17 @@ public class Entity : MonoBehaviour
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
     public void SetVelocity(Vector2 newVelocity) => _rb.velocity = newVelocity;
     public Vector2 Velocity => _rb.velocity;
-    public float Direction(float a) => Mathf.Abs(a) / a;
-    public bool Flip(Rigidbody2D rb, bool currentFlip)
+    public float Direction(float a)
     {
-        if (rb.velocityX > 0)
+        if (a != 0) 
+            return Mathf.Abs(a) / a;
+        return 0;
+    }
+    public virtual bool Flip(Rigidbody2D rb, bool currentFlip)
+    {
+        if (rb.velocityX > 0.1f)
             return false;
-        if (rb.velocityX < 0)
+        if (rb.velocityX < -0.1f)
             return true;
         return currentFlip;
     }

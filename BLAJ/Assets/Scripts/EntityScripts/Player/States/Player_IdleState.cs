@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : PlayerState
+public class Player_IdleState : PlayerState
 {
     
     
-    public IdleState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
+    public Player_IdleState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
     {
     }
     public override void EnterState()
@@ -24,7 +24,7 @@ public class IdleState : PlayerState
             return PlayerStateMachine.EPlayerState.jump;
         }
 
-        if (player.attack.TimerDone && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
+        if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
         {
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;

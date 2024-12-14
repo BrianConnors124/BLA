@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerState : State<PlayerStateMachine.EPlayerState>
 {
-
     public PlayerState(PlayerStateMachine.EPlayerState key, Player entity) : base(key)
     {
         player = entity;
@@ -33,6 +32,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         base.UpdateState();
         player.GetComponent<SpriteRenderer>().flipX = player.Flip(rb, currentFlip);
         player.Anim.Play(StateKey.ToString());
+        //Debug.Log(AttackReady() + " " + attackCD + " " + Time.deltaTime);
     }
 
     public override void ExitState()
@@ -40,6 +40,4 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         base.ExitState();
         //player.Anim.SetBool(StateKey.ToString(), false);
     }
-    
-    //private bool IsTouchingGround() => BoxCastDrawer.BoxCastAndDraw(player.transform.position - new Vector3(0, player.transform.localScale.y, 0), new Vector2())
 }

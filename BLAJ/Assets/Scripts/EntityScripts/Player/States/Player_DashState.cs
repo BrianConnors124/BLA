@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashState : PlayerState
+public class Player_DashState : PlayerState
 {
     private Rigidbody2D rb;
     
-    public DashState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
+    public Player_DashState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
     {
         Console.WriteLine("Yo");
         rb = RB;
@@ -14,8 +14,8 @@ public class DashState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.StartDashCD();
         stateTimer = player.dashDuration;
+        player.StartDashCD();
         rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
     }
 
@@ -39,7 +39,7 @@ public class DashState : PlayerState
                 return PlayerStateMachine.EPlayerState.jump;
             }
 
-            if (InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
+            if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
             {
                 InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
                 return PlayerStateMachine.EPlayerState.attack;

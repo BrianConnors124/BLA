@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Animator>().runtimeAnimatorController = info.animatorController;
+        //GetComponent<Animator>().runtimeAnimatorController = info.animatorController;
     }
 
     private void Start()
@@ -365,7 +365,7 @@ public class EnemyController : MonoBehaviour
     {
        if(Walking())
             MovementDirection();
-       GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), takingDamage, attacking);
+       //GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), takingDamage, attacking);
        
        
     //    print("Ray Casts: \n" + "PlayerOutOfSight: " + (bool) PlayerOutOfSight() + "\nForwardObjDetection: " + (bool) ForwardObjDetection() + "\nForwardObjTooHigh: " + (bool) ForwardObjTooHigh() + "\nIsTouchingGround: " + (bool) IsTouchingGround() + "\nThereIsAFloor: " + (bool) ThereIsAFloor()

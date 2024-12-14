@@ -6,11 +6,9 @@ public class Player : Entity
 {
     public PlayerStateMachine _stateMachine;
     public PlayerInfo playerInfo;
-    public UniversalTimer attack;
-    public UniversalTimer dash;
     
-    private float dashCD;
-    private float attackCD;
+    public float dashCD;
+    public float attackCD = -1;
     public float dashDuration;
     public float dashSpeed;
     public float movementSpeed;
@@ -23,31 +21,47 @@ public class Player : Entity
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
-        SetTimers();
         SetPresets();
     }
 
-    private void SetTimers()
-    {
-        attack = new UniversalTimer();
-        dash = new UniversalTimer();
-    }
     private void SetPresets()
     {
-        attackCD = playerInfo.attackCD;
         dashCD = playerInfo.dashCD;
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
         dashDuration = playerInfo.dashDuration;
         jumpHeight = playerInfo.jumpHeight;
     }
-    public void StartDashCD()
+
+    #region Cooldowns
+    private void Update()
     {
-        StartCoroutine(dash.Timer(dashCD));
+        if(!AttackReady())
+            attackCD -= Time.deltaTime;
+        if(!DashReady())
+            dashCD -= Time.deltaTime;
     }
     public void StartAttackCD()
     {
-        StartCoroutine(attack.Timer(attackCD));
+        attackCD = playerInfo.attackCD;
+    }
+
+    public bool AttackReady() => attackCD <= 0;
+    
+    public void StartDashCD()
+    {
+        dashCD = playerInfo.dashCD;
+    }
+    public bool DashReady() => dashCD <= 0;
+    
+    #endregion
+    public override bool Flip(Rigidbody2D rb, bool currentFlip)
+    {
+        if (InputSystemController.MovementInput().x > 0)
+            return false;
+        if (InputSystemController.MovementInput().x < 0)
+            return true;
+        return currentFlip;
     }
 }
 [CreateAssetMenu(menuName = "Players/NewPlayer", fileName = "NewPlayer")]
