@@ -26,7 +26,8 @@ public static class BoxCastDrawer
         Vector2 size,
         float angle,
         Vector2 direction,
-        float distance = Mathf.Infinity)
+        float distance = Mathf.Infinity,
+        float duration = .1f)
     {
         // Set up points to draw the cast.
         Vector2[] originalBox = CreateOriginalBox(origin, size, angle);
@@ -36,11 +37,11 @@ public static class BoxCastDrawer
 
         // Draw the cast.
         Color castColor = hitInfo ? Color.red : Color.green;
-        DrawBox(originalBox, castColor);
-        DrawBox(shiftedBox, castColor);
-        ConnectBoxes(originalBox, shiftedBox, Color.gray);
+        DrawBox(originalBox, castColor, duration);
+        DrawBox(shiftedBox, castColor, duration);
+        ConnectBoxes(originalBox, shiftedBox, Color.gray, duration);
         
-        Debug.DrawLine(hitInfo.point, hitInfo.point + (hitInfo.normal.normalized * 0.2f), Color.yellow);
+        Debug.DrawLine(hitInfo.point, hitInfo.point + (hitInfo.normal.normalized * 0.2f), Color.yellow, duration);
         
     }
 
@@ -66,10 +67,11 @@ public static class BoxCastDrawer
         float distance = Mathf.Infinity,
         int layerMask = Physics2D.AllLayers,
         float minDepth = -Mathf.Infinity,
-        float maxDepth = Mathf.Infinity)
+        float maxDepth = Mathf.Infinity,
+        float duration = 0.1f)
     {
         var hitInfo = Physics2D.BoxCast(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
-        Draw(hitInfo, origin, size, angle, direction, distance);
+        Draw(hitInfo, origin, size, angle, direction, distance, duration);
         return hitInfo;
     }
     
@@ -81,11 +83,12 @@ public static class BoxCastDrawer
         float distance = Mathf.Infinity,
         int layerMask = Physics2D.AllLayers,
         float minDepth = -Mathf.Infinity,
-        float maxDepth = Mathf.Infinity)
+        float maxDepth = Mathf.Infinity, 
+        float duration = 0.1f)
     {
         RaycastHit2D[] hitInfo = Physics2D.BoxCastAll(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
         RaycastHit2D hit = Physics2D.BoxCast(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
-        Draw(hit, origin, size, angle, direction, distance);
+        Draw(hit, origin, size, angle, direction, distance, duration);
         return hitInfo;
     }
 
@@ -122,20 +125,20 @@ public static class BoxCastDrawer
         return shiftedBox;
     }
 
-    private static void DrawBox(Vector2[] box, Color color)
+    private static void DrawBox(Vector2[] box, Color color, float duration)
     {
-        Debug.DrawLine(box[0], box[1], color,1);
-        Debug.DrawLine(box[1], box[2], color,1);
-        Debug.DrawLine(box[2], box[3], color,1);
-        Debug.DrawLine(box[3], box[0], color,1);
+        Debug.DrawLine(box[0], box[1], color,duration);
+        Debug.DrawLine(box[1], box[2], color,duration);
+        Debug.DrawLine(box[2], box[3], color,duration);
+        Debug.DrawLine(box[3], box[0], color,duration);
     }
 
-    private static void ConnectBoxes(Vector2[] firstBox, Vector2[] secondBox, Color color)
+    private static void ConnectBoxes(Vector2[] firstBox, Vector2[] secondBox, Color color, float duration)
     {
-        Debug.DrawLine(firstBox[0], secondBox[0], color);
-        Debug.DrawLine(firstBox[1], secondBox[1], color);
-        Debug.DrawLine(firstBox[2], secondBox[2], color);
-        Debug.DrawLine(firstBox[3], secondBox[3], color);
+        Debug.DrawLine(firstBox[0], secondBox[0], color, duration);
+        Debug.DrawLine(firstBox[1], secondBox[1], color, duration);
+        Debug.DrawLine(firstBox[2], secondBox[2], color, duration);
+        Debug.DrawLine(firstBox[3], secondBox[3], color, duration);
     }
 
     private static Vector2 GetDistanceVector(float distance, Vector2 direction)

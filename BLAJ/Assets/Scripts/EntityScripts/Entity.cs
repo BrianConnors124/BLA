@@ -7,9 +7,6 @@ public class Entity : MonoBehaviour
     protected Animator _anim;
     public Vector2 hitBox;
 
-    [SerializeField] protected float _moveSpeed;
-    public float MoveSpeed => _moveSpeed;
-
     public Animator Anim => _anim;
 
     protected virtual void Awake()

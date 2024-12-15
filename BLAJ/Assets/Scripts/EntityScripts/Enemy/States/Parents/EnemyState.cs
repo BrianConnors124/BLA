@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class EnemyState : State<EnemyStateMachine.EEnemyState>
 {
+    public Enemy enemy;
+    public Rigidbody2D rb;
     public EnemyState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key)
     {
-        
+        enemy = entity;
+        rb = enemy.GetComponent<Rigidbody2D>();
     }
 
     public override void EnterState()
