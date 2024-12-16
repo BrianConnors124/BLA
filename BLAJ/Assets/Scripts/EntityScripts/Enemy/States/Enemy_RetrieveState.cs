@@ -33,8 +33,8 @@ public class Enemy_RetrieveState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (enemy.PlayerInRange())
-            return EnemyStateMachine.EEnemyState.pursuit;
+        if (enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.pursuit;
+        if (enemy.DetectsObjectForward()) return EnemyStateMachine.EEnemyState.jump;
         return StateKey;
     }
 }

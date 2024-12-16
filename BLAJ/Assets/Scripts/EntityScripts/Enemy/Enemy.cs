@@ -31,7 +31,11 @@ public class Enemy : Entity
 
 #region Sight
     public RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
-    public RaycastHit2D DetectsObjectForward() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0, Vector2.right, 0, LayerMask.GetMask("WorldObj"));
+    public RaycastHit2D DetectsObjectForward(){
+        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));
+        if(_stateMachine.CurrentState.Equals(_stateMachine.States[EnemyStateMachine.EEnemyState.retrieve])) a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));
+        return a;
+    }
 
 #endregion
     
@@ -59,6 +63,20 @@ private int PlayerDirection()
         return 1;
     }
     if (transform.position.x > player.transform.position.x)
+    { 
+        return -1;
+    }
+    return 1;
+
+}
+
+public int MovementDirection()
+{
+    if (_rb.velocityX > 0)
+    { 
+        return 1;
+    }
+    if (_rb.velocityX < 0)
     { 
         return -1;
     }

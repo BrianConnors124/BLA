@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 {
-    protected Dictionary<EState, State<EState>> States = new Dictionary<EState, State<EState>>();
+    public Dictionary<EState, State<EState>> States = new Dictionary<EState, State<EState>>();
 
-    protected State<EState> CurrentState;
-    protected State<EState> LastState;
+    public State<EState> CurrentState;
+    public State<EState> LastState;
     protected bool animEnded;
     
 
