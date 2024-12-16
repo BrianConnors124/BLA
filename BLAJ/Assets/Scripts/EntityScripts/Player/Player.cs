@@ -13,6 +13,8 @@ public class Player : Entity
     public float dashSpeed;
     public float movementSpeed;
     public float jumpHeight;
+    public float doubleJumps;
+    public InputSystemController ISC;
     
     
     
@@ -21,11 +23,13 @@ public class Player : Entity
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
+        ISC = GetComponent<InputSystemController>();
         SetPresets();
     }
 
     private void SetPresets()
     {
+        doubleJumps = playerInfo.doubleJumps;
         dashCD = playerInfo.dashCD;
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
@@ -41,17 +45,13 @@ public class Player : Entity
         if(!DashReady())
             dashCD -= Time.deltaTime;
     }
-    public void StartAttackCD()
-    {
-        attackCD = playerInfo.attackCD;
-    }
+    public void StartAttackCD() => attackCD = playerInfo.attackCD;
+    
 
     public bool AttackReady() => attackCD <= 0;
     
-    public void StartDashCD()
-    {
-        dashCD = playerInfo.dashCD;
-    }
+    public void StartDashCD() => dashCD = playerInfo.dashCD;
+    
     public bool DashReady() => dashCD <= 0;
     
     #endregion
@@ -73,4 +73,5 @@ public class PlayerInfo : ScriptableObject
     public float attackCD;
     public float dashCD;
     public float dashDuration;
+    public float doubleJumps;
 }

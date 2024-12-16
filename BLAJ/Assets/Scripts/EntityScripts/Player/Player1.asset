@@ -16,5 +16,6 @@ MonoBehaviour:
   dashSpeed: 30
   jumpHeight: 20
   attackCD: 1
-  dashCD: 2
-  dashDuration: 0.15
+  dashCD: 0.8
+  dashDuration: 0.1
+  doubleJumps: 5

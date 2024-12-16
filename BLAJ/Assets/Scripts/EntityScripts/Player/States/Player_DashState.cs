@@ -16,17 +16,19 @@ public class Player_DashState : PlayerState
         base.EnterState();
         stateTimer = player.dashDuration;
         player.StartDashCD();
-        rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+        rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+        Debug.Log(stateTimer + " " + StateTimerDone());
+        rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (TimerDone())
+        if (StateTimerDone())
         {
             if (player.IsTouchingGround() && InputSystemController.MovementInput().magnitude > 0)
             {
@@ -48,7 +50,9 @@ public class Player_DashState : PlayerState
             if (InputSystemController.MovementInput().magnitude == 0)
             {
                 return PlayerStateMachine.EPlayerState.idle;
-            }  
+            }
+
+            return PlayerStateMachine.EPlayerState.falling;
         }
          
         return StateKey;

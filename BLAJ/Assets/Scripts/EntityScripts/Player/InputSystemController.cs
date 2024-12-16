@@ -12,6 +12,7 @@ public class InputSystemController : MonoBehaviour
 
     public static InputSystemController instance;
     private bool queueActive;
+    private bool buttonPressed;
 
 
     private UniversalTimer _queueTimer;
@@ -55,12 +56,17 @@ public class InputSystemController : MonoBehaviour
     }
     
     public static Vector2 MovementInput() => instance.Walk.action.ReadValue<Vector2>();
-    public bool HandleJump() => instance.Jump.action.ReadValue<float>() > 0;
-    public static bool HandleDash() => instance.Dash.action.ReadValue<float>() > 0;
+    public bool HandleJump() => instance.Jump.action.triggered;
+    public static bool HandleDash() => instance.Dash.action.triggered;
     public static bool HandleAttack() => instance.Attack.action.ReadValue<float>() > 0;
-    private void ChangeQueuedToNothing()
+    public void ChangeQueuedToNothing()
     {
         queued = Equeue.nothing;
         queueActive = false;
+    }
+
+    public void ButtonReleassed()
+    {
+        buttonPressed = false;
     }
 }

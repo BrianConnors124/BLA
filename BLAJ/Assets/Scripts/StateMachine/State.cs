@@ -36,5 +36,6 @@ public abstract class State<EState> where EState : Enum
         animEnded = true;
     }
 
-    public bool TimerDone() => stateTimer <= 0;
+    protected bool StateTimerDone() => stateTimer < 0;
+    
 }

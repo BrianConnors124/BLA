@@ -25,23 +25,19 @@ public class Player_WalkingState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
-        {
+        if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump) 
             return PlayerStateMachine.EPlayerState.jump;
-        }
+        
 
-        if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
-        {
+        if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) 
             return PlayerStateMachine.EPlayerState.attack;
-        }
-        if (player.DashReady() && player.IsTouchingGround() && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash)
-        {
+        
+        if (player.DashReady() && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash) 
             return PlayerStateMachine.EPlayerState.dash;
-        }
-        if (InputSystemController.MovementInput().magnitude == 0)
-        {
+        
+        if (InputSystemController.MovementInput().magnitude == 0) 
             return PlayerStateMachine.EPlayerState.idle;
-        }
+        
          
         return StateKey;
     }
