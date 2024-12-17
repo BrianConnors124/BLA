@@ -29,21 +29,16 @@ public class Player_WalkingState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump) 
-            return PlayerStateMachine.EPlayerState.jump;
+        if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;
         
-
-        if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) 
+        if (player.AttackReady() && (InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack))
             return PlayerStateMachine.EPlayerState.attack;
         
-        if (player.DashReady() && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash) 
+        if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
+            return PlayerStateMachine.EPlayerState.jump;
+        
+        if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
             return PlayerStateMachine.EPlayerState.dash;
-        
-        if (InputSystemController.MovementInput().magnitude == 0) 
-            return PlayerStateMachine.EPlayerState.idle;
-        if (rb.velocityY < 0)
-            return PlayerStateMachine.EPlayerState.falling;
-        
          
         return StateKey;
     }

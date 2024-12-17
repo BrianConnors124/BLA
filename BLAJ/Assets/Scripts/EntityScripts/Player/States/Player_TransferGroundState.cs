@@ -3,17 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_IdleState : PlayerState
+public class Player_TransferGroundState : PlayerState
 {
     
     
-    public Player_IdleState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
+    public Player_TransferGroundState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
     {
     }
     public override void EnterState()
     {
         base.EnterState();
-        player.SetVelocity(new Vector2(0,0));
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -27,6 +26,8 @@ public class Player_IdleState : PlayerState
         if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
             return PlayerStateMachine.EPlayerState.jump;
          
+        if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;
+        
         return StateKey;
     }
 

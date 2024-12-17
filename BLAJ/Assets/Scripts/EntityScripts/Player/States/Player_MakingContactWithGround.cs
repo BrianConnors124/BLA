@@ -13,14 +13,13 @@ public class Player_MakingContactWithGround : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
+        //player.ZeroVelocity();
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.idle;
-        if (player.DashReady() && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash) return PlayerStateMachine.EPlayerState.dash;
+        if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround; 
         
-        return base.GetNextState();
+        return StateKey;
     }
 }

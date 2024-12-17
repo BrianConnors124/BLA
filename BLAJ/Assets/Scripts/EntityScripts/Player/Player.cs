@@ -26,6 +26,7 @@ public class Player : Entity
         _stateMachine.Initialize(this, _rb);
         ISC = GetComponent<InputSystemController>();
         SetPresets();
+        _rb.gravityScale = playerInfo.gravityScale;
     }
 
     private void SetPresets()
@@ -41,8 +42,16 @@ public class Player : Entity
     #region Cooldowns
     protected void FixedUpdate()
     {
-        if (!Grounded()) 
+        if (Grounded())
+        {
+            coyoteJump = playerInfo.coyoteJump;
+            doubleJumps = playerInfo.doubleJumps + 1;
+        }
+        else
+        {
             coyoteJump -= Time.deltaTime;
+        }
+            
         if(!AttackReady())
             attackCD -= Time.deltaTime;
         if(!DashReady())
@@ -82,4 +91,5 @@ public class PlayerInfo : ScriptableObject
     public float dashDuration;
     public float doubleJumps;
     public float coyoteJump;
+    public float gravityScale;
 }

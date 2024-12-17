@@ -25,18 +25,12 @@ public class Player_FallingState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.IsTouchingGround() && InputSystemController.MovementInput().magnitude > 0)
-            return PlayerStateMachine.EPlayerState.walking;
-        if (player.DashReady() && InputSystemController.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash) 
+        if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
+        
+        if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
             return PlayerStateMachine.EPlayerState.dash;
-        if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
-            return PlayerStateMachine.EPlayerState.attack;
-        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump) 
-            return PlayerStateMachine.EPlayerState.doubleJump;
-        if (player.CloseToGround() && Mathf.Abs(rb.velocityY) > 50)
-            return PlayerStateMachine.EPlayerState.contactWithGround;
-        if (player.IsTouchingGround())
-            return PlayerStateMachine.EPlayerState.idle;
+
+        if (rb.velocityY < -50 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;
 
         return StateKey;
     }

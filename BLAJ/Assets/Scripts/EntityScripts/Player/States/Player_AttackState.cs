@@ -32,9 +32,16 @@ public class Player_AttackState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if(animEnded){
-            return PlayerStateMachine.EPlayerState.idle;
+        if (animEnded)
+        {
+            if (player.Grounded())
+            {
+                return PlayerStateMachine.EPlayerState.transferGround;
+            }
+            
+            return PlayerStateMachine.EPlayerState.falling; 
         }
+        
          
         return StateKey;
     }

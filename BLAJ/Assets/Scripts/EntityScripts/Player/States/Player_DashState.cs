@@ -16,13 +16,13 @@ public class Player_DashState : PlayerState
         base.EnterState();
         stateTimer = player.dashDuration;
         player.StartDashCD();
+        rb.gravityScale = 0;
         rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log(stateTimer + " " + StateTimerDone());
         rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
     }
 
@@ -30,29 +30,12 @@ public class Player_DashState : PlayerState
     {
         if (StateTimerDone())
         {
-            if (player.IsTouchingGround() && InputSystemController.MovementInput().magnitude > 0)
+            if (player.Grounded())
             {
-                return PlayerStateMachine.EPlayerState.walking;
+                return PlayerStateMachine.EPlayerState.transferGround;
             }
             
-            if (player.IsTouchingGround() && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
-            {
-                InputSystemController.instance.queued = InputSystemController.Equeue.jump; 
-                return PlayerStateMachine.EPlayerState.jump;
-            }
-
-            if (player.AttackReady() && InputSystemController.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack)
-            {
-                InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
-                return PlayerStateMachine.EPlayerState.attack;
-            }
-            
-            if (InputSystemController.MovementInput().magnitude == 0)
-            {
-                return PlayerStateMachine.EPlayerState.idle;
-            }
-
-            return PlayerStateMachine.EPlayerState.falling;
+            return PlayerStateMachine.EPlayerState.falling; 
         }
          
         return StateKey;
@@ -61,5 +44,7 @@ public class Player_DashState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        rb.gravityScale = player.playerInfo.gravityScale;
+        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
     }
 }

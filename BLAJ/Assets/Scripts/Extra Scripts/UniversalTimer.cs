@@ -25,7 +25,7 @@ public class UniversalTimer : MonoBehaviour
     
    
 
-    public void SetActionTimer(string code, float length,Action commit)
+    public void SetActionTimer(string code, float length, Action commit)
     {
         if(!key.Contains(code)) key.Add(code);
         action.TryAdd(code, commit);
@@ -44,18 +44,16 @@ public class UniversalTimer : MonoBehaviour
     private void Update()
     {
         for (int i = 0; i < timer.Count; i++)
-        { if(timer[key[i]] > 0)
-            {
-                timer[key[i]] -= Time.deltaTime;
-            } else {    
-            if(action.ContainsKey(key[i]))
-            {
-                action[key[i]].Invoke();
-                action.Remove(key[i]);
-            }  
-            timer.Remove(key[i]);  
-            key.RemoveAt(i);       
-            i--;                   
+        { timer[key[i]] -= Time.deltaTime;
+            if(timer[key[i]] <= 0){
+                if(action.ContainsKey(key[i]))
+                {
+                   action[key[i]].Invoke();
+                    action.Remove(key[i]);
+                }  
+                timer.Remove(key[i]);  
+                key.RemoveAt(i);       
+                i--;                   
             }    
         }   
     }

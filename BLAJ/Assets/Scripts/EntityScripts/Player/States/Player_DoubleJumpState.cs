@@ -14,6 +14,7 @@ public class Player_DoubleJumpState : PlayerState
     {
         base.EnterState();
         player.doubleJumps--;
+        stateTimer = 0.2f;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
     }
 
@@ -25,14 +26,7 @@ public class Player_DoubleJumpState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.DashReady() && InputSystemController.HandleDash() ||
-            InputSystemController.instance.queued == InputSystemController.Equeue.dash)
-            return PlayerStateMachine.EPlayerState.dash;
         
-        if (rb.velocityY < -0.5f) return PlayerStateMachine.EPlayerState.falling;
-        
-        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump) 
-            return PlayerStateMachine.EPlayerState.jump;
         
         return StateKey;
     }

@@ -46,7 +46,7 @@ public class Entity : MonoBehaviour
     public bool Grounded() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.55f), new Vector2(hitBox.x - 0.1f, 0.2f), 0,
         Vector2.down, 0, LayerMask.GetMask("WorldObj"));
 
-    public bool IsTouchingGround() => coyoteJump > 0;
+    public bool IsTouchingGround() => coyoteJump > 0 || Grounded();
     public bool CloseToGround() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.81f), new Vector2(hitBox.x - 0.1f, 1f), 0,
         Vector2.down, 0, LayerMask.GetMask("WorldObj"));
 }

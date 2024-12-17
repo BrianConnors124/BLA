@@ -25,14 +25,15 @@ public class Player_JumpState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (rb.velocityY < -0.5f) return PlayerStateMachine.EPlayerState.falling;
-
-        if (player.DashReady() && InputSystemController.HandleDash() ||
-            InputSystemController.instance.queued == InputSystemController.Equeue.dash)
+        if (player.AttackReady() && (InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack))
+            return PlayerStateMachine.EPlayerState.attack;
+        
+        if (rb.velocityY < 0) return PlayerStateMachine.EPlayerState.falling;
+        
+        if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
             return PlayerStateMachine.EPlayerState.dash;
         
-        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump) 
-            return PlayerStateMachine.EPlayerState.doubleJump;
+        if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
         
         return StateKey;
     }
