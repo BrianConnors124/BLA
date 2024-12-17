@@ -15,6 +15,7 @@ public class Player : Entity
     public float jumpHeight;
     public float doubleJumps;
     public InputSystemController ISC;
+    public bool currentFlip;
     
     
     
@@ -29,7 +30,7 @@ public class Player : Entity
 
     private void SetPresets()
     {
-        doubleJumps = playerInfo.doubleJumps;
+        doubleJumps = playerInfo.doubleJumps + 1;
         dashCD = playerInfo.dashCD;
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
@@ -38,12 +39,21 @@ public class Player : Entity
     }
 
     #region Cooldowns
-    private void Update()
+    protected void FixedUpdate()
     {
+        if (!Grounded()) 
+            coyoteJump -= Time.deltaTime;
         if(!AttackReady())
             attackCD -= Time.deltaTime;
         if(!DashReady())
             dashCD -= Time.deltaTime;
+        if (Grounded())
+        {
+            coyoteJump = playerInfo.coyoteJump;
+            doubleJumps = playerInfo.doubleJumps;
+        }
+        
+        Flip();
     }
     public void StartAttackCD() => attackCD = playerInfo.attackCD;
     
@@ -55,13 +65,15 @@ public class Player : Entity
     public bool DashReady() => dashCD <= 0;
     
     #endregion
-    public override bool Flip(Rigidbody2D rb, bool currentFlip)
+    public override void Flip()
     {
-        if (InputSystemController.MovementInput().x > 0)
-            return false;
-        if (InputSystemController.MovementInput().x < 0)
-            return true;
-        return currentFlip;
+        if (InputSystemController.MovementInput().x > 0) sprite.flipX = false;
+        if (InputSystemController.MovementInput().x < 0) sprite.flipX = true;
+    }
+
+    public void Move(float x, float y)
+    {
+        _rb.velocity = new Vector2(x, y);
     }
 }
 [CreateAssetMenu(menuName = "Players/NewPlayer", fileName = "NewPlayer")]
@@ -74,4 +86,5 @@ public class PlayerInfo : ScriptableObject
     public float dashCD;
     public float dashDuration;
     public float doubleJumps;
+    public float coyoteJump;
 }

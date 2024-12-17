@@ -1,11 +1,14 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
     protected Rigidbody2D _rb;
+    protected SpriteRenderer sprite;
     protected Animator _anim;
     public Vector2 hitBox;
+    public float coyoteJump;
 
     public Animator Anim => _anim;
 
@@ -15,6 +18,7 @@ public class Entity : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     public void SetAnimState(string state ,bool value)
@@ -31,17 +35,18 @@ public class Entity : MonoBehaviour
             return Mathf.Abs(a) / a;
         return 0;
     }
-    public virtual bool Flip(Rigidbody2D rb, bool currentFlip)
+    public virtual void Flip()
     {
-        if (rb.velocityX > 0.1f)
-            return false;
-        if (rb.velocityX < -0.1f)
-            return true;
-        return currentFlip;
+        
+        if (_rb.velocityX > 0.1f) sprite.flipX = false;
+        if (_rb.velocityX < -0.1f) sprite.flipX = false;
+        
     }
 
-    public bool IsTouchingGround() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.55f), new Vector2(hitBox.x - 0.1f, 0.2f), 0,
+    public bool Grounded() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.55f), new Vector2(hitBox.x - 0.1f, 0.2f), 0,
         Vector2.down, 0, LayerMask.GetMask("WorldObj"));
-    public bool CloseToGround() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.9f), new Vector2(hitBox.x - 0.1f, 0.2f), 0,
+
+    public bool IsTouchingGround() => coyoteJump > 0;
+    public bool CloseToGround() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.81f), new Vector2(hitBox.x - 0.1f, 1f), 0,
         Vector2.down, 0, LayerMask.GetMask("WorldObj"));
 }

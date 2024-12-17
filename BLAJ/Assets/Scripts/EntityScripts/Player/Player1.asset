@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Player1
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
-  movementSpeed: 6
+  movementSpeed: 8
   dashSpeed: 30
-  jumpHeight: 20
+  jumpHeight: 24
   attackCD: 1
   dashCD: 0.8
   dashDuration: 0.1
-  doubleJumps: 5
+  doubleJumps: 1
+  coyoteJump: 0.2

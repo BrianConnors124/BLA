@@ -19,6 +19,7 @@ public class Player_AttackState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
         bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(_transform.position.x + hitBox.x * 1.5f, _transform.position.y),
             new Vector2(_transform.localScale.x, _transform.localScale.y) * 0.5f, 0, Vector2.right, 0,
             LayerMask.GetMask("Enemy"));
@@ -26,7 +27,7 @@ public class Player_AttackState : PlayerState
 
     public override void UpdateState()
     {
-        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()

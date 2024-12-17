@@ -14,13 +14,15 @@ public class Player_WalkingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
+        player.Anim.speed = Mathf.Abs(InputSystemController.MovementInput().x);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
+        player.Anim.speed = Mathf.Abs(InputSystemController.MovementInput().x);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -37,6 +39,8 @@ public class Player_WalkingState : PlayerState
         
         if (InputSystemController.MovementInput().magnitude == 0) 
             return PlayerStateMachine.EPlayerState.idle;
+        if (rb.velocityY < 0)
+            return PlayerStateMachine.EPlayerState.falling;
         
          
         return StateKey;
@@ -44,6 +48,7 @@ public class Player_WalkingState : PlayerState
 
     public override void ExitState()
     {
+        player.Anim.speed = 1;
         base.ExitState();
     }
 }

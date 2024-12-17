@@ -13,23 +13,27 @@ public class Player_JumpState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        rb.velocity = new Vector2(rb.velocityX, player.jumpHeight);
+        player.doubleJumps--;
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (rb.velocityY < 0.5f) return PlayerStateMachine.EPlayerState.falling;
+        if (rb.velocityY < -0.5f) return PlayerStateMachine.EPlayerState.falling;
 
         if (player.DashReady() && InputSystemController.HandleDash() ||
             InputSystemController.instance.queued == InputSystemController.Equeue.dash)
             return PlayerStateMachine.EPlayerState.dash;
-         
+        
+        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump) 
+            return PlayerStateMachine.EPlayerState.doubleJump;
+        
         return StateKey;
     }
 

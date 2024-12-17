@@ -29,29 +29,18 @@ public class InputSystemController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        _queueTimer = new UniversalTimer();
+        _queueTimer = GetComponent<UniversalTimer>();
     }
 
     private void Update()
     {
         if (!queueActive)
         {
-            if (queued == Equeue.jump)
+            if (queued != Equeue.nothing)
             {
-                StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
+                _queueTimer.SetActionTimer("InputQue", .2f, ChangeQueuedToNothing);
                 queueActive = true;
             }
-
-            if (queued == Equeue.dash)
-            {
-                StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
-                queueActive = true;
-            }
-            if (queued == Equeue.attack)
-            {
-                StartCoroutine(_queueTimer.Timer(.1f, ChangeQueuedToNothing));
-                queueActive = true;
-            }   
         }
     }
     

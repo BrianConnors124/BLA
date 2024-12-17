@@ -1,45 +1,58 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
-public class UniversalTimer
+public class UniversalTimer : MonoBehaviour
 {
-    public float timer;
+    public List<string> key;
+    private Dictionary<string, float> timer;
+    private Dictionary<string, Action> action;
+    
     private float timerLength;
 
-    public bool TimerDone => timer <= 0;
-    public IEnumerator Timer(float Length, Action Commit)
+    public void Start()
     {
-        timer = Length; 
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        Commit.Invoke();
-    }
-    
-    public IEnumerator Timer(float Length)
-    {
-        timer = Length; 
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
+        key = new List<string>();
+        timer = new Dictionary<string, float>();
+        action = new Dictionary<string, Action>();
     }
 
+    public bool TimerDone(string a) => timer[a] < 0;
     
-    public void Reset()
+   
+
+    public void SetActionTimer(string code, float length,Action commit)
     {
-        timer = 0;
+        if(!key.Contains(code)) key.Add(code);
+        action.TryAdd(code, commit);
+        timer.TryAdd(code, length);
+        timer[code] = length;
     }
-    public void Reset(float Length)
+    
+    public void SetTimer(string code, float length)
     {
-        timer = Length;
+        if(!key.Contains(code)) key.Add(code);
+        timer.TryAdd(code, length);
+        timer[code] = length;
     }
+    
+    
+    private void Update()
+    {
+        for (int i = 0; i < timer.Count; i++)
+        {
+            timer[key[i]] -= Time.deltaTime;
+            if (action.ContainsKey(key[i]))
+            {
+                action[key[i]].Invoke();
+            }
+        }
+        
+    }
+    
  
 }

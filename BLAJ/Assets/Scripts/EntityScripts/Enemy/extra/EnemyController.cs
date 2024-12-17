@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
         stunLength = new UniversalTimer();
         primaryCD = new UniversalTimer();
         jumpCD = new UniversalTimer();
-        StartCoroutine(jumpCD.Timer(2)); 
+        //StartCoroutine(jumpCD.Timer(2)); 
     }
 
     void SetInfo()
@@ -113,17 +113,18 @@ public class EnemyController : MonoBehaviour
 
             if (!IsTouchingGround())
             {
-                StartCoroutine(jumpCD.Timer(2)); 
+               // StartCoroutine(jumpCD.Timer(2)); 
             }
         
             if (ForwardObjDetection())
             {
+                /*
                 if (!ForwardObjTooHigh() && jumpCD.TimerDone)
                 {
                     if(rb.velocityX != 0 && !resetJump)
                     {
                         Move(rb.velocityX, jumpHeight);
-                        StartCoroutine(jumpCD.Timer(3));   
+                       //StartCoroutine(jumpCD.Timer(3));   
                     } else
                     {
                         resetJump = true;
@@ -134,6 +135,7 @@ public class EnemyController : MonoBehaviour
                 {
                     Move(0, rb.velocityY);
                 }
+                */
             }   
         }
     }
@@ -216,7 +218,7 @@ public class EnemyController : MonoBehaviour
         if (!boss)
         {
             StartCoroutine(DoKnockBack(knockback));
-            StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
+            //StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
         }
         else
         {
@@ -224,7 +226,7 @@ public class EnemyController : MonoBehaviour
         }
 
         StartCoroutine(DoDamageColor());
-        StartCoroutine(jumpCD.Timer(4));
+        //StartCoroutine(jumpCD.Timer(4));
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
     private IEnumerator DoKnockBack(float playerKnockBack)
@@ -253,14 +255,14 @@ public class EnemyController : MonoBehaviour
     private void AttackStage1()
     {
         attacking = true;
-        StartCoroutine(primaryCD.Timer(primaryCooldown, () => { attackCount = 1;})); 
+        //StartCoroutine(primaryCD.Timer(primaryCooldown, () => { attackCount = 1;})); 
         warningSign.SetActive(true);
-        StartCoroutine(new UniversalTimer().Timer(0.2f, AttackStage2));
+        //StartCoroutine(new UniversalTimer().Timer(0.2f, AttackStage2));
     }
 
     private void AttackStage2()
     {
-        StartCoroutine(new UniversalTimer().Timer(0.4f, AttackStage3));
+        //StartCoroutine(new UniversalTimer().Timer(0.4f, AttackStage3));
     }
     private void AttackStage3()
     {

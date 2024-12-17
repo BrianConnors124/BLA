@@ -13,8 +13,7 @@ public class Player_MakingContactWithGround : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.doubleJumps = player.playerInfo.doubleJumps;
-        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()

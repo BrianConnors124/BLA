@@ -29,7 +29,7 @@ public class Player_IdleState : PlayerState
             InputSystemController.instance.queued = InputSystemController.Equeue.attack; 
             return PlayerStateMachine.EPlayerState.attack;
         }
-        if (InputSystemController.MovementInput().magnitude > 0)
+        if (InputSystemController.MovementInput().magnitude > 0.1f)
         {
             return PlayerStateMachine.EPlayerState.walking;
         }
