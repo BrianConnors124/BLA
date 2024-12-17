@@ -14,6 +14,8 @@ public class Player_WalkingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.coyoteJump = player.playerInfo.coyoteJump;
+        player.doubleJumps = player.playerInfo.doubleJumps + 1;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
         player.Anim.speed = Mathf.Abs(InputSystemController.MovementInput().x);
     }

@@ -47,11 +47,6 @@ public class Player : Entity
             attackCD -= Time.deltaTime;
         if(!DashReady())
             dashCD -= Time.deltaTime;
-        if (Grounded())
-        {
-            coyoteJump = playerInfo.coyoteJump;
-            doubleJumps = playerInfo.doubleJumps;
-        }
         
         Flip();
     }
