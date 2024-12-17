@@ -44,16 +44,20 @@ public class UniversalTimer : MonoBehaviour
     private void Update()
     {
         for (int i = 0; i < timer.Count; i++)
-        {
-        if(timer[key[i]] > 0){
-            timer[key[i]] -= Time.deltaTime;
-        } else if (action.ContainsKey(key[i]))
+        { if(timer[key[i]] > 0)
+            {
+                timer[key[i]] -= Time.deltaTime;
+            } else {    
+            if(action.ContainsKey(key[i]))
             {
                 action[key[i]].Invoke();
-            }
-            
-        }
-        
+                action.Remove(key[i]);
+            }  
+            timer.Remove(key[i]);  
+            key.RemoveAt(i);       
+            i--;                   
+            }    
+        }   
     }
     
  
