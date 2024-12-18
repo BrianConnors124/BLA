@@ -39,6 +39,8 @@ public class Player_WalkingState : PlayerState
         
         if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
             return PlayerStateMachine.EPlayerState.dash;
+        
+        if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;
          
         return StateKey;
     }

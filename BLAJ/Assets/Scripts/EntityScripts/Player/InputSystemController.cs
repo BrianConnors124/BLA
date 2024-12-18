@@ -37,7 +37,7 @@ public class InputSystemController : MonoBehaviour
     {
         if (queued != Equeue.nothing)
         { 
-            _queueTimer.SetActionTimer("InputQue", .1f, ChangeQueuedToNothing); queueActive = true;
+            if(!queueActive) _queueTimer.SetActionTimer("InputQue", .1f, ChangeQueuedToNothing); queueActive = true;
         }
         
     }
@@ -65,7 +65,7 @@ public class InputSystemController : MonoBehaviour
     }
     public bool HandleAttack()
     {
-        bool a = instance.Attack.action.triggered;
+        bool a = instance.Attack.action.inProgress;
         if (a)
         {
             queued = Equeue.attack; 
@@ -76,6 +76,7 @@ public class InputSystemController : MonoBehaviour
     public void ChangeQueuedToNothing()
     {
         queued = Equeue.nothing;
+        queueActive = false;
     }
 
     public void ButtonReleassed()

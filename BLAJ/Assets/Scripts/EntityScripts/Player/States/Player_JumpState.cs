@@ -14,6 +14,7 @@ public class Player_JumpState : PlayerState
     {
         base.EnterState();
         player.doubleJumps--;
+        stateTimer = 0.4f;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
     }
 
@@ -32,6 +33,9 @@ public class Player_JumpState : PlayerState
         
         if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
             return PlayerStateMachine.EPlayerState.dash;
+        
+        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())
+            return PlayerStateMachine.EPlayerState.doubleJump;
         
         if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
         

@@ -10,6 +10,8 @@ public class Enemy : Entity
     public EnemyStateMachine _stateMachine;
     public GameObject player;
     public EnemyInfo info;
+
+    public bool Returned;
     
     public float movementSpeed;
     public float jumpHeight;
@@ -58,6 +60,8 @@ public bool PlayerInRange() => player != null;
 
 private int PlayerDirection()
 {
+    if (!PlayerInRange()) return 0;
+    
     if (transform.position.x < player.transform.position.x)
     { 
         return 1;
@@ -66,22 +70,19 @@ private int PlayerDirection()
     { 
         return -1;
     }
-    return 1;
+
+    return 0;
 
 }
 
 public int MovementDirection()
 {
-    if (_rb.velocityX > 0)
-    { 
-        return 1;
-    }
-    if (_rb.velocityX < 0)
-    { 
-        return -1;
-    }
-    return 1;
-
+    return _rb.velocityX switch
+    {
+        > 0 => 1,
+        < 0 => -1,
+        _ => 1
+    };
 }
     
 

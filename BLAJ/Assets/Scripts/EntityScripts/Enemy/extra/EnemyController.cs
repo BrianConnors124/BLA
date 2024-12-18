@@ -35,13 +35,13 @@ public class EnemyController : MonoBehaviour
     private bool stunned;
     private float reach;
     private bool canMove;
-    private UniversalTimer stunLength;
     private bool resetJump;
-    private UniversalTimer jumpCD;
     [SerializeField] private bool attacking;
     private int attackCount = 1;
     private bool boss;
-    private UniversalTimer primaryCD;
+    
+    private UniversalTimer Timer;
+    private string jumpCode;
     
     
     
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        //GetComponent<Animator>().runtimeAnimatorController = info.animatorController;
+        Timer = GetComponent<UniversalTimer>();
     }
 
     private void Start()
@@ -65,10 +65,6 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         startingPos = transform.position;
         SetInfo();
-        stunLength = new UniversalTimer();
-        primaryCD = new UniversalTimer();
-        jumpCD = new UniversalTimer();
-        //StartCoroutine(jumpCD.Timer(2)); 
     }
 
     void SetInfo()
@@ -113,29 +109,30 @@ public class EnemyController : MonoBehaviour
 
             if (!IsTouchingGround())
             {
-               // StartCoroutine(jumpCD.Timer(2)); 
+               Timer.SetTimer(jumpCode, 2);
             }
         
             if (ForwardObjDetection())
             {
-                /*
-                if (!ForwardObjTooHigh() && jumpCD.TimerDone)
+                
+                if (!ForwardObjTooHigh() && Timer.TimerDone(jumpCode))
                 {
                     if(rb.velocityX != 0 && !resetJump)
                     {
                         Move(rb.velocityX, jumpHeight);
-                       //StartCoroutine(jumpCD.Timer(3));   
+                       //StartCoroutine(jumpCD.Timer(3));  
+                       Timer.SetTimer(jumpCode, 3);
                     } else
                     {
                         resetJump = true;
                         StartCoroutine(SituateJump());
                     }   
                 }
-                else if(jumpCD.TimerDone)
+                else if(Timer.TimerDone(jumpCode))
                 {
                     Move(0, rb.velocityY);
                 }
-                */
+                
             }   
         }
     }
@@ -219,6 +216,7 @@ public class EnemyController : MonoBehaviour
         {
             StartCoroutine(DoKnockBack(knockback));
             //StartCoroutine(stunLength.Timer(stun, () => takingDamage = false));
+            Timer.SetActionTimer("stun", stun, () => takingDamage = false);
         }
         else
         {
@@ -226,7 +224,7 @@ public class EnemyController : MonoBehaviour
         }
 
         StartCoroutine(DoDamageColor());
-        //StartCoroutine(jumpCD.Timer(4));
+        Timer.SetTimer(jumpCode, 4);
         Debug.Log(name + ", " + description+ ", took " + d + " damage and now has " + health + " hp.");
     }
     private IEnumerator DoKnockBack(float playerKnockBack)
@@ -240,7 +238,6 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator DoDamageColor()
     {
-        //GetComponent<SpriteRenderer>().color = new Color(224, 138, 138, 255);
         GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(0.2f);
         GetComponent<SpriteRenderer>().color = Color.white;
@@ -255,20 +252,17 @@ public class EnemyController : MonoBehaviour
     private void AttackStage1()
     {
         attacking = true;
-        //StartCoroutine(primaryCD.Timer(primaryCooldown, () => { attackCount = 1;})); 
+        
+        Timer.SetActionTimer("primaryCD", primaryCooldown, () => { attackCount = 1;});
+        
         warningSign.SetActive(true);
-        //StartCoroutine(new UniversalTimer().Timer(0.2f, AttackStage2));
-    }
-
-    private void AttackStage2()
-    {
-        //StartCoroutine(new UniversalTimer().Timer(0.4f, AttackStage3));
+        
+        Timer.SetActionTimer("stage3", 0.6f, AttackStage3);
     }
     private void AttackStage3()
     {
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(reach * PlayerDirection()), transform.position.y),new Vector2(transform.localScale.x/2,transform.localScale.y), 0, new Vector2(PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
-        if (a.collider != null)
-            //a.collider.GetComponent<PlayerController>().DamageDelt(damage, knockBack, stun, gameObject);
+        if (a.collider != null) a.collider.GetComponent<Player>().DamageDelt(damage, knockBack, stun, gameObject);
         warningSign.SetActive(false);
         attacking = false;
     }
@@ -282,7 +276,6 @@ public class EnemyController : MonoBehaviour
     
     [Header("Raycast")] int RAYCAST;
     private RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
-    //private RaycastHit2D ForwardObjDetection() => Line.CreateAndDraw(transform.position, new Vector2(1,0), transform.localScale.x * reach * 0.5f * PlayerDirection(), LayerMask.GetMask("WorldObj"), Color.green);
     private RaycastHit2D ForwardObjDetection() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0, Vector2.right, 0, LayerMask.GetMask("WorldObj"));
     private RaycastHit2D ForwardObjTooHigh() => Line.CreateAndDraw(transform.position + new Vector3(0,transform.localScale.y * .6f, 0), Vector2.right, transform.localScale.x * PlayerDirection() * .45f, LayerMask.GetMask("WorldObj"), Color.green);
     
@@ -312,10 +305,8 @@ public class EnemyController : MonoBehaviour
         {
             return Line.CreateAndDraw(new Vector2(transform.position.x + (reach * PlayerDirection()), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
         }
-        else
-        {
-            return Line.CreateAndDraw(new Vector2(transform.position.x + (reach * MovementDirection()), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
-        }
+        
+        return Line.CreateAndDraw(new Vector2(transform.position.x + (reach * MovementDirection()), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
     }
     #endregion
 
@@ -370,8 +361,7 @@ public class EnemyController : MonoBehaviour
        //GetComponent<EnemyAnimator>().UpdateAnimator(Walking(), takingDamage, attacking);
        
        
-    //    print("Ray Casts: \n" + "PlayerOutOfSight: " + (bool) PlayerOutOfSight() + "\nForwardObjDetection: " + (bool) ForwardObjDetection() + "\nForwardObjTooHigh: " + (bool) ForwardObjTooHigh() + "\nIsTouchingGround: " + (bool) IsTouchingGround() + "\nThereIsAFloor: " + (bool) ThereIsAFloor()
-    //    + "\n\nBool Methods: \n" + "OutOfReachX: " + OutOfReachX() + "\nOutOfReachY: " + OutOfReachY() + "\nWalking: "+ Walking() + "\n\nInt Methods: \n" + "MovementDirection: " + MovementDirection() + "PlayerDirection: " + PlayerDirection());
+    print("Ray Casts: \n" + "PlayerOutOfSight: " + (bool) PlayerOutOfSight() + "\nForwardObjDetection: " + (bool) ForwardObjDetection() + "\nForwardObjTooHigh: " + (bool) ForwardObjTooHigh() + "\nIsTouchingGround: " + (bool) IsTouchingGround() + "\nThereIsAFloor: " + (bool) ThereIsAFloor() + "\n\nBool Methods: \n" + "OutOfReachX: " + OutOfReachX() + "\nOutOfReachY: " + OutOfReachY() + "\nWalking: "+ Walking() + "\n\nInt Methods: \n" + "MovementDirection: " + MovementDirection() + "PlayerDirection: " + PlayerDirection());
     }
 
     #endregion

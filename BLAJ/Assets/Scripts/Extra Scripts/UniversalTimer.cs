@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Timeline.Actions;
@@ -9,6 +10,7 @@ using UnityEngine;
 public class UniversalTimer : MonoBehaviour
 {
     public List<string> key;
+    public List<string> previousKey;
     private Dictionary<string, float> timer;
     private Dictionary<string, Action> action;
     
@@ -21,13 +23,14 @@ public class UniversalTimer : MonoBehaviour
         action = new Dictionary<string, Action>();
     }
 
-    public bool TimerDone(string a) => timer[a] < 0;
+    public bool TimerDone(string a) => previousKey.Any(t => t == a);
     
    
 
     public void SetActionTimer(string code, float length, Action commit)
     {
         if(!key.Contains(code)) key.Add(code);
+        if (previousKey.Contains(code)) previousKey.Remove(code);
         action.TryAdd(code, commit);
         timer.TryAdd(code, length);
         timer[code] = length;
@@ -36,6 +39,7 @@ public class UniversalTimer : MonoBehaviour
     public void SetTimer(string code, float length)
     {
         if(!key.Contains(code)) key.Add(code);
+        if (previousKey.Contains(code)) previousKey.Remove(code);
         timer.TryAdd(code, length);
         timer[code] = length;
     }
@@ -52,7 +56,8 @@ public class UniversalTimer : MonoBehaviour
                     action.Remove(key[i]);
                 }  
                 timer.Remove(key[i]);  
-                key.RemoveAt(i);       
+                previousKey.Add(key[i]);
+                key.RemoveAt(i);
                 i--;                   
             }    
         }   

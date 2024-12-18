@@ -39,6 +39,11 @@ public class Player : Entity
         jumpHeight = playerInfo.jumpHeight;
     }
 
+    public void DamageDelt(float damage, float knockback, float stun, GameObject gameObject)
+    {
+        
+    }
+
     #region Cooldowns
     protected void FixedUpdate()
     {
@@ -69,6 +74,9 @@ public class Player : Entity
     public bool DashReady() => dashCD <= 0;
     
     #endregion
+
+    #region Misc
+
     public override void Flip()
     {
         if (InputSystemController.MovementInput().x > 0) sprite.flipX = false;
@@ -79,6 +87,8 @@ public class Player : Entity
     {
         _rb.velocity = new Vector2(x, y);
     }
+
+    #endregion
 }
 [CreateAssetMenu(menuName = "Players/NewPlayer", fileName = "NewPlayer")]
 public class PlayerInfo : ScriptableObject

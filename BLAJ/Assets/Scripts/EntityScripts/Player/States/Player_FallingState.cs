@@ -29,6 +29,12 @@ public class Player_FallingState : PlayerState
         
         if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
             return PlayerStateMachine.EPlayerState.dash;
+        
+        if (player.AttackReady() && (InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack))
+            return PlayerStateMachine.EPlayerState.attack;
+        
+        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())
+            return PlayerStateMachine.EPlayerState.doubleJump;
 
         if (rb.velocityY < -50 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;
 

@@ -14,21 +14,13 @@ public class Player_DoubleJumpState : PlayerState
     {
         base.EnterState();
         player.doubleJumps--;
-        stateTimer = 0.2f;
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
+        rb.velocity = new Vector2(rb.velocityX, 0);
     }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
-    }
+    
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        
-        
-        return StateKey;
+        return PlayerStateMachine.EPlayerState.jump;
     }
 
     public override void ExitState()

@@ -19,12 +19,17 @@ public class Enemy_JumpState : EnemyState
     public override void UpdateState()
     {
         base.UpdateState();
+        rb.velocity = new Vector2(enemy.movementSpeed * enemy.MovementDirection(), rb.velocityY);
     }
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (!enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.retrieve;
-        if (enemy.IsTouchingGround()) return EnemyStateMachine.EEnemyState.pursuit;
+        if (StateTimerDone())
+        {
+            if (!enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.retrieve;
+            if (enemy.IsTouchingGround()) return EnemyStateMachine.EEnemyState.pursuit;
+        }
+        
         
         
         return StateKey;

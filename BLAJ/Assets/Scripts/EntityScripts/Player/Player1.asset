@@ -19,5 +19,5 @@ MonoBehaviour:
   dashCD: 0.8
   dashDuration: 0.08
   doubleJumps: 1
-  coyoteJump: 0.2
+  coyoteJump: 0.18
   gravityScale: 10

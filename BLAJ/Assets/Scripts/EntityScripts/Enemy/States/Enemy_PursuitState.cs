@@ -23,7 +23,7 @@ public class Enemy_PursuitState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (!enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.retrieve;
+        if (enemy.PlayerOutOfSight()) return EnemyStateMachine.EEnemyState.idle;
         if (enemy.DetectsObjectForward()) return EnemyStateMachine.EEnemyState.jump;
         
         

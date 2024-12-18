@@ -15,7 +15,8 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public override void EnterState()
     {
         base.EnterState();
-        
+        Debug.Log(StateKey);
+        enemy.Anim.Play(StateKey.ToString());
     }
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
@@ -25,6 +26,6 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public override void UpdateState()
     {
         base.UpdateState();
-        
+        enemy.Anim.Play(StateKey.ToString());
     }
 }

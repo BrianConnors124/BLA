@@ -15,7 +15,7 @@ public class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _anim = GetComponentInChildren<Animator>();
+        _anim = GetComponent<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();

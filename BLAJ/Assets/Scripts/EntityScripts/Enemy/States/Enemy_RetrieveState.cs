@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy_RetrieveState : EnemyState
 {
-    public bool returned;
     public Enemy_RetrieveState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key, entity)
     {
         
@@ -13,27 +12,34 @@ public class Enemy_RetrieveState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        returned = false;
         rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
-        if (rb.velocityX > 0 && enemy.transform.position.x > enemy.startingXPos)
+        if (!enemy.Returned)
         {
-            returned = true;
+            rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
+            if (rb.velocityX > 0 && enemy.transform.position.x > enemy.startingXPos)
+            {
+                enemy.Returned = true;
+            }
+            if (rb.velocityX < 0 && enemy.transform.position.x < enemy.startingXPos)
+            {
+                enemy.Returned = true;
+            }
         }
-        if (rb.velocityX < 0 && enemy.transform.position.x < enemy.startingXPos)
+        else
         {
-            returned = true;
+            enemy.ZeroVelocity();
         }
+        
     }
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.pursuit;
+        if (enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.idle;
         if (enemy.DetectsObjectForward()) return EnemyStateMachine.EEnemyState.jump;
         return StateKey;
     }
