@@ -887,7 +887,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: []
-  previousKey: []
 --- !u!1001 &1280756494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1063,7 +1062,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1902782299494066667, guid: d633661c3e4bb6d4cbb7149693d27285, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8826134425972699895, guid: d633661c3e4bb6d4cbb7149693d27285, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2313396919805325319, guid: d633661c3e4bb6d4cbb7149693d27285, type: 3}
@@ -1088,7 +1088,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: []
-  previousKey: []
 --- !u!1 &1700999185 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2313396919805325319, guid: d633661c3e4bb6d4cbb7149693d27285, type: 3}
@@ -1550,7 +1549,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: []
-  previousKey: []
 --- !u!1001 &8573800989999737993
 PrefabInstance:
   m_ObjectHideFlags: 0

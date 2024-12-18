@@ -22,7 +22,7 @@ public class Enemy_IdleState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (enemy.PlayerInRange() && !enemy.PlayerOutOfSight()) return EnemyStateMachine.EEnemyState.pursuit;
+        if (animEnded) return EnemyStateMachine.EEnemyState.transferGround;
         return StateKey;
     }
 }

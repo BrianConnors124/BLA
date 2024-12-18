@@ -84,7 +84,11 @@ public int MovementDirection()
         _ => 1
     };
 }
-    
+
+public override void Flip()
+{
+    base.Flip();
+}
 
 #endregion
 }

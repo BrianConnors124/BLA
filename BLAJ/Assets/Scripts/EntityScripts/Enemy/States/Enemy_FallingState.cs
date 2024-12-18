@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_JumpState : EnemyState
+public class Enemy_FallingState : EnemyState
 {
-    public Enemy_JumpState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key, entity)
+    public Enemy_FallingState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key, entity)
     {
         
     }
@@ -12,7 +12,7 @@ public class Enemy_JumpState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        rb.velocity = new Vector2(enemy.movementSpeed * enemy.MovementDirection(), enemy.jumpHeight);
+        Timer.SetTimer(jumpKey, .3f);
     }
 
     public override void UpdateState()
@@ -22,8 +22,7 @@ public class Enemy_JumpState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
-        
+        if (enemy.IsTouchingGround()) return EnemyStateMachine.EEnemyState.transferGround;
         return StateKey;
     }
 

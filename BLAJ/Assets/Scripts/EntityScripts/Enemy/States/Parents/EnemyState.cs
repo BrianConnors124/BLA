@@ -6,10 +6,20 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
 {
     public Enemy enemy;
     public Rigidbody2D rb;
+    public UniversalTimer Timer;
+    public string jumpKey;
     public EnemyState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key)
     {
         enemy = entity;
         rb = enemy.GetComponent<Rigidbody2D>();
+        Timer = enemy.GetComponent<UniversalTimer>();
+        jumpKey = "jumpCD";
+        //InitiateTimer();
+    }
+
+    private void InitiateTimer()
+    {
+        Timer.SetTimer(jumpKey, .1f);
     }
 
     public override void EnterState()

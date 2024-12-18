@@ -39,7 +39,7 @@ public class Entity : MonoBehaviour
     {
         
         if (_rb.velocityX > 0.1f) sprite.flipX = false;
-        if (_rb.velocityX < -0.1f) sprite.flipX = false;
+        if (_rb.velocityX < -0.1f) sprite.flipX = true;
         
     }
 
