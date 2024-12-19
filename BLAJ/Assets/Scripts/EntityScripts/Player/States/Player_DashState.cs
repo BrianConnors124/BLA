@@ -23,7 +23,6 @@ public class Player_DashState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
