@@ -18,22 +18,7 @@ public class Enemy_RetrieveState : EnemyState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (!enemy.Returned)
-        {
-            rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
-            if (rb.velocityX > 0 && enemy.transform.position.x > enemy.startingXPos)
-            {
-                enemy.Returned = true;
-            }
-            if (rb.velocityX < 0 && enemy.transform.position.x < enemy.startingXPos)
-            {
-                enemy.Returned = true;
-            }
-        }
-        else
-        {
-            enemy.ZeroVelocity();
-        }
+        rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
         
     }
 
@@ -43,5 +28,11 @@ public class Enemy_RetrieveState : EnemyState
         if (enemy.Returned || enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.transferGround;
         
         return StateKey;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        enemy.ZeroVelocity();
     }
 }

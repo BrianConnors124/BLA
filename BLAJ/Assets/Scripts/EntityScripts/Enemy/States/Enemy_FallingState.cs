@@ -29,6 +29,6 @@ public class Enemy_FallingState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        enemy.SetVelocity(new Vector2(rb.velocity.x, 0));
+        //enemy.SetVelocity(new Vector2(rb.velocity.x, 0));
     }
 }

@@ -653,7 +653,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 50d089d6fdef87a4dadada3869fdf7c3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -837,9 +837,10 @@ MonoBehaviour:
   _stateMachine: {fileID: 0}
   player: {fileID: 0}
   info: {fileID: 11400000, guid: b871630229cc6314a91be46b2d2999fe, type: 2}
-  Returned: 0
+  origin: {x: 0, y: 0}
   movementSpeed: 0
   jumpHeight: 0
+  Returned: 0
 --- !u!114 &1121890366
 MonoBehaviour:
   m_ObjectHideFlags: 0

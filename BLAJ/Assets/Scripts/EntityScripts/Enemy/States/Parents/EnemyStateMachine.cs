@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStateMachine : StateMachine<EnemyStateMachine.EEnemyState>
 {
-    public enum EEnemyState{retrieve, pursuit, attack, jump, falling, idle, transferGround}
+    public enum EEnemyState{retrieve, pursuit, attack, jump, falling, idle, transferGround, situateJump}
 
     public void Initialize(Enemy enemy, Rigidbody2D rb)
     {
@@ -14,6 +15,7 @@ public class EnemyStateMachine : StateMachine<EnemyStateMachine.EEnemyState>
         States.Add(EEnemyState.idle, new Enemy_IdleState(EEnemyState.idle,enemy));
         States.Add(EEnemyState.falling, new Enemy_FallingState(EEnemyState.falling, enemy));
         States.Add(EEnemyState.transferGround, new Enemy_TransferGroundState(EEnemyState.transferGround, enemy));
+        States.Add(EEnemyState.situateJump, new Enemy_SituateJumpState(EEnemyState.situateJump, enemy));
         CurrentState = States[EEnemyState.idle];
     }
 }

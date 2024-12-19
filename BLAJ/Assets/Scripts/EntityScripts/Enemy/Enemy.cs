@@ -10,11 +10,13 @@ public class Enemy : Entity
     public EnemyStateMachine _stateMachine;
     public GameObject player;
     public EnemyInfo info;
-
-    public bool Returned;
+    public Vector2 origin;
+    
     
     public float movementSpeed;
     public float jumpHeight;
+    
+    public bool Returned;
 
     protected override void Awake()
     {
@@ -23,6 +25,7 @@ public class Enemy : Entity
         _stateMachine = GetComponent<EnemyStateMachine>();
         _stateMachine.Initialize(this, _rb);
         SetPresets();
+        origin = _rb.transform.position;
     }
 
     private void SetPresets()
@@ -31,7 +34,13 @@ public class Enemy : Entity
         jumpHeight = info.jumpHeight;
     }
 
-#region Sight
+    private void Update()
+    {
+        Flip();
+        Returned = _rb.transform.position.x < origin.x + .3f && _rb.transform.position.x > origin.x - .3f;
+    }
+
+    #region Sight
     public RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
     public RaycastHit2D DetectsObjectForward(){
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));

@@ -21,6 +21,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     {
         Timer.SetTimer(jumpKey, .1f);
     }
+    
 
     public override void EnterState()
     {
