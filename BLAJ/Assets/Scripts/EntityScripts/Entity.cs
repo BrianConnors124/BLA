@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
     public float coyoteJump;
 
     public Animator Anim => _anim;
+    public Rigidbody2D rb => _rb;
 
     protected virtual void Awake()
     {
@@ -19,11 +20,6 @@ public class Entity : MonoBehaviour
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
-    }
-
-    public void SetAnimState(string state ,bool value)
-    {
-        _anim.SetBool(state, value);
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;

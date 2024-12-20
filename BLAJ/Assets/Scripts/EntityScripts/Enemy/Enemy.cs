@@ -40,12 +40,26 @@ public class Enemy : Entity
         Returned = _rb.transform.position.x < origin.x + .3f && _rb.transform.position.x > origin.x - .3f;
     }
 
-    #region Sight
+    public void ReceiveDamage(float damage, float knockBack)
+    {
+        
+    }
+
+
+
+
+
+#region Sight
+
     public RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
     public RaycastHit2D DetectsObjectForward(){
-        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));
-        if(_stateMachine.CurrentState.Equals(_stateMachine.States[EnemyStateMachine.EEnemyState.retrieve])) a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));
-        return a;
+    RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
+        new Vector2(
+            transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()),
+            transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,
+        Vector2.right, 0, LayerMask.GetMask("WorldObj"));
+    if(_stateMachine.CurrentState.Equals(_stateMachine.States[EnemyStateMachine.EEnemyState.retrieve])) a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));
+    return a; 
     }
 
 #endregion

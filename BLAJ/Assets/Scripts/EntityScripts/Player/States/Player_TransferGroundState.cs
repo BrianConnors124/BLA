@@ -9,6 +9,7 @@ public class Player_TransferGroundState : PlayerState
     
     public Player_TransferGroundState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
     {
+        
     }
     public override void EnterState()
     {

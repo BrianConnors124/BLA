@@ -11,8 +11,8 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     }
 
     protected Player player;
-    private Transform transform;
-    private Rigidbody2D rb;
+    public Transform transform;
+    public Rigidbody2D rb;
 
     public override void EnterState()
     {
@@ -28,7 +28,6 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     {
         base.UpdateState();
         player.Anim.Play(StateKey.ToString());
-        //Debug.Log(AttackReady() + " " + attackCD + " " + Time.deltaTime);
     }
 
     public override void ExitState()

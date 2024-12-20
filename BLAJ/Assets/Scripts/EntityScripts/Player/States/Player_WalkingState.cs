@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class Player_WalkingState : PlayerState
 {
-    private Rigidbody2D rb;
     
     public Player_WalkingState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
     {
-        rb = RB;
+        
     }
     public override void EnterState()
     {

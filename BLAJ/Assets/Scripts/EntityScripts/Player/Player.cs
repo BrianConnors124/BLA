@@ -16,6 +16,8 @@ public class Player : Entity
     public float doubleJumps;
     public InputSystemController ISC;
     public bool currentFlip;
+    public float damage;
+    public float knockBack;
     
     
     
@@ -37,6 +39,8 @@ public class Player : Entity
         dashSpeed = playerInfo.dashSpeed;
         dashDuration = playerInfo.dashDuration;
         jumpHeight = playerInfo.jumpHeight;
+        damage = playerInfo.baseDamage;
+        knockBack = playerInfo.baseKnockBack;
     }
 
     public void DamageDelt(float damage, float knockback, float stun, GameObject gameObject)
@@ -102,4 +106,6 @@ public class PlayerInfo : ScriptableObject
     public float doubleJumps;
     public float coyoteJump;
     public float gravityScale;
+    public float baseDamage;
+    public float baseKnockBack;
 }
