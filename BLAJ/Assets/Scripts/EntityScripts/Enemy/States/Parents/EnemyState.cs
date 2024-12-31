@@ -8,6 +8,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public Rigidbody2D rb;
     public UniversalTimer Timer;
     public string jumpKey;
+    public bool enemyLost;
     public EnemyState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key)
     {
         enemy = entity;

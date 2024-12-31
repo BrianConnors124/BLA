@@ -61,6 +61,16 @@ public class Enemy : Entity
         Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f);
         return a; 
     }
+    
+    public RaycastHit2D ObjectForwardTooClose(){
+    
+        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
+            new Vector2(
+                transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
+                transform.position.y), new Vector2(transform.localScale.x * .1f, transform.localScale.y * .94f), 0,
+            Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f);
+        return a; 
+    }
     public RaycastHit2D DetectsObjectBackwards(){
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
             new Vector2(
