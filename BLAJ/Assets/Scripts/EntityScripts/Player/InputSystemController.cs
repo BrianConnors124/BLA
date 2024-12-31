@@ -49,6 +49,8 @@ public class InputSystemController : MonoBehaviour
         bool j = instance.Jump.action.triggered;
         if (j)
         {
+            _queueTimer.RemoveActionTimer("InputQue");
+            queueActive = false;
             queued = Equeue.jump; 
         }
         return j;
@@ -58,6 +60,8 @@ public class InputSystemController : MonoBehaviour
         bool d = instance.Dash.action.triggered;
         if (d)
         {
+            _queueTimer.RemoveActionTimer("InputQue");
+            queueActive = false;
             queued = Equeue.dash; 
         }
 
@@ -68,6 +72,8 @@ public class InputSystemController : MonoBehaviour
         bool a = instance.Attack.action.inProgress;
         if (a)
         {
+            _queueTimer.RemoveActionTimer("InputQue");
+            queueActive = false;
             queued = Equeue.attack; 
         }
 

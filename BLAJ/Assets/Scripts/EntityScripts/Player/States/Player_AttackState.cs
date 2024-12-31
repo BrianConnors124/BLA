@@ -17,6 +17,7 @@ public class Player_AttackState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        stateTimer = 0.005f;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
         bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(_transform.position.x + hitBox.x * 1.5f, _transform.position.y),
             new Vector2(_transform.localScale.x, _transform.localScale.y) * 0.5f, 0, Vector2.right, 0,
@@ -27,6 +28,7 @@ public class Player_AttackState : PlayerState
 
     public override void UpdateState()
     {
+        base.UpdateState();
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
     }
 
@@ -38,8 +40,8 @@ public class Player_AttackState : PlayerState
             {
                 return PlayerStateMachine.EPlayerState.transferGround;
             }
-            
-            return PlayerStateMachine.EPlayerState.falling; 
+
+            return PlayerStateMachine.EPlayerState.falling;
         }
         
          

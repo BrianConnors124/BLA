@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Player1
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
   movementSpeed: 8
-  dashSpeed: 60
+  dashSpeed: 50
   jumpHeight: 24
-  attackCD: 1
-  dashCD: 0.8
-  dashDuration: 0.08
+  attackCD: 0
+  dashCD: 0
+  dashDuration: 0.005
   doubleJumps: 1
   coyoteJump: 0.18
   gravityScale: 10
+  baseDamage: 0
+  baseKnockBack: 0

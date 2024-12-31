@@ -66,9 +66,9 @@ public static class BoxCastDrawer
         Vector2 direction,
         float distance = Mathf.Infinity,
         int layerMask = Physics2D.AllLayers,
+        float duration = 0.1f,
         float minDepth = -Mathf.Infinity,
-        float maxDepth = Mathf.Infinity,
-        float duration = 0.1f)
+        float maxDepth = Mathf.Infinity)
     {
         var hitInfo = Physics2D.BoxCast(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
         Draw(hitInfo, origin, size, angle, direction, distance, duration);
@@ -82,9 +82,9 @@ public static class BoxCastDrawer
         Vector2 direction,
         float distance = Mathf.Infinity,
         int layerMask = Physics2D.AllLayers,
+        float duration = 0.1f,
         float minDepth = -Mathf.Infinity,
-        float maxDepth = Mathf.Infinity, 
-        float duration = 0.1f)
+        float maxDepth = Mathf.Infinity)
     {
         RaycastHit2D[] hitInfo = Physics2D.BoxCastAll(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);
         RaycastHit2D hit = Physics2D.BoxCast(origin, size, angle, direction, distance, layerMask, minDepth, maxDepth);

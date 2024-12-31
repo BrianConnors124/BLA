@@ -53,13 +53,21 @@ public class Enemy : Entity
 
     public RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
     public RaycastHit2D DetectsObjectForward(){
-    RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
+    
+        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
         new Vector2(
-            transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * PlayerDirection()),
+            transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
             transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,
-        Vector2.right, 0, LayerMask.GetMask("WorldObj"));
-    if(_stateMachine.CurrentState.Equals(_stateMachine.States[EnemyStateMachine.EEnemyState.retrieve])) a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()), transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,Vector2.right, 0, LayerMask.GetMask("WorldObj"));
-    return a; 
+        Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f);
+        return a; 
+    }
+    public RaycastHit2D DetectsObjectBackwards(){
+        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
+            new Vector2(
+                transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * -MovementDirection()),
+                transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,
+            Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f); 
+        return a; 
     }
 
 #endregion
@@ -100,12 +108,11 @@ private int PlayerDirection()
 
 public int MovementDirection()
 {
-    return _rb.velocityX switch
+    if (GetComponent<SpriteRenderer>().flipX)
     {
-        > 0 => 1,
-        < 0 => -1,
-        _ => 1
-    };
+        return -1;
+    }
+    return 1;
 }
 
 public override void Flip()

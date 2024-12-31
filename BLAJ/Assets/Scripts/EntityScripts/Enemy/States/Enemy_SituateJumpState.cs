@@ -12,7 +12,7 @@ public class Enemy_SituateJumpState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        rb.velocity = new Vector2(enemy.movementSpeed * -Line.LeftOrRight(enemy.transform.position.x, enemy.player.transform.position.x), rb.velocity.y);
+        rb.velocity = new Vector2(enemy.movementSpeed * -Line.LeftOrRight(enemy.transform.position.x, enemy.DetectsObjectForward().collider.transform.position.x), rb.velocity.y);
     }
 
     public override void UpdateState()
@@ -22,7 +22,9 @@ public class Enemy_SituateJumpState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (!enemy.DetectsObjectForward()) return EnemyStateMachine.EEnemyState.pursuit;
+        if (!enemy.DetectsObjectBackwards()) return enemy.GetComponent<EnemyStateMachine>().LastState.StateKey;
+        
+        
         return StateKey;
     }
 }

@@ -30,13 +30,13 @@ public class Player_WalkingState : PlayerState
     {
         if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;
         
-        if (player.AttackReady() && (InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack))
+        if ((InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
         
         if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
             return PlayerStateMachine.EPlayerState.jump;
         
-        if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
+        if ((InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
         if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;

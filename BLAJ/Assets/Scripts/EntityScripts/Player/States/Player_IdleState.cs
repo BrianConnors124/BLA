@@ -21,11 +21,13 @@ public class Player_IdleState : PlayerState
         if (InputSystemController.MovementInput().magnitude > 0) return PlayerStateMachine.EPlayerState.walking;
         
         
-        if (player.AttackReady() && (InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack))
+        if ((InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
 
         if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
             return PlayerStateMachine.EPlayerState.jump;
+
+        if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;
          
         return StateKey;
     }
