@@ -22,7 +22,12 @@ public class Enemy_IdleState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (animEnded) return EnemyStateMachine.EEnemyState.transferGround;
+        if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
+        if (enemy.ObjectForwardTooClose()) return EnemyStateMachine.EEnemyState.situateJump;
+        if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
+        if (!enemy.playerInPursuitRange && !enemy.returned) return EnemyStateMachine.EEnemyState.retrieve;
+        if (enemy.playerInPursuitRange && !enemy.playerInAttackRange) return EnemyStateMachine.EEnemyState.pursuit;
+        if (enemy.playerInAttackRange && enemy.canAttack) return EnemyStateMachine.EEnemyState.attack;
         return StateKey;
     }
 }

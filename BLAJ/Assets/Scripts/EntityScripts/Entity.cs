@@ -31,6 +31,8 @@ public class Entity : MonoBehaviour
             return Mathf.Abs(a) / a;
         return 0;
     }
+
+    public float FacingDirection() => sprite.flipX ? -1 : 1;
     public virtual void Flip()
     {
         

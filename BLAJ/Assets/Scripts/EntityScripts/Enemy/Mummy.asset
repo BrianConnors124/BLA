@@ -18,8 +18,8 @@ MonoBehaviour:
   jumpHeight: 20
   movementSpeed: 4
   damage: 10
-  baseReach: 10
+  baseReach: 1
   stun: 10
   knockBack: 10
-  primaryCD: 10
+  primaryCD: 1
   bossType: 0

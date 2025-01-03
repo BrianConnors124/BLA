@@ -24,10 +24,10 @@ public class Enemy_RetrieveState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey)) return EnemyStateMachine.EEnemyState.jump;
-        if (enemy.Returned || enemy.PlayerInRange()) return EnemyStateMachine.EEnemyState.transferGround;
-        
-        return StateKey;
+        if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
+        if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
+        if (enemy.returned) return EnemyStateMachine.EEnemyState.idle;
+        return enemy.playerInPursuitRange || !playerLost ? EnemyStateMachine.EEnemyState.pursuit : StateKey;
     }
 
     public override void ExitState()

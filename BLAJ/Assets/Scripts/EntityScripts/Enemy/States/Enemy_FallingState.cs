@@ -22,7 +22,8 @@ public class Enemy_FallingState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (enemy.IsTouchingGround()) return EnemyStateMachine.EEnemyState.transferGround;
+        if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
+        if (enemy.IsTouchingGround()) return EnemyStateMachine.EEnemyState.idle;
         return StateKey;
     }
 

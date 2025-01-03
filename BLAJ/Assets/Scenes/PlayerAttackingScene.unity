@@ -577,8 +577,8 @@ Transform:
   m_GameObject: {fileID: 549254378}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 92.72, y: -16.34, z: 0}
-  m_LocalScale: {x: 1.6594937, y: 1.4131042, z: 0}
+  m_LocalPosition: {x: 92.72, y: -16.2581, z: 0}
+  m_LocalScale: {x: 1.6594937, y: 1.5769873, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -631,7 +631,6 @@ GameObject:
   - component: {fileID: 1121890361}
   - component: {fileID: 1121890360}
   - component: {fileID: 1121890363}
-  - component: {fileID: 1121890364}
   - component: {fileID: 1121890366}
   - component: {fileID: 1121890365}
   - component: {fileID: 1121890367}
@@ -724,9 +723,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121890357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 98.23, y: -16.26, z: -0.25779223}
-  m_LocalScale: {x: 1.56, y: 1.56, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 98.708, y: -15.6454, z: -0.25779223}
+  m_LocalScale: {x: 2.5159678, y: 2.7891238, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -783,42 +782,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1121890364
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121890357}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 8.85
 --- !u!114 &1121890365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,7 +803,19 @@ MonoBehaviour:
   origin: {x: 0, y: 0}
   movementSpeed: 0
   jumpHeight: 0
-  Returned: 0
+  reach: 0
+  damage: 0
+  stun: 0
+  knockback: 0
+  primaryCD: 0
+  health: 0
+  returned: 0
+  playerInPursuitRange: 0
+  playerInAttackRange: 0
+  canAttack: 1
+  takingDamage: 0
+  recentKnockBack: 0
+  recentStun: 0
 --- !u!114 &1121890366
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,9 +4,11 @@ using UnityEngine.UI;
 
 public class Player : Entity
 {
+    [Header("Controllers")]
     public PlayerStateMachine _stateMachine;
     public PlayerInfo playerInfo;
     
+    [Header("Input / Info")]
     public float dashCD;
     public float attackCD = -1;
     public float dashDuration;
@@ -14,10 +16,9 @@ public class Player : Entity
     public float movementSpeed;
     public float jumpHeight;
     public float doubleJumps;
-    public InputSystemController ISC;
-    public bool currentFlip;
     public float damage;
     public float knockBack;
+    public float stun;
     
     
     
@@ -26,7 +27,6 @@ public class Player : Entity
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
-        ISC = GetComponent<InputSystemController>();
         SetPresets();
         _rb.gravityScale = playerInfo.gravityScale;
     }
@@ -41,9 +41,10 @@ public class Player : Entity
         jumpHeight = playerInfo.jumpHeight;
         damage = playerInfo.baseDamage;
         knockBack = playerInfo.baseKnockBack;
+        stun = playerInfo.stun;
     }
 
-    public void DamageDelt(float damage, float knockback, float stun, GameObject gameObject)
+    public void DamageDelt(float damage, float knockback, float stun)
     {
         
     }
@@ -108,4 +109,5 @@ public class PlayerInfo : ScriptableObject
     public float gravityScale;
     public float baseDamage;
     public float baseKnockBack;
+    public float stun;
 }

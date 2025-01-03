@@ -8,19 +8,13 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public Rigidbody2D rb;
     public UniversalTimer Timer;
     public string jumpKey;
-    public bool enemyLost;
+    public bool playerLost = false;
     public EnemyState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key)
     {
         enemy = entity;
         rb = enemy.GetComponent<Rigidbody2D>();
         Timer = enemy.GetComponent<UniversalTimer>();
         jumpKey = "jumpCD";
-        //InitiateTimer();
-    }
-
-    private void InitiateTimer()
-    {
-        Timer.SetTimer(jumpKey, .1f);
     }
     
 

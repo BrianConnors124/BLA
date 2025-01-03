@@ -19,11 +19,11 @@ public class Player_AttackState : PlayerState
         base.EnterState();
         stateTimer = 0.005f;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
-        bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(_transform.position.x + hitBox.x * 1.5f, _transform.position.y),
+        bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(_transform.position.x + hitBox.x * 1.5f * player.FacingDirection(), _transform.position.y),
             new Vector2(_transform.localScale.x, _transform.localScale.y) * 0.5f, 0, Vector2.right, 0,
             LayerMask.GetMask("Enemy"));
         
-        foreach(var enemies in bcd) enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage,player.knockBack);
+        foreach(var enemies in bcd) enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage,player.knockBack, player.stun);
     }
 
     public override void UpdateState()
