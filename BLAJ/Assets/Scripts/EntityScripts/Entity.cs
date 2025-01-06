@@ -6,17 +6,16 @@ public class Entity : MonoBehaviour
 {
     protected Rigidbody2D _rb;
     protected SpriteRenderer sprite;
-    protected Animator _anim;
+    public Animator Anim;
     public Vector2 hitBox;
     public float coyoteJump;
 
-    public Animator Anim => _anim;
     public Rigidbody2D rb => _rb;
 
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();
+        Anim = GetComponent<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();

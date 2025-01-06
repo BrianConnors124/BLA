@@ -23,9 +23,7 @@ public class Enemy_JumpState : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
-        if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
-        
-        return StateKey;
+        return rb.velocityY < 0 ? EnemyStateMachine.EEnemyState.falling : StateKey;
     }
 
     public override void ExitState()

@@ -299,15 +299,7 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
-    private RaycastHit2D ThereIsAFloor()
-    {
-        if (rb.velocity.x != 0)
-        {
-            return Line.CreateAndDraw(new Vector2(transform.position.x + (reach * PlayerDirection()), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
-        }
-        
-        return Line.CreateAndDraw(new Vector2(transform.position.x + (reach * MovementDirection()), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
-    }
+    private RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + (reach * MovementDirection()), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
     #endregion
 
     #region Misc

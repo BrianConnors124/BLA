@@ -12,6 +12,7 @@ public class Enemy : Entity
     public GameObject player;
     public EnemyInfo info;
     public Vector2 origin;
+    private BoxCollider2D hitbox;
 
     [Header("Input")] 
     public float movementSpeed;
@@ -40,6 +41,7 @@ public class Enemy : Entity
         _stateMachine.Initialize(this, _rb);
         SetPresets();
         origin = _rb.transform.position;
+        hitbox = GetComponent<BoxCollider2D>();
     }
 
     private void SetPresets()
@@ -63,10 +65,10 @@ public class Enemy : Entity
 
         #region Detection
 
-        var player = Physics2D.CircleCast(position, 8.85f, Vector2.left, 0, LayerMask.GetMask("Player"));
-        playerInPursuitRange = player;
-        playerInAttackRange = Physics2D.CircleCast(position, reach, Vector2.left, 0, LayerMask.GetMask("Player"));
-        this.player = player.collider.GameObject();
+        playerInAttackRange = BoxCastDrawer.BoxCastAndDraw(new Vector2(position.x + .4f * MovementDirection(), position.y),
+            new Vector2(transform.localScale.x * hitbox.size.x * 1.4f, transform.localScale.y * 1.1f), 0, Vector2.right, 0,
+            LayerMask.GetMask("Player"));
+
 
 
         #endregion
@@ -86,12 +88,19 @@ public class Enemy : Entity
      Destroy(gameObject);   
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player")) player = other.gameObject;
+        if (other.CompareTag("Player")) playerInPursuitRange = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player")) playerInPursuitRange = false;
+    }
 
 
-
-
-
-#region Sight
+    #region Sight
 
     public RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
     public RaycastHit2D DetectsObjectForward(){
@@ -128,34 +137,36 @@ public class Enemy : Entity
             Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f); 
         return a; 
     }
-
-#endregion
-
-
-#region Misc
-
-public int PlayerDirection()
-{
-    if (player.transform.position.x - transform.position.x < 0)
+    #endregion
+    
+    #region Misc
+          
+    public int PlayerDirection()
     {
-        GetComponent<SpriteRenderer>().flipX = true;
-        return -1;
+        if (player.transform.position.x - transform.position.x < 0)
+        { 
+            sprite.flipX = true; 
+            return -1;
+        }
+        
+        sprite.flipX = false;
+        return 1;
     }
-    GetComponent<SpriteRenderer>().flipX = false;
-    return 1;
-}
-public int MovementDirection()
-{
-    if (GetComponent<SpriteRenderer>().flipX)
+    public int MovementDirection()
     {
-        return -1;
+        if (sprite.flipX)
+        { 
+            return -1;
+        }
+        return 1;
     }
-    return 1;
-}
+          
+    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection(), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
+          
+    #endregion
 
 
 
-#endregion
 }
 
 [CreateAssetMenu(menuName = "Enemies/New Enemy", fileName = "New Enemy")]

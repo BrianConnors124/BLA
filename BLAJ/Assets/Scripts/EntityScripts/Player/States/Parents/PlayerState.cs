@@ -6,12 +6,10 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public PlayerState(PlayerStateMachine.EPlayerState key, Player entity) : base(key)
     {
         player = entity;
-        transform = player.transform;
         rb = player.GetComponent<Rigidbody2D>();
     }
 
     protected Player player;
-    public Transform transform;
     public Rigidbody2D rb;
 
     public override void EnterState()

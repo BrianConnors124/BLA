@@ -35,6 +35,11 @@ public class UniversalTimer : MonoBehaviour
         timer[code] = length;
     }
 
+    public bool TimerActive(string code)
+    {
+        return key.Contains(code);
+    }
+
     public void RemoveActionTimer(string code)
     {
         timer.Remove(code);

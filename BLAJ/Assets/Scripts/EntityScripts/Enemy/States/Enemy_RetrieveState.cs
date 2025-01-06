@@ -27,7 +27,9 @@ public class Enemy_RetrieveState : EnemyState
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
         if (enemy.returned) return EnemyStateMachine.EEnemyState.idle;
-        return enemy.playerInPursuitRange || !playerLost ? EnemyStateMachine.EEnemyState.pursuit : StateKey;
+        if (!enemy.PlayerOutOfSight() && enemy.playerInPursuitRange) return EnemyStateMachine.EEnemyState.pursuit;
+
+        return StateKey;
     }
 
     public override void ExitState()

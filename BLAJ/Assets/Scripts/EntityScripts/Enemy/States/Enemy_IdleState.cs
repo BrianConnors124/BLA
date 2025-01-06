@@ -18,6 +18,7 @@ public class Enemy_IdleState : EnemyState
     public override void UpdateState()
     {
         base.UpdateState();
+        if(enemy.player != null) enemy.PlayerDirection();
     }
 
     public override EnemyStateMachine.EEnemyState GetNextState()
@@ -26,7 +27,7 @@ public class Enemy_IdleState : EnemyState
         if (enemy.ObjectForwardTooClose()) return EnemyStateMachine.EEnemyState.situateJump;
         if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
         if (!enemy.playerInPursuitRange && !enemy.returned) return EnemyStateMachine.EEnemyState.retrieve;
-        if (enemy.playerInPursuitRange && !enemy.playerInAttackRange) return EnemyStateMachine.EEnemyState.pursuit;
+        if (enemy.playerInPursuitRange && !enemy.playerInAttackRange && !enemy.PlayerOutOfSight()) return EnemyStateMachine.EEnemyState.pursuit;
         if (enemy.playerInAttackRange && enemy.canAttack) return EnemyStateMachine.EEnemyState.attack;
         return StateKey;
     }

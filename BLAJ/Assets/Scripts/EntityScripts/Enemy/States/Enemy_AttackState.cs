@@ -13,7 +13,7 @@ public class Enemy_AttackState : EnemyState
         base.EnterState();
         enemy.canAttack = false;
         enemy.ZeroVelocity();
-        var a = BoxCastDrawer.BoxCastAndDraw(new Vector2(enemy.transform.position.x +( enemy.reach * enemy.PlayerDirection()), enemy.transform.position.y),new Vector2(enemy.transform.localScale.x/2,enemy.transform.localScale.y), 0, new Vector2(enemy.PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
+        var a = BoxCastDrawer.BoxCastAndDraw(new Vector2(enemy.transform.position.x +( enemy.reach * enemy.MovementDirection()), enemy.transform.position.y),new Vector2(enemy.transform.localScale.x/2,enemy.transform.localScale.y), 0, new Vector2(enemy.MovementDirection(), 0),0, LayerMask.GetMask("Player"), 0.3f);
         if(a) a.collider.GetComponent<Player>().DamageDelt(enemy.damage, enemy.knockback,enemy.stun);
     }
     
