@@ -262,7 +262,7 @@ public class EnemyController : MonoBehaviour
     private void AttackStage3()
     {
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x +(reach * PlayerDirection()), transform.position.y),new Vector2(transform.localScale.x/2,transform.localScale.y), 0, new Vector2(PlayerDirection(), 0),0, LayerMask.GetMask("Player"));
-        if (a.collider != null) a.collider.GetComponent<Player>().DamageDelt(damage, knockBack, stun);
+        //if (a.collider != null) a.collider.GetComponent<Player>().DamageDelt(damage, knockBack, stun);
         warningSign.SetActive(false);
         attacking = false;
     }

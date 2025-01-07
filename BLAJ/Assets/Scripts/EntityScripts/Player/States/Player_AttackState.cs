@@ -23,7 +23,7 @@ public class Player_AttackState : PlayerState
             new Vector2(_transform.localScale.x, _transform.localScale.y) * 0.5f, 0, Vector2.right, 0,
             LayerMask.GetMask("Enemy"));
         
-        foreach(var enemies in bcd) enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage,player.knockBack, player.stun);
+        foreach(var enemies in bcd) enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.playerDamage,player.playerKnockBack, player.playerStun);
     }
 
     public override void UpdateState()
@@ -34,6 +34,8 @@ public class Player_AttackState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+        
         if (animEnded)
         {
             if (player.Grounded())

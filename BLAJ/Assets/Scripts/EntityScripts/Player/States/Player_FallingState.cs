@@ -13,6 +13,7 @@ public class Player_FallingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.canTakeDamage = false;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
     }
 
@@ -38,5 +39,11 @@ public class Player_FallingState : PlayerState
         if (rb.velocityY < -50 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;
 
         return StateKey;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        player.canTakeDamage = true;
     }
 }

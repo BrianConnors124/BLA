@@ -13,6 +13,7 @@ public class Player_MakingContactWithGround : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.canTakeDamage = false;
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -20,5 +21,11 @@ public class Player_MakingContactWithGround : PlayerState
         if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround; 
         
         return StateKey;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        player.canTakeDamage = true;
     }
 }

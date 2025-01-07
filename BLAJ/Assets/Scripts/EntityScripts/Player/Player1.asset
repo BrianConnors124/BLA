@@ -24,3 +24,4 @@ MonoBehaviour:
   baseDamage: 10
   baseKnockBack: 10
   stun: 2
+  health: 100

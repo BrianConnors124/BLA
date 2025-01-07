@@ -12,13 +12,24 @@ public class Player : Entity
     public float dashCD;
     public float attackCD = -1;
     public float dashDuration;
+    public float recentDamage;
+    public float recentKnockBack;
+    public float recentStun;
+    public bool takingDamage;
+    public bool canTakeDamage;
+    public Vector2 enemyLocation; 
+    public float KnockBackDirection => transform.position.x - enemyLocation.x;
+    
+
+    [Header("Stats")] 
+    public float health;
+    public float doubleJumps;
     public float dashSpeed;
     public float movementSpeed;
     public float jumpHeight;
-    public float doubleJumps;
-    public float damage;
-    public float knockBack;
-    public float stun;
+    public float playerDamage;
+    public float playerKnockBack;
+    public float playerStun;
     
     
     
@@ -39,14 +50,28 @@ public class Player : Entity
         dashSpeed = playerInfo.dashSpeed;
         dashDuration = playerInfo.dashDuration;
         jumpHeight = playerInfo.jumpHeight;
-        damage = playerInfo.baseDamage;
-        knockBack = playerInfo.baseKnockBack;
-        stun = playerInfo.stun;
+        playerDamage = playerInfo.baseDamage;
+        playerKnockBack = playerInfo.baseKnockBack;
+        playerStun = playerInfo.stun;
+        health = playerInfo.health;
     }
 
-    public void DamageDelt(float damage, float knockback, float stun)
+    public void ReceiveDamage(float damage, float knockBack, float stun, Vector2 location)
     {
-        
+        if (!canTakeDamage) return;
+        health -= damage;
+        if(health <= 0)Die();
+        recentKnockBack = knockBack;
+        recentStun = stun;
+        takingDamage = true;
+        enemyLocation = location;
+        print("DamageReceived");
+    }
+
+    private void Die()
+    {
+        print("Player Has Died");
+        health = playerInfo.health;
     }
 
     #region Cooldowns
@@ -110,4 +135,5 @@ public class PlayerInfo : ScriptableObject
     public float baseDamage;
     public float baseKnockBack;
     public float stun;
+    public float health;
 }

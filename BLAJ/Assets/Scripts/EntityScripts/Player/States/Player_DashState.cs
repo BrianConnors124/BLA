@@ -15,6 +15,7 @@ public class Player_DashState : PlayerState
     {
         base.EnterState();
         stateTimer = player.dashDuration;
+        player.canTakeDamage = false;
         player.StartDashCD();
         rb.gravityScale = 0;
         rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
@@ -43,6 +44,7 @@ public class Player_DashState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        player.canTakeDamage = true;
         rb.gravityScale = player.playerInfo.gravityScale;
         rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
     }

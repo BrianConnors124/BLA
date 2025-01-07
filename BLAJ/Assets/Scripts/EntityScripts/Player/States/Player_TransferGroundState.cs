@@ -18,6 +18,8 @@ public class Player_TransferGroundState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+        
         if (InputSystemController.MovementInput().magnitude > 0) return PlayerStateMachine.EPlayerState.walking;
         
         
