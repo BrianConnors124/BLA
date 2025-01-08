@@ -10,27 +10,34 @@ public class Player_WalkingState : PlayerState
     {
         
     }
+
+    private bool canIdle;
     public override void EnterState()
     {
         base.EnterState();
+        canIdle = false;
         player.coyoteJump = player.playerInfo.coyoteJump;
         player.doubleJumps = player.playerInfo.doubleJumps + 1;
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
+        player.Move(Speed.CalculatorX(player.Velocity.x, Speed.CalculatorX(0.1f, 0.02f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
         player.Anim.speed = Mathf.Abs(InputSystemController.MovementInput().x);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
-        player.Anim.speed = Mathf.Abs(InputSystemController.MovementInput().x);
+        
+        if(player.Velocity.x == 0 && !timer.TimerActive(idleWaitTime)) timer.SetActionTimer(idleWaitTime, .1f, () => canIdle = true);
+        if(player.Velocity.x != 0) timer.RemoveActionTimer(idleWaitTime);
+        
+        player.Move(Speed.CalculatorX(player.Velocity.x, Speed.CalculatorX(0.1f, 0.02f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
+        player.Anim.speed = Mathf.Abs(player.Velocity.x) / player.movementSpeed;
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;
+        if (InputSystemController.MovementInput().magnitude == 0 && canIdle) return PlayerStateMachine.EPlayerState.idle;
         
         if ((InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;

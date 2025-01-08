@@ -7,8 +7,9 @@ public class Player : Entity
     [Header("Controllers")]
     public PlayerStateMachine _stateMachine;
     public PlayerInfo playerInfo;
-    
-    [Header("Input / Info")]
+
+    [Header("Input / Info")] 
+    public Vector2 speed;
     public float dashCD;
     public float attackCD = -1;
     public float dashDuration;
@@ -77,6 +78,7 @@ public class Player : Entity
     #region Cooldowns
     protected void FixedUpdate()
     {
+        speed = Velocity;
         if (Grounded())
         {
             coyoteJump = playerInfo.coyoteJump;
@@ -109,13 +111,8 @@ public class Player : Entity
 
     public override void Flip()
     {
-        if (InputSystemController.MovementInput().x > 0) sprite.flipX = false;
-        if (InputSystemController.MovementInput().x < 0) sprite.flipX = true;
-    }
-
-    public void Move(float x, float y)
-    {
-        _rb.velocity = new Vector2(x, y);
+        if (rb.velocityX > 0.1f) sprite.flipX = false;
+        if (rb.velocityX < -0.1f) sprite.flipX = true;
     }
 
     #endregion

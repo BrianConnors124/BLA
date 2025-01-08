@@ -23,6 +23,10 @@ public class Entity : MonoBehaviour
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
     public void SetVelocity(Vector2 newVelocity) => _rb.velocity = newVelocity;
+    public virtual void Move(float x, float y)
+    {
+        _rb.velocity = new Vector2(x, y);
+    }
     public Vector2 Velocity => _rb.velocity;
     public float Direction(float a)
     {

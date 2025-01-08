@@ -14,7 +14,7 @@ public class Enemy_AttackState : EnemyState
         enemy.canAttack = false;
         enemy.ZeroVelocity();
         var a = BoxCastDrawer.BoxCastAndDraw(new Vector2(enemy.transform.position.x +( enemy.reach * enemy.MovementDirection()), enemy.transform.position.y),new Vector2(enemy.transform.localScale.x/2,enemy.transform.localScale.y), 0, new Vector2(enemy.MovementDirection(), 0),0, LayerMask.GetMask("Player"), 0.3f);
-        a.collider.GetComponent<Player>().ReceiveDamage(enemy.damage, enemy.knockback,enemy.stun, enemy.transform.position);
+        if(a) a.collider.GetComponent<Player>().ReceiveDamage(enemy.damage, enemy.knockback,enemy.stun, enemy.transform.position);
     }
     
     
@@ -25,8 +25,8 @@ public class Enemy_AttackState : EnemyState
     
     
     
-    public override EnemyStateMachine.EEnemyState GetNextState() 
-    { 
+    public override EnemyStateMachine.EEnemyState GetNextState()
+    {
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         return animEnded ? EnemyStateMachine.EEnemyState.idle : StateKey;
     }

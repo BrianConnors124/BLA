@@ -7,10 +7,15 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     {
         player = entity;
         rb = player.GetComponent<Rigidbody2D>();
+        timer = entity.GetComponent<UniversalTimer>();
     }
 
     protected Player player;
-    public Rigidbody2D rb;
+    protected Rigidbody2D rb;
+    protected UniversalTimer timer;
+
+    protected string idleWaitTime = "idleWaitTime";
+    
 
     public override void EnterState()
     {
