@@ -13,7 +13,6 @@ public class Player_JumpState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.canTakeDamage = false;
         player.doubleJumps--;
         stateTimer = 0.4f;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
@@ -27,6 +26,8 @@ public class Player_JumpState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+        
         if ((InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
         
@@ -46,7 +47,5 @@ public class Player_JumpState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
-        
-        player.canTakeDamage = true;
     }
 }

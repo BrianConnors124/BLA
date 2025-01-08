@@ -13,7 +13,6 @@ public class Player_FallingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.canTakeDamage = false;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
     }
 
@@ -25,6 +24,8 @@ public class Player_FallingState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+        
         if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
         
         if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
@@ -44,6 +45,5 @@ public class Player_FallingState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
-        player.canTakeDamage = true;
     }
 }

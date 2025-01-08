@@ -8,9 +8,6 @@ public class Enemy_PursuitState : EnemyState
     {
         
     }
-    
-    
-    private string code = "Player Lost";
 
     public override void EnterState()
     {
@@ -30,16 +27,22 @@ public class Enemy_PursuitState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
+        if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         if (playerLost) return EnemyStateMachine.EEnemyState.retrieve;
-        if (enemy.ObjectForwardTooClose()) return EnemyStateMachine.EEnemyState.situateJump;
+        if (enemy.ObjectForwardTooClose() && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.situateJump;
         if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
-        if (playerLost || enemy.playerInAttackRange && !enemy.canAttack || !enemy.ThereIsAFloor()) return EnemyStateMachine.EEnemyState.idle;
+        if (enemy.playerInAttackRange && !enemy.canAttack || !enemy.ThereIsAFloor() || enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.idle;
         if (enemy.playerInAttackRange && enemy.canAttack) return EnemyStateMachine.EEnemyState.attack;
-        if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
         
         
         
         return StateKey;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        if((enemy.PlayerOutOfSight() || !enemy.playerInPursuitRange) && !Timer.TimerActive(code)) Timer.SetActionTimer(code, 1, () => playerLost = true);
     }
 }

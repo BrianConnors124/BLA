@@ -14,6 +14,7 @@ public class Player_TakingDamage : PlayerState
     {
         base.EnterState();
         player.canTakeDamage = false;
+        player.canFlip = false;
         Debug.Log("Taking Damage");
         if (player.recentKnockBack == 0) return;
         player.SetVelocity(new Vector2(player.recentKnockBack * player.KnockBackDirection, player.recentKnockBack));
@@ -38,6 +39,7 @@ public class Player_TakingDamage : PlayerState
     {
         base.ExitState();
         player.takingDamage = false;
+        player.canFlip = true;
         player.canTakeDamage = true;
     }
 }

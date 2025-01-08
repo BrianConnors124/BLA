@@ -9,6 +9,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public UniversalTimer Timer;
     public string jumpKey;
     public bool playerLost = false;
+    protected string code = "Player Lost";
     public EnemyState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key)
     {
         enemy = entity;
@@ -34,4 +35,9 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
         base.UpdateState();
         enemy.Anim.Play(StateKey.ToString());
     }
-}
+    
+    protected void DoAttack()
+    {
+        var a = BoxCastDrawer.BoxCastAndDraw(new Vector2(enemy.transform.position.x +( enemy.reach * enemy.MovementDirection()), enemy.transform.position.y),new Vector2(enemy.transform.localScale.x/2,enemy.transform.localScale.y), 0, new Vector2(enemy.MovementDirection(), 0),0, LayerMask.GetMask("Player"), 0.3f);
+        if(a) a.collider.GetComponent<Player>().ReceiveDamage(enemy.damage, enemy.knockback,enemy.stun, enemy.transform.position);
+    }}

@@ -9,17 +9,12 @@ public class Speed
     private float speedMax;
     private float speedMin;
 
-    public static float CalculatorX(float speed, float accel,float max)
+    public static float Calculator(float speed, float accel,float max)
     {
         speed += accel;
         speed = Mathf.Clamp(speed, -max, max);
         return speed;
     }
     
-    public static float CalculatorY(float speed, float accel,float max)
-    {
-        speed += accel;
-        speed = Mathf.Clamp(speed, -max, max);
-        return speed;
-    }
+    
 }

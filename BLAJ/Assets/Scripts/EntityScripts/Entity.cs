@@ -36,7 +36,7 @@ public class Entity : MonoBehaviour
     }
 
     public float FacingDirection() => sprite.flipX ? -1 : 1;
-    public virtual void Flip()
+    protected virtual void Flip()
     {
         
         if (_rb.velocityX > 0.1f) sprite.flipX = false;

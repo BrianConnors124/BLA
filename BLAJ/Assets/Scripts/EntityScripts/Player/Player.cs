@@ -19,18 +19,20 @@ public class Player : Entity
     public bool takingDamage;
     public bool canTakeDamage;
     public Vector2 enemyLocation; 
+    public bool canFlip = true;
     public float KnockBackDirection => transform.position.x - enemyLocation.x;
     
 
     [Header("Stats")] 
     public float health;
+    public float playerDamage;
+    public float playerKnockBack;
+    public float playerStun;
+    
     public float doubleJumps;
     public float dashSpeed;
     public float movementSpeed;
     public float jumpHeight;
-    public float playerDamage;
-    public float playerKnockBack;
-    public float playerStun;
     
     
     
@@ -94,7 +96,7 @@ public class Player : Entity
         if(!DashReady())
             dashCD -= Time.deltaTime;
         
-        Flip();
+        if(canFlip) Flip();
     }
     public void StartAttackCD() => attackCD = playerInfo.attackCD;
     
@@ -109,7 +111,7 @@ public class Player : Entity
 
     #region Misc
 
-    public override void Flip()
+    protected override void Flip()
     {
         if (rb.velocityX > 0.1f) sprite.flipX = false;
         if (rb.velocityX < -0.1f) sprite.flipX = true;

@@ -118,7 +118,7 @@ public class Enemy : Entity
             transform.position.x +
             (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
             transform.position.y + transform.localScale.y / 5), new Vector2(MovementDirection(), 0),
-        transform.localScale.x * .5f);
+        transform.localScale.x * .5f, LayerMask.GetMask("World"), Color.gray);
     
     public RaycastHit2D ObjectForwardTooClose(){
     

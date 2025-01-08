@@ -20,7 +20,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log(StateKey);
+        //Debug.Log(StateKey);
         player.Anim.Play(StateKey.ToString());
     }
     public override PlayerStateMachine.EPlayerState GetNextState()
