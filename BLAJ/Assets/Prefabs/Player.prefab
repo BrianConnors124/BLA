@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 993344871259942363}
   - component: {fileID: 7731353031252206761}
   m_Layer: 7
-  m_Name: NewPlayer
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,16 +216,25 @@ MonoBehaviour:
   coyoteJump: 0
   _stateMachine: {fileID: 0}
   playerInfo: {fileID: 11400000, guid: d68603c1fe9ddf146a1ac29f2dc89e5f, type: 2}
+  speed: {x: 0, y: 0}
   dashCD: 0
   attackCD: 0
   dashDuration: 0
+  recentDamage: 0
+  recentKnockBack: 0
+  recentStun: 0
+  takingDamage: 0
+  canTakeDamage: 0
+  enemyLocation: {x: 0, y: 0}
+  canFlip: 1
+  health: 0
+  playerDamage: 0
+  playerKnockBack: 0
+  playerStun: 0
+  doubleJumps: 0
   dashSpeed: 0
   movementSpeed: 0
   jumpHeight: 0
-  doubleJumps: 0
-  damage: 0
-  knockBack: 0
-  stun: 0
 --- !u!114 &2654378839634255985
 MonoBehaviour:
   m_ObjectHideFlags: 0

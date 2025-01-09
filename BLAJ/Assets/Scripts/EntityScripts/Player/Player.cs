@@ -7,6 +7,7 @@ public class Player : Entity
     [Header("Controllers")]
     public PlayerStateMachine _stateMachine;
     public PlayerInfo playerInfo;
+    public UniversalTimer timer;
 
     [Header("Input / Info")] 
     public Vector2 speed;
@@ -25,6 +26,7 @@ public class Player : Entity
 
     [Header("Stats")] 
     public float health;
+    public float maxHealth;
     public float playerDamage;
     public float playerKnockBack;
     public float playerStun;
@@ -33,6 +35,13 @@ public class Player : Entity
     public float dashSpeed;
     public float movementSpeed;
     public float jumpHeight;
+
+    [Header("Timer Keys")] 
+    public string attackKey = "AttackCoolDown";
+    public string coyoteKey = "CoyoteJump";
+    public string blockKey = "BlockCoolDown";
+    public string dashKey = "DashCoolDown";
+    
     
     
     
@@ -43,6 +52,7 @@ public class Player : Entity
         _stateMachine.Initialize(this, _rb);
         SetPresets();
         _rb.gravityScale = playerInfo.gravityScale;
+        timer = GetComponent<UniversalTimer>();
     }
 
     private void SetPresets()
@@ -57,6 +67,7 @@ public class Player : Entity
         playerKnockBack = playerInfo.baseKnockBack;
         playerStun = playerInfo.stun;
         health = playerInfo.health;
+        maxHealth = playerInfo.health;
     }
 
     public void ReceiveDamage(float damage, float knockBack, float stun, Vector2 location)
@@ -90,22 +101,17 @@ public class Player : Entity
         {
             coyoteJump -= Time.deltaTime;
         }
-            
-        if(!AttackReady())
-            attackCD -= Time.deltaTime;
-        if(!DashReady())
-            dashCD -= Time.deltaTime;
         
         if(canFlip) Flip();
     }
-    public void StartAttackCD() => attackCD = playerInfo.attackCD;
+    public void StartAttackCD() => timer.SetTimer(attackKey, attackCD);
     
 
-    public bool AttackReady() => attackCD <= 0;
+    public bool AttackReady() => !timer.TimerActive(attackKey);
     
-    public void StartDashCD() => dashCD = playerInfo.dashCD;
+    public void StartDashCD() => timer.SetTimer(dashKey, dashCD);
     
-    public bool DashReady() => dashCD <= 0;
+    public bool DashReady() => !timer.TimerActive(dashKey);
     
     #endregion
 
