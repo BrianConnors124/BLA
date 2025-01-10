@@ -12,6 +12,7 @@ public class Enemy_SituateJumpState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        stateTimer = 1;
         rb.velocity = new Vector2(enemy.movementSpeed * -Line.LeftOrRight(enemy.transform.position.x, enemy.DetectsObjectForward().collider.transform.position.x), rb.velocity.y);
     }
 
@@ -25,6 +26,7 @@ public class Enemy_SituateJumpState : EnemyState
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         if (!enemy.DetectsObjectBackwards() && playerLost) return EnemyStateMachine.EEnemyState.retrieve;
         if (!enemy.DetectsObjectBackwards()) return enemy.GetComponent<EnemyStateMachine>().LastState.StateKey;
+        if (StateTimerDone()) return EnemyStateMachine.EEnemyState.retrieve;
         
         
         return StateKey;

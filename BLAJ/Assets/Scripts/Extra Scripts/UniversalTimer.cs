@@ -22,6 +22,8 @@ public class UniversalTimer : MonoBehaviour
         action = new Dictionary<string, Action>();
     }
 
+    public float GetTimerValue(string code) => timer[code];
+
     // public bool TimerDone(string a) => previousKey.Any(t => t == a);
     public bool TimerDone(string a) => !key.Contains(a);
     

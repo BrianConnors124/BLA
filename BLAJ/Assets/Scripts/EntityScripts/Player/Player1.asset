@@ -15,7 +15,7 @@ MonoBehaviour:
   movementSpeed: 8
   dashSpeed: 60
   jumpHeight: 24
-  attackCD: 1
+  attackCD: 0.5
   dashCD: 1
   dashDuration: 0.08
   doubleJumps: 1
@@ -23,5 +23,5 @@ MonoBehaviour:
   gravityScale: 10
   baseDamage: 10
   baseKnockBack: 10
-  stun: 2
+  stun: 0.5
   health: 100

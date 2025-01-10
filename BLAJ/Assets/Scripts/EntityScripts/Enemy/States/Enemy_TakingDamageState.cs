@@ -13,21 +13,19 @@ public class Enemy_TakingDamage : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        enemy.SetVelocity(new Vector2(enemy.recentKnockBack * - enemy.PlayerDirection(), enemy.recentKnockBack));
         stateTimer = 0.2f;
-        if (enemy.recentStun > 0) stateTimer = enemy.recentStun;
+        enemy.SetVelocity(new Vector2(enemy.recentKnockBack * - enemy.PlayerDirection(), enemy.recentKnockBack));
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        if(enemy.IsTouchingGround() && enemy.recentStun - stateTimer >= .2f) enemy.ZeroVelocity();
     }
     
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (enemy.IsTouchingGround() && StateTimerDone()) return EnemyStateMachine.EEnemyState.idle;
+        if (enemy.IsTouchingGround() && StateTimerDone()) return EnemyStateMachine.EEnemyState.stunned;
         
         return StateKey;
     }

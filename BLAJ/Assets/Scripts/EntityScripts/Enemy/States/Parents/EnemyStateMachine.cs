@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyStateMachine : StateMachine<EnemyStateMachine.EEnemyState>
 {
-    public enum EEnemyState{retrieve, pursuit, attack, jump, falling, idle, situateJump, takingDamage}
+    public enum EEnemyState{retrieve, pursuit, attack, jump, falling, idle, situateJump, takingDamage, stunned}
 
     public void Initialize(Enemy enemy, Rigidbody2D rb)
     {
@@ -17,6 +17,7 @@ public class EnemyStateMachine : StateMachine<EnemyStateMachine.EEnemyState>
         States.Add(EEnemyState.situateJump, new Enemy_SituateJumpState(EEnemyState.situateJump, enemy));
         States.Add(EEnemyState.attack, new Enemy_AttackState(EEnemyState.attack, enemy));
         States.Add(EEnemyState.takingDamage, new Enemy_TakingDamage(EEnemyState.takingDamage, enemy));
+        States.Add(EEnemyState.stunned, new Enemy_StunnedState(EEnemyState.stunned, enemy));
         CurrentState = States[EEnemyState.idle];
     }
 }

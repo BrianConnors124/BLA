@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +10,14 @@ public class Player : Entity
     public PlayerInfo playerInfo;
     public UniversalTimer timer;
 
-    [Header("Input / Info")] 
+    [Header("Input / Info")]
+    //public float dashCD;
+    //public float attackCD;
+
+    public List<string> cooldownKey;
+    private Dictionary<string, float> coolDowns;
+    
     public Vector2 speed;
-    public float dashCD;
-    public float attackCD = -1;
     public float dashDuration;
     public float recentDamage;
     public float recentKnockBack;
@@ -36,13 +41,8 @@ public class Player : Entity
     public float movementSpeed;
     public float jumpHeight;
 
-    [Header("Timer Keys")] 
-    public string attackKey = "AttackCoolDown";
-    public string coyoteKey = "CoyoteJump";
-    public string blockKey = "BlockCoolDown";
-    public string dashKey = "DashCoolDown";
-    
-    
+
+    public bool doneLoading;
     
     
     protected override void Awake()
@@ -50,15 +50,21 @@ public class Player : Entity
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
-        SetPresets();
         _rb.gravityScale = playerInfo.gravityScale;
         timer = GetComponent<UniversalTimer>();
+        coolDowns = new Dictionary<string, float>();
+        cooldownKey = new List<string>();
+        cooldownKey.Add("attackCD");
+        cooldownKey.Add("dashCD");
+        doneLoading = true;
+        SetPresets();
     }
 
     private void SetPresets()
     {
         doubleJumps = playerInfo.doubleJumps + 1;
-        dashCD = playerInfo.dashCD;
+        coolDowns.Add(cooldownKey[0], playerInfo.attackCD);
+        coolDowns.Add(cooldownKey[1], playerInfo.dashCD);
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
         dashDuration = playerInfo.dashDuration;
@@ -68,7 +74,12 @@ public class Player : Entity
         playerStun = playerInfo.stun;
         health = playerInfo.health;
         maxHealth = playerInfo.health;
+        
     }
+
+    public Dictionary<string, float> GetCoolDowns() => coolDowns;
+
+    public UniversalTimer GetUniversalTimer() => timer;
 
     public void ReceiveDamage(float damage, float knockBack, float stun, Vector2 location)
     {
@@ -104,14 +115,13 @@ public class Player : Entity
         
         if(canFlip) Flip();
     }
-    public void StartAttackCD() => timer.SetTimer(attackKey, attackCD);
+    public void StartAttackCD() => timer.SetTimer(cooldownKey[0], coolDowns[cooldownKey[0]]);
     
-
-    public bool AttackReady() => !timer.TimerActive(attackKey);
+    public void StartDashCD() => timer.SetTimer(cooldownKey[1], coolDowns[cooldownKey[1]]);
+    public bool AttackReady() => !timer.TimerActive(cooldownKey[0]);
     
-    public void StartDashCD() => timer.SetTimer(dashKey, dashCD);
     
-    public bool DashReady() => !timer.TimerActive(dashKey);
+    public bool DashReady() => !timer.TimerActive(cooldownKey[1]);
     
     #endregion
 

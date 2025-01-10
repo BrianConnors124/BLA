@@ -18,7 +18,7 @@ public class Player_WalkingState : PlayerState
         canIdle = false;
         player.coyoteJump = player.playerInfo.coyoteJump;
         player.doubleJumps = player.playerInfo.doubleJumps + 1;
-        player.Move(Speed.Calculator(player.Velocity.x, Speed.Calculator(0.1f, 0.02f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
+        player.Move(Speed.Calculator(player.Velocity.x, Speed.Calculator(0.15f, 0.05f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
         player.Anim.speed = Mathf.Abs(player.Velocity.x) / player.movementSpeed;
     }
 
@@ -29,7 +29,7 @@ public class Player_WalkingState : PlayerState
         if(player.Velocity.x == 0 && !timer.TimerActive(idleWaitTime)) timer.SetActionTimer(idleWaitTime, .1f, () => canIdle = true);
         if(player.Velocity.x != 0) timer.RemoveActionTimer(idleWaitTime);
         
-        player.Move(Speed.Calculator(player.Velocity.x, Speed.Calculator(0.1f, 0.02f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
+        player.Move(Speed.Calculator(player.Velocity.x, Speed.Calculator(0.15f, 0.05f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
         player.Anim.speed = Mathf.Abs(player.Velocity.x) / player.movementSpeed;
     }
 
