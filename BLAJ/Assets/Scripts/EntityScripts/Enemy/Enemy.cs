@@ -161,7 +161,7 @@ public class Enemy : Entity
         return 1;
     }
           
-    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection(), transform.position.y), Vector2.down, transform.localScale.y * 1.3f, LayerMask.GetMask("WorldObj"), Color.red);
+    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection(), transform.position.y), Vector2.down, transform.localScale.y * 1.4f, LayerMask.GetMask("WorldObj"), Color.red);
           
     #endregion
 

@@ -23,10 +23,10 @@ public class Player_IdleState : PlayerState
         if (InputSystemController.MovementInput().magnitude > 0) return PlayerStateMachine.EPlayerState.walking;
         
         
-        if ((InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) && player.AttackReady())
+        if ((InputSystemController.instance.TryingAttack()) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
 
-        if (InputSystemController.instance.HandleJump() || InputSystemController.instance.queued == InputSystemController.Equeue.jump)
+        if (InputSystemController.instance.TryingJump())
             return PlayerStateMachine.EPlayerState.jump;
 
         if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;

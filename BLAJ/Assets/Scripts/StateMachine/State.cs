@@ -14,15 +14,18 @@ public abstract class State<EState> where EState : Enum
 
     protected float stateTimer;
     protected bool animEnded;
+    protected bool startAttack;
 
     public virtual void EnterState()
     {
         //Debug.Log(StateKey);
         animEnded = false;
+        
     }
 
     public virtual void ExitState()
     {
+        startAttack = false;
     }
 
     public virtual void UpdateState()
@@ -34,6 +37,11 @@ public abstract class State<EState> where EState : Enum
     public virtual void AnimEndTrigger()
     {
         animEnded = true;
+    }
+
+    public virtual void SendAttack()
+    {
+        startAttack = true;
     }
 
     protected bool StateTimerDone() => stateTimer < 0;

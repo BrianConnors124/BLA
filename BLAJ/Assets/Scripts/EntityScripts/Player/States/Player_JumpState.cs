@@ -28,12 +28,12 @@ public class Player_JumpState : PlayerState
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if ((InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack) && player.AttackReady())
+        if ((InputSystemController.instance.TryingAttack()) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
         
         if (rb.velocityY < 0) return PlayerStateMachine.EPlayerState.falling;
         
-        if ((InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash) && player.DashReady())
+        if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
         if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())

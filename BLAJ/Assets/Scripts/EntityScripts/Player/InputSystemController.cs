@@ -17,9 +17,12 @@ public class InputSystemController : MonoBehaviour
 
 
     private UniversalTimer _queueTimer;
-    public enum Equeue{nothing,jump,attack,dash}
 
-    public Equeue queued;
+    [Header("ActionKeys")] 
+    private string jumpKey = "Jump";
+    private string attackKey = "Attack";
+    private string dashKey = "Dash";
+    
     [SerializeField] private InputActionReference Walk;
     [SerializeField] private InputActionReference Jump;
     [SerializeField] private InputActionReference Dash;
@@ -32,61 +35,40 @@ public class InputSystemController : MonoBehaviour
         instance = this;
         _queueTimer = GetComponent<UniversalTimer>();
     }
-
-    private void Update()
-    {
-        if (queued != Equeue.nothing)
-        { 
-            if(!queueActive) _queueTimer.SetActionTimer("InputQue", .1f, ChangeQueuedToNothing); queueActive = true;
-        }
-        
-    }
     
     public static Vector2 MovementInput() => instance.Walk.action.ReadValue<Vector2>();
-    //public bool HandleJump() => instance.Jump.action.triggered;
+    
     public bool HandleJump()
     {
-        bool j = instance.Jump.action.triggered;
-        if (j)
-        {
-            _queueTimer.RemoveActionTimer("InputQue");
-            queueActive = false;
-            queued = Equeue.jump; 
-        }
-        return j;
-    }
-    public bool HandleDash()
-    {
-        bool d = instance.Dash.action.triggered;
-        if (d)
-        {
-            _queueTimer.RemoveActionTimer("InputQue");
-            queueActive = false;
-            queued = Equeue.dash; 
-        }
-
-        return d;
-    }
-    public bool HandleAttack()
-    {
-        bool a = instance.Attack.action.inProgress;
-        if (a)
-        {
-            _queueTimer.RemoveActionTimer("InputQue");
-            queueActive = false;
-            queued = Equeue.attack; 
-        }
-
+        var a = instance.Jump.action.triggered;
+        if (a && !_queueTimer.TimerActive(jumpKey))_queueTimer.SetTimer(jumpKey, 0.2f);
         return a;
-    }
-    public void ChangeQueuedToNothing()
+    } 
+    public bool TryingJump() => HandleJump() || _queueTimer.TimerActive(jumpKey);
+    
+    
+    private bool HandleDash()
     {
-        queued = Equeue.nothing;
-        queueActive = false;
-    }
+        var a = instance.Dash.action.triggered;
+        if (a && !_queueTimer.TimerActive(dashKey))_queueTimer.SetTimer(dashKey, 0.2f);
+        return a;
+    } 
+    public bool TryingDash() => HandleDash() || _queueTimer.TimerActive(dashKey);
+    
+    
+    private bool HandleAttack()
+    {
+        var a = instance.Attack.action.inProgress;
+        if (a && !_queueTimer.TimerActive(attackKey))_queueTimer.SetTimer(attackKey, 0.2f);
+        return a;
+    } 
+    public bool TryingAttack() => HandleAttack() || _queueTimer.TimerActive(attackKey);
 
-    public void ButtonReleassed()
+    public void GetInput()
     {
-        buttonPressed = false;
+        HandleJump();
+        HandleAttack();
+        HandleDash();
     }
+    
 }

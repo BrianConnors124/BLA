@@ -50,4 +50,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         CurrentState.AnimEndTrigger();
     }
+
+    public virtual void SendAttack()
+    {
+        CurrentState.SendAttack();
+    }
 }

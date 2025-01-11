@@ -28,16 +28,16 @@ public class Player_FallingState : PlayerState
         
         if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
         
-        if (player.DashReady() && (InputSystemController.instance.HandleDash() || InputSystemController.instance.queued == InputSystemController.Equeue.dash))
+        if (player.DashReady() && (InputSystemController.instance.TryingDash()))
             return PlayerStateMachine.EPlayerState.dash;
         
-        if (player.AttackReady() && (InputSystemController.instance.HandleAttack() || InputSystemController.instance.queued == InputSystemController.Equeue.attack))
+        if (player.AttackReady() && (InputSystemController.instance.TryingAttack()))
             return PlayerStateMachine.EPlayerState.attack;
         
         if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())
             return PlayerStateMachine.EPlayerState.doubleJump;
 
-        if (rb.velocityY < -50 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;
+        if (rb.velocityY < -70 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;
 
         return StateKey;
     }

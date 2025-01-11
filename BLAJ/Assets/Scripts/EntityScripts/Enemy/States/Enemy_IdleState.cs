@@ -27,7 +27,7 @@ public class Enemy_IdleState : EnemyState
         if (enemy.ObjectForwardTooClose()) return EnemyStateMachine.EEnemyState.situateJump;
         if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
         if (!enemy.playerInPursuitRange && !enemy.returned || playerLost && !enemy.returned) return EnemyStateMachine.EEnemyState.retrieve;
-        if (enemy.playerInPursuitRange && !enemy.playerInAttackRange && !enemy.PlayerOutOfSight() && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.pursuit;
+        if (enemy.playerInPursuitRange && !enemy.playerInAttackRange && !enemy.PlayerOutOfSight() && !enemy.ObjectTooHigh() && enemy.ThereIsAFloor()) return EnemyStateMachine.EEnemyState.pursuit;
         if (enemy.playerInAttackRange && enemy.canAttack) return EnemyStateMachine.EEnemyState.attack;
         return StateKey;
     }

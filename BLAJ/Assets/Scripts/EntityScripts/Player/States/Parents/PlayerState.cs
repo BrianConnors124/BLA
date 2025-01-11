@@ -8,11 +8,13 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         player = entity;
         rb = player.GetComponent<Rigidbody2D>();
         timer = entity.GetComponent<UniversalTimer>();
+        playerController = entity.GetComponent<InputSystemController>();
     }
 
     protected Player player;
     protected Rigidbody2D rb;
     protected UniversalTimer timer;
+    protected InputSystemController playerController;
 
     protected string idleWaitTime = "idleWaitTime";
     
@@ -31,7 +33,8 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public override void UpdateState()
     {
         base.UpdateState();
-        player.Anim.Play(StateKey.ToString());
+        playerController.GetInput();
+        if(!animEnded) player.Anim.Play(StateKey.ToString());
     }
 
     public override void ExitState()

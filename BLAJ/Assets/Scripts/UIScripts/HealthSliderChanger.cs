@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HealthSliderChanger : MonoBehaviour
 {
-    public Image main;
+    public Image[] images;
     public GameObject player;
     private Player playerController;
 
@@ -19,8 +19,10 @@ public class HealthSliderChanger : MonoBehaviour
 
     private void Update()
     {
-        
-        main.fillAmount = playerController.health/playerController.maxHealth;
+        foreach(var a in images)
+        {
+            a.fillAmount = playerController.health/playerController.maxHealth;   
+        }
         previousHp = playerController.health;
     }
 }

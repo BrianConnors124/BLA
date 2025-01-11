@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : Entity
 {
     [Header("Controllers")]
-    public PlayerStateMachine _stateMachine;
     public PlayerInfo playerInfo;
+    public PlayerStateMachine _stateMachine;
     public UniversalTimer timer;
 
     [Header("Input / Info")]
@@ -47,6 +48,7 @@ public class Player : Entity
     
     protected override void Awake()
     {
+        GetComponent<Animator>().runtimeAnimatorController = playerInfo.playerAnimator;
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
@@ -151,4 +153,5 @@ public class PlayerInfo : ScriptableObject
     public float baseKnockBack;
     public float stun;
     public float health;
+    public AnimatorController playerAnimator;
 }
