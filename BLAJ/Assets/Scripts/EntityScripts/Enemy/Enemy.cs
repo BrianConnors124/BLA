@@ -20,18 +20,15 @@ public class Enemy : Entity
     public float reach;
     public float damage;
     public float stun;
-    public float knockback;
+    public float knockBack;
     public float primaryCD;
-    public float health;
     
     [Header("Output")]
     public bool returned;
     public bool playerInPursuitRange;
     public bool playerInAttackRange;
     public bool canAttack = true;
-    public bool takingDamage;
-    public float recentKnockBack;
-    public float recentStun;
+    
 
     protected override void Awake()
     {
@@ -51,7 +48,7 @@ public class Enemy : Entity
         reach = info.baseReach / transform.localScale.x;
         damage = info.damage;
         stun = info.stun;
-        knockback = info.knockBack;
+        knockBack = info.knockBack;
         primaryCD = info.primaryCD;
         health = info.health;
     }
@@ -72,20 +69,6 @@ public class Enemy : Entity
 
 
         #endregion
-    }
-
-    public void ReceiveDamage(float damage, float knockBack, float stun)
-    {
-        health -= damage;
-        if(health <= 0)Die();
-        recentKnockBack = knockBack;
-        recentStun = stun;
-        takingDamage = true;
-    }
-
-    private void Die()
-    {
-     Destroy(gameObject);   
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -150,14 +133,6 @@ public class Enemy : Entity
         }
         
         sprite.flipX = false;
-        return 1;
-    }
-    public int MovementDirection()
-    {
-        if (sprite.flipX)
-        { 
-            return -1;
-        }
         return 1;
     }
           

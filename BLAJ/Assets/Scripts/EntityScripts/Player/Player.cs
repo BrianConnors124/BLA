@@ -16,23 +16,14 @@ public class Player : Entity
     //public float attackCD;
 
     public List<string> cooldownKey;
-    private Dictionary<string, float> coolDowns;
+    public Dictionary<string, float> coolDowns;
     
     public Vector2 speed;
-    public float dashDuration;
-    public float recentDamage;
-    public float recentKnockBack;
-    public float recentStun;
-    public bool takingDamage;
-    public bool canTakeDamage;
-    public Vector2 enemyLocation; 
+    public float dashDuration; 
     public bool canFlip = true;
-    public float KnockBackDirection => transform.position.x - enemyLocation.x;
     
 
     [Header("Stats")] 
-    public float health;
-    public float maxHealth;
     public float playerDamage;
     public float playerKnockBack;
     public float playerStun;
@@ -83,19 +74,13 @@ public class Player : Entity
 
     public UniversalTimer GetUniversalTimer() => timer;
 
-    public void ReceiveDamage(float damage, float knockBack, float stun, Vector2 location)
+    public override void ReceiveDamage(float damage, float knockBack, float stun, int direction)
     {
         if (!canTakeDamage) return;
-        health -= damage;
-        if(health <= 0)Die();
-        recentKnockBack = knockBack;
-        recentStun = stun;
-        takingDamage = true;
-        enemyLocation = location;
-        print("DamageReceived");
+        base.ReceiveDamage(damage,knockBack,stun,direction);
     }
 
-    private void Die()
+    protected override void Die()
     {
         print("Player Has Died");
         health = playerInfo.health;
@@ -140,18 +125,18 @@ public class Player : Entity
 [CreateAssetMenu(menuName = "Players/NewPlayer", fileName = "NewPlayer")]
 public class PlayerInfo : ScriptableObject
 {
-    public float movementSpeed;
-    public float dashSpeed;
-    public float jumpHeight;
-    public float attackCD;
-    public float dashCD;
-    public float dashDuration;
-    public float doubleJumps;
-    public float coyoteJump;
-    public float gravityScale;
-    public float baseDamage;
-    public float baseKnockBack;
-    public float stun;
-    public float health;
+    public float movementSpeed = 8;
+    public float dashSpeed = 64;
+    public float jumpHeight = 24;
+    public float attackCD = .5f;
+    public float dashCD = 1;
+    public float dashDuration = 0.08f;
+    public float doubleJumps = 1;
+    public float coyoteJump = 0.2f;
+    public float gravityScale = 10;
+    public float baseDamage = 10;
+    public float baseKnockBack = 12;
+    public float stun = 0.5f;
+    public float health = 100;
     public AnimatorController playerAnimator;
 }

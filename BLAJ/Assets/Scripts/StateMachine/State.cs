@@ -18,9 +18,7 @@ public abstract class State<EState> where EState : Enum
 
     public virtual void EnterState()
     {
-        //Debug.Log(StateKey);
         animEnded = false;
-        
     }
 
     public virtual void ExitState()
@@ -39,7 +37,15 @@ public abstract class State<EState> where EState : Enum
         animEnded = true;
     }
 
-    public abstract void DoAttack();
+    public virtual void DoAttack()
+    {
+     throw new NotImplementedException();
+    }
+
+    public virtual void DoAttackKnockBack()
+    {
+        throw new NotImplementedException();
+    }
     
 
     protected bool StateTimerDone() => stateTimer < 0;

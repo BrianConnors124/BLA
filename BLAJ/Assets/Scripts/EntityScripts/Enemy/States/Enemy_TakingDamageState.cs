@@ -13,8 +13,8 @@ public class Enemy_TakingDamage : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        stateTimer = 0.2f;
-        enemy.SetVelocity(new Vector2(enemy.recentKnockBack * - enemy.PlayerDirection(), enemy.recentKnockBack));
+        if (enemy.recentKnockBack > 0) stateTimer = 0.2f;
+        enemy.SetVelocity(new Vector2(enemy.recentKnockBack * enemy.knockBackDirection, enemy.recentKnockBack));
     }
 
     public override void UpdateState()
@@ -34,5 +34,8 @@ public class Enemy_TakingDamage : EnemyState
     {
         base.ExitState();
         enemy.takingDamage = false;
+        enemy.recentKnockBack = 0;
+        enemy.recentStun = 0;
+        enemy.recentDamage = 0;
     }
 }

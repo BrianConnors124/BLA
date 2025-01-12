@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    
+    
+    [Header("info")]
+    public float health;
+    public float maxHealth;
+    public float recentDamage;
+    public float recentKnockBack;
+    public int knockBackDirection;
+    public float recentStun;
+    
+    public bool takingDamage;
+    public bool canTakeDamage;
     protected Rigidbody2D _rb;
     protected SpriteRenderer sprite;
     public Animator Anim;
@@ -28,6 +40,23 @@ public class Entity : MonoBehaviour
         _rb.velocity = new Vector2(x, y);
     }
     public Vector2 Velocity => _rb.velocity;
+    
+    
+    public virtual void ReceiveDamage(float damage, float knockBack, float stun, int direction)
+    {
+        health -= damage;
+        if(health <= 0)Die();
+        recentKnockBack = knockBack;
+        recentStun = stun;
+        takingDamage = true;
+        knockBackDirection = direction;
+    }
+    
+    protected virtual void Die()
+    {
+        Destroy(gameObject);
+    }
+    
     public float Direction(float a)
     {
         if (a != 0) 
@@ -35,7 +64,7 @@ public class Entity : MonoBehaviour
         return 0;
     }
 
-    public float FacingDirection() => sprite.flipX ? -1 : 1;
+    public int MovementDirection() => sprite.flipX ? -1 : 1;
     protected virtual void Flip()
     {
         

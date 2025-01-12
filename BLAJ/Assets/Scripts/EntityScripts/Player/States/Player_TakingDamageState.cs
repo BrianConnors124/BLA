@@ -17,7 +17,7 @@ public class Player_TakingDamage : PlayerState
         player.canFlip = false;
         Debug.Log("Taking Damage");
         if (player.recentKnockBack == 0) return;
-        player.SetVelocity(new Vector2(player.recentKnockBack * player.KnockBackDirection, player.recentKnockBack));
+        player.SetVelocity(new Vector2(player.recentKnockBack * player.knockBackDirection, player.recentKnockBack));
         stateTimer = 0.2f;
         if (player.recentStun > 0) stateTimer = player.recentStun;
     }

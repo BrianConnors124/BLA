@@ -55,4 +55,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         CurrentState.DoAttack();
     }
+
+    public virtual void DoAttackKnockBack()
+    {
+        CurrentState.DoAttackKnockBack();
+    }
 }
