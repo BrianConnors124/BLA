@@ -37,10 +37,10 @@ public class Player_WalkingState : PlayerState
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         
+        if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;
+        
         if (InputSystemController.instance.TryingJump())
             return PlayerStateMachine.EPlayerState.jump;
-        
-        if (InputSystemController.MovementInput().magnitude == 0 && canIdle) return PlayerStateMachine.EPlayerState.idle;
         
         if (InputSystemController.instance.TryingAttack() && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
@@ -49,7 +49,8 @@ public class Player_WalkingState : PlayerState
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
-        if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;
+        if (InputSystemController.MovementInput().magnitude == 0 && canIdle) return PlayerStateMachine.EPlayerState.idle;
+        
          
         return StateKey;
     }

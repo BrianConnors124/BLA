@@ -18,7 +18,7 @@ public class Player_MakingContactWithGround : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround; 
+        if (player.Grounded()) return PlayerStateMachine.EPlayerState.walking; 
         
         return StateKey;
     }

@@ -32,6 +32,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     }
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         throw new System.NotImplementedException();
     }
 

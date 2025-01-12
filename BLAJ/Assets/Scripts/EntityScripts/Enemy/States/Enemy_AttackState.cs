@@ -13,7 +13,6 @@ public class Enemy_AttackState : EnemyState
         enemy.ZeroVelocity();
         base.EnterState();
         enemy.canAttack = false;
-        Timer.SetActionTimer("Attack", .3f, DoAttack);
     }
     
     

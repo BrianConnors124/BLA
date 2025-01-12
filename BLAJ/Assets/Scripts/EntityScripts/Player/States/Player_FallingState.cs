@@ -26,7 +26,7 @@ public class Player_FallingState : PlayerState
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
+        if (player.Grounded()) return PlayerStateMachine.EPlayerState.walking;
         
         if (player.DashReady() && (InputSystemController.instance.TryingDash()))
             return PlayerStateMachine.EPlayerState.dash;

@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_TransferGroundState : PlayerState
+public class Player_TransferGroundStat : PlayerState
 {
     
     
-    public Player_TransferGroundState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
+    public Player_TransferGroundStat(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
     {
         
     }
@@ -20,14 +20,13 @@ public class Player_TransferGroundState : PlayerState
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if (InputSystemController.MovementInput().magnitude > 0) return PlayerStateMachine.EPlayerState.walking;
-        
+        if (InputSystemController.instance.TryingJump())
+            return PlayerStateMachine.EPlayerState.jump;
         
         if ((InputSystemController.instance.TryingAttack()) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
 
-        if (InputSystemController.instance.TryingJump())
-            return PlayerStateMachine.EPlayerState.jump;
+        if (InputSystemController.MovementInput().magnitude > 0) return PlayerStateMachine.EPlayerState.walking;
          
         if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;
         

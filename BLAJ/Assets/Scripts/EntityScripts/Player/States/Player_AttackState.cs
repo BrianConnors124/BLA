@@ -33,7 +33,7 @@ public class Player_AttackState : PlayerState
         {
             if (player.Grounded())
             {
-                return PlayerStateMachine.EPlayerState.transferGround;
+                return PlayerStateMachine.EPlayerState.walking;
             }
 
             return PlayerStateMachine.EPlayerState.falling;

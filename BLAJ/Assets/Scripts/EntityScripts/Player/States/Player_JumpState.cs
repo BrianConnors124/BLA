@@ -31,15 +31,15 @@ public class Player_JumpState : PlayerState
         if ((InputSystemController.instance.TryingAttack()) && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
         
-        if (rb.velocityY < 0) return PlayerStateMachine.EPlayerState.falling;
-        
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
         if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())
             return PlayerStateMachine.EPlayerState.doubleJump;
         
-        if (player.Grounded()) return PlayerStateMachine.EPlayerState.transferGround;
+        if (rb.velocityY < 0) return PlayerStateMachine.EPlayerState.falling;
+        
+        if (player.Grounded()) return PlayerStateMachine.EPlayerState.walking;
         
         return StateKey;
     }

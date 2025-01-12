@@ -32,7 +32,7 @@ public class Player_DashState : PlayerState
         {
             if (player.Grounded())
             {
-                return PlayerStateMachine.EPlayerState.transferGround;
+                return PlayerStateMachine.EPlayerState.walking;
             }
             
             return PlayerStateMachine.EPlayerState.falling; 
