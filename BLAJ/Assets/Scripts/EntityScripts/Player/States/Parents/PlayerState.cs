@@ -22,7 +22,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public override void EnterState()
     {
         base.EnterState();
-        //Debug.Log(StateKey);
+        Debug.Log(StateKey);
         player.Anim.Play(StateKey.ToString());
     }
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -35,6 +35,16 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         base.UpdateState();
         playerController.GetInput();
         if(!animEnded) player.Anim.Play(StateKey.ToString());
+    }
+
+    public override void DoAttack()
+    {
+        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.FacingDirection(), player.transform.position.y),new Vector2(player.transform.localScale.x/1.3f,player.transform.localScale.y), 0, new Vector2(player.FacingDirection(), 0),0, LayerMask.GetMask("Enemy"), 0.3f);
+        foreach (var enemies in bcd)
+        {
+            enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.playerDamage,player.playerKnockBack, player.playerStun);
+            Debug.Log(enemies);
+        }
     }
 
     public override void ExitState()

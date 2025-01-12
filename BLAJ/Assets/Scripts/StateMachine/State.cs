@@ -39,10 +39,8 @@ public abstract class State<EState> where EState : Enum
         animEnded = true;
     }
 
-    public virtual void SendAttack()
-    {
-        startAttack = true;
-    }
+    public abstract void DoAttack();
+    
 
     protected bool StateTimerDone() => stateTimer < 0;
     

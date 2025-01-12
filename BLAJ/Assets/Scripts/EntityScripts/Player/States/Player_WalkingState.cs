@@ -37,13 +37,14 @@ public class Player_WalkingState : PlayerState
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         
+        if (InputSystemController.instance.TryingJump())
+            return PlayerStateMachine.EPlayerState.jump;
+        
         if (InputSystemController.MovementInput().magnitude == 0 && canIdle) return PlayerStateMachine.EPlayerState.idle;
         
         if (InputSystemController.instance.TryingAttack() && player.AttackReady())
             return PlayerStateMachine.EPlayerState.attack;
         
-        if (InputSystemController.instance.TryingJump())
-            return PlayerStateMachine.EPlayerState.jump;
         
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
