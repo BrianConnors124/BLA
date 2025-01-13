@@ -13,7 +13,9 @@ public class Enemy_TakingDamage : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        if (enemy.recentKnockBack > 0) stateTimer = 0.2f;
+        enemy.sprite.color = Color.red;
+        Timer.SetActionTimer("ChangeColorBack", 0.2f, () => enemy.sprite.color = Color.white);
+        stateTimer = 0.1f;
         enemy.SetVelocity(new Vector2(enemy.recentKnockBack * enemy.knockBackDirection, enemy.recentKnockBack));
     }
 
@@ -34,8 +36,5 @@ public class Enemy_TakingDamage : EnemyState
     {
         base.ExitState();
         enemy.takingDamage = false;
-        enemy.recentKnockBack = 0;
-        enemy.recentStun = 0;
-        enemy.recentDamage = 0;
     }
 }

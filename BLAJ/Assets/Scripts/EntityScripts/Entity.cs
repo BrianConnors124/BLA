@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour
     public bool takingDamage;
     public bool canTakeDamage;
     protected Rigidbody2D _rb;
-    protected SpriteRenderer sprite;
+    public SpriteRenderer sprite;
     public Animator Anim;
     public Vector2 hitBox;
     public float coyoteJump;

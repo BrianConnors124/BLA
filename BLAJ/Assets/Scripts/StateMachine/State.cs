@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class State<EState> where EState : Enum
@@ -46,8 +47,14 @@ public abstract class State<EState> where EState : Enum
     {
         throw new NotImplementedException();
     }
-    
+
+    public virtual void FacePlayer()
+    {
+        throw new NotImplementedException();
+    }
 
     protected bool StateTimerDone() => stateTimer < 0;
+    
+    
     
 }

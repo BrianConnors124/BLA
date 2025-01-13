@@ -60,4 +60,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         CurrentState.DoAttackKnockBack();
     }
+
+    public virtual void FacePlayer()
+    {
+        CurrentState.FacePlayer();
+    }
 }

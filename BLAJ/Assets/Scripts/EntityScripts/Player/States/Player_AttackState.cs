@@ -15,7 +15,7 @@ public class Player_AttackState : PlayerState
         animEnded = false;
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        player.canFlip = false;
+        timer.SetActionTimer("PlayerCanFlip", 0.05f, () => player.canFlip = false);
         timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 1);
         if(attackInt == 3)player.StartAttackCD();
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);

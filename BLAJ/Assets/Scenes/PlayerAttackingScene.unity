@@ -479,30 +479,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5533471724482558307, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 5533471724482558307, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 5533471724482558307, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 5533471724482558307, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 5533471724482558307, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -18
-      objectReference: {fileID: 0}
-    - target: {fileID: 5533471724482558307, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 4011034971153658096, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1947399344}
     - target: {fileID: 7890575358005446142, guid: e2194987c3760034889c580a85cb8c7f, type: 3}
       propertyPath: m_Name
       value: PlayerUI
@@ -1583,11 +1563,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7091675439672830994, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
-      value: 0.5
+      value: 0.53898335
       objectReference: {fileID: 0}
     - target: {fileID: 7091675439672830994, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.5
+      value: 0.5194917
       objectReference: {fileID: 0}
     - target: {fileID: 7091675439672830994, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x

@@ -9,11 +9,16 @@ public class Enemy_StunnedState : EnemyState
         
     }
 
+    protected bool doneStartUp = false;
+
     public override void EnterState()
     {
+        stateTimer = enemy.recentStun;
         base.EnterState();
         enemy.ZeroVelocity();
-        stateTimer = enemy.recentStun;
+        Timer.RemoveActionTimer("ChangeColorBack");
+        enemy.sprite.color = Color.cyan;
+        doneStartUp = true;
     }
 
     public override void UpdateState()
@@ -24,12 +29,18 @@ public class Enemy_StunnedState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        return StateTimerDone() ? EnemyStateMachine.EEnemyState.idle : StateKey;
+        if(!doneStartUp) return StateKey;
+        if (StateTimerDone()) return EnemyStateMachine.EEnemyState.idle;
+        return StateKey;
+
     }
     
     public override void ExitState()
     {
+        enemy.sprite.color = Color.white;
         base.ExitState();
-        
+        enemy.recentKnockBack = 0;
+        enemy.recentStun = 0;
+        enemy.recentDamage = 0;
     }
 }
