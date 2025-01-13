@@ -309,7 +309,7 @@ ScriptedImporter:
       x: 110
       y: 42
       width: 14
-      height: 30
+      height: 31
     spriteID: bcacf8a2ad90e424d952c2aa61508744
     spriteBone: []
     spriteOutline: []
@@ -329,7 +329,7 @@ ScriptedImporter:
       x: 110
       y: 81
       width: 14
-      height: 30
+      height: 31
     spriteID: 56cb46ac507acb14597a62dad07bf2ae
     spriteBone: []
     spriteOutline: []
@@ -369,7 +369,7 @@ ScriptedImporter:
       x: 86
       y: 160
       width: 14
-      height: 30
+      height: 31
     spriteID: a6cc7e50d009266479cf1f5ad9bb49b6
     spriteBone: []
     spriteOutline: []
@@ -387,9 +387,9 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 86
-      y: 198
+      y: 199
       width: 14
-      height: 30
+      height: 31
     spriteID: 19fdb39ee9ccf3f4692ccaae6a4738c1
     spriteBone: []
     spriteOutline: []
@@ -398,7 +398,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 86, y: 198}
+    uvTransform: {x: 86, y: 199}
   - name: WarriorCharacter_Frame_6
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -726,7 +726,7 @@ ScriptedImporter:
         x: 2
         y: 0
         width: 14
-        height: 30
+        height: 31
       spriteId: bcacf8a2ad90e424d952c2aa61508744
     - name: WarriorCharacter_Frame_2
       frameIndex: 2
@@ -734,7 +734,7 @@ ScriptedImporter:
         x: 2
         y: 0
         width: 14
-        height: 30
+        height: 31
       spriteId: 56cb46ac507acb14597a62dad07bf2ae
     - name: WarriorCharacter_Frame_3
       frameIndex: 3
@@ -750,7 +750,7 @@ ScriptedImporter:
         x: 2
         y: 0
         width: 14
-        height: 30
+        height: 31
       spriteId: a6cc7e50d009266479cf1f5ad9bb49b6
     - name: WarriorCharacter_Frame_5
       frameIndex: 5
@@ -758,7 +758,7 @@ ScriptedImporter:
         x: 2
         y: 0
         width: 14
-        height: 30
+        height: 31
       spriteId: 19fdb39ee9ccf3f4692ccaae6a4738c1
     - name: WarriorCharacter_Frame_6
       frameIndex: 6
