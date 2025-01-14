@@ -9,11 +9,10 @@ public class Player : Entity
     [Header("Controllers")]
     public PlayerInfo playerInfo;
     public PlayerStateMachine _stateMachine;
-    public UniversalTimer timer;
 
     [Header("Input / Info")]
-    //public float dashCD;
-    //public float attackCD;
+    
+    public GameObject damageNumberObject;
 
     public List<string> cooldownKey;
     public Dictionary<string, float> coolDowns;
@@ -44,13 +43,13 @@ public class Player : Entity
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
         _rb.gravityScale = playerInfo.gravityScale;
-        timer = GetComponent<UniversalTimer>();
         coolDowns = new Dictionary<string, float>();
         cooldownKey = new List<string>();
         cooldownKey.Add("attackCD");
         cooldownKey.Add("dashCD");
         doneLoading = true;
         SetPresets();
+        damageNumber[0] = damageNumberObject;
     }
 
     private void SetPresets()

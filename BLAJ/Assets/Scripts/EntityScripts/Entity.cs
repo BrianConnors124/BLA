@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class Entity : MonoBehaviour
     public float recentKnockBack;
     public int knockBackDirection;
     public float recentStun;
+    public UniversalTimer timer;
+    
+    protected static GameObject[] damageNumber = new GameObject[1];
     
     public bool takingDamage;
     public bool canTakeDamage;
@@ -22,11 +26,12 @@ public class Entity : MonoBehaviour
     public Vector2 hitBox;
     public float coyoteJump;
 
-    public Rigidbody2D rb => _rb;
+    protected Rigidbody2D rb => _rb;
 
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        timer = GetComponent<UniversalTimer>();
         Anim = GetComponent<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
@@ -45,6 +50,36 @@ public class Entity : MonoBehaviour
     public virtual void ReceiveDamage(float damage, float knockBack, float stun, int direction)
     {
         health -= damage;
+        int i;
+        bool needNewGameObject = true;
+        for (i = 0; i < damageNumber.Length; i++)
+        {
+            if (!damageNumber[i].activeInHierarchy)
+            {
+                needNewGameObject = false;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (needNewGameObject)
+        {
+            var placeholder = new GameObject[damageNumber.Length + 1];
+            for(var j = 0; j < damageNumber.Length; j++)
+            {
+                placeholder[j] = damageNumber[j];
+            }
+
+            placeholder[^1] = Instantiate(damageNumber[0]);
+            i = placeholder.Length - 1;
+            damageNumber = placeholder;
+        }
+        i--;
+        damageNumber[i].transform.position = transform.position;
+        var script = damageNumber[i].GetComponent<DamageNumber>(); 
+        script.damage.text = "" + damage;
+        damageNumber[i].SetActive(true);
         if(health <= 0)Die();
         recentKnockBack = knockBack;
         recentStun = stun;

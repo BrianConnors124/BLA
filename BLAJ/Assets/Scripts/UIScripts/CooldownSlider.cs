@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CooldownSlider : MonoBehaviour
 {
-    public UniversalTimer playerTimer;
+    private UniversalTimer playerTimer;
 
     public GameObject player;
     private Player playerScript;
@@ -47,6 +48,7 @@ public class CooldownSlider : MonoBehaviour
             if (playerTimer.TimerActive(a))
             {
                 currentTimerValue = playerTimer.GetTimerValue(a);
+                
                 images[a].fillAmount = currentTimerValue / playerTimerValues[a];
             }
         }

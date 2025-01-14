@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class HealthSliderChanger : MonoBehaviour
 {
     public Image[] images;
     public GameObject player;
+    public TextMeshProUGUI healthMeter;
     private Player playerController;
 
     private float previousHp;
@@ -23,6 +25,8 @@ public class HealthSliderChanger : MonoBehaviour
         {
             a.fillAmount = playerController.health/playerController.maxHealth;   
         }
+
+        healthMeter.text = "" + playerController.health;
         previousHp = playerController.health;
     }
 }
