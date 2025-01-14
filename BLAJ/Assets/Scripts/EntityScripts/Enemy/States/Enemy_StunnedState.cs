@@ -16,8 +16,6 @@ public class Enemy_StunnedState : EnemyState
         stateTimer = enemy.recentStun;
         base.EnterState();
         enemy.ZeroVelocity();
-        Timer.RemoveActionTimer("ChangeColorBack");
-        enemy.sprite.color = Color.cyan;
         doneStartUp = true;
     }
 
@@ -37,7 +35,6 @@ public class Enemy_StunnedState : EnemyState
     
     public override void ExitState()
     {
-        enemy.sprite.color = Color.white;
         base.ExitState();
         enemy.recentKnockBack = 0;
         enemy.recentStun = 0;

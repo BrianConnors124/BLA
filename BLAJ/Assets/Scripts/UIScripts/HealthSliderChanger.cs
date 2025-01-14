@@ -25,8 +25,6 @@ public class HealthSliderChanger : MonoBehaviour
         {
             a.fillAmount = playerController.health/playerController.maxHealth;   
         }
-
-        healthMeter.text = "" + playerController.health;
         previousHp = playerController.health;
     }
 }

@@ -30,6 +30,9 @@ public class Player_FallingState : PlayerState
         
         if (player.DashReady() && (InputSystemController.instance.TryingDash()))
             return PlayerStateMachine.EPlayerState.dash;
+
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+            return PlayerStateMachine.EPlayerState.slamAttack;
         
         if (player.AttackReady() && (InputSystemController.instance.TryingAttack()))
             return PlayerStateMachine.EPlayerState.attack;

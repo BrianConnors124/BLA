@@ -28,6 +28,9 @@ public class Player_IdleState : PlayerState
 
         if (InputSystemController.instance.TryingJump())
             return PlayerStateMachine.EPlayerState.jump;
+        
+        if ((InputSystemController.instance.TryingDash()) && player.DashReady())
+            return PlayerStateMachine.EPlayerState.dash;
 
         if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;
          

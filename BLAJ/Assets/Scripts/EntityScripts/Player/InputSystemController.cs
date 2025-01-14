@@ -21,12 +21,14 @@ public class InputSystemController : MonoBehaviour
     [Header("ActionKeys")] 
     private string jumpKey = "Jump";
     private string attackKey = "Attack";
+    private string superAttackKey = "SuperAttack";
     private string dashKey = "Dash";
     
     [SerializeField] private InputActionReference Walk;
     [SerializeField] private InputActionReference Jump;
     [SerializeField] private InputActionReference Dash;
     [SerializeField] private InputActionReference Attack;
+    [SerializeField] private InputActionReference SuperAttack;
     
     
 
@@ -63,6 +65,15 @@ public class InputSystemController : MonoBehaviour
         return a;
     } 
     public bool TryingAttack() => HandleAttack() || _queueTimer.TimerActive(attackKey);
+    
+    private bool HandleSuperAttack()
+    {
+        var a = instance.SuperAttack.action.inProgress;
+        if (a && !_queueTimer.TimerActive(superAttackKey))_queueTimer.SetTimer(superAttackKey, 0.2f);
+        return a;
+    } 
+    
+    public bool TryingSuperAttack() => HandleSuperAttack() || _queueTimer.TimerActive(superAttackKey);
 
     public void GetInput()
     {

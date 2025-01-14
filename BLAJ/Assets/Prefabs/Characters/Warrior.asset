@@ -21,7 +21,7 @@ MonoBehaviour:
   doubleJumps: 1
   coyoteJump: 0.2
   gravityScale: 10
-  baseDamage: 10
+  baseDamage: 25
   baseKnockBack: 12
   stun: 0.5
   health: 100

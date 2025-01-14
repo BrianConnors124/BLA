@@ -18,9 +18,6 @@ public class Enemy : Entity
     public float movementSpeed;
     public float jumpHeight;
     public float reach;
-    public float damage;
-    public float stun;
-    public float knockBack;
     public float primaryCD;
     
     [Header("Output")]

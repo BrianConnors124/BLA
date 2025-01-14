@@ -37,7 +37,7 @@ public class DamageNumber : MonoBehaviour
     {
         damage.color = Color.Lerp(damage.color, Color.red, Time.deltaTime * 5);
         time -= Time.deltaTime;
-        damage.fontSize += Time.deltaTime;
+        damage.fontSize += Time.deltaTime * 3;
         if(time <= 0) gameObject.SetActive(false);
     }
 }

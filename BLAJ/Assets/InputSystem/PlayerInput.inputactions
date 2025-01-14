@@ -66,7 +66,7 @@
                     "id": "ce7d0561-2bd3-450d-a6bc-7d2889f42fdd",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "",
                     "action": "Walking",
                     "isComposite": false,

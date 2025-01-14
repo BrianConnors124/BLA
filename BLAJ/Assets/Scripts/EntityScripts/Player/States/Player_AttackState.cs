@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player_AttackState : PlayerState
 {
     
-    public Player_AttackState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
+    public Player_AttackState(PlayerStateMachine.EPlayerState key, Player entity) : base(key, entity)
     {
         
     }
@@ -15,10 +15,10 @@ public class Player_AttackState : PlayerState
         animEnded = false;
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        timer.SetActionTimer("PlayerCanFlip", 0.05f, () => player.canFlip = false);
+        timer.SetActionTimer("PlayerCanFlip", 0.01f, () => player.canFlip = false);
         timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 1);
         if(attackInt == 3)player.StartAttackCD();
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 5, rb.velocityY);
     }
 
     public override void UpdateState()

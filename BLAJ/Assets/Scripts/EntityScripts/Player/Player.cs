@@ -23,9 +23,7 @@ public class Player : Entity
     
 
     [Header("Stats")] 
-    public float playerDamage;
-    public float playerKnockBack;
-    public float playerStun;
+    
     
     public float doubleJumps;
     public float dashSpeed;
@@ -47,6 +45,7 @@ public class Player : Entity
         cooldownKey = new List<string>();
         cooldownKey.Add("attackCD");
         cooldownKey.Add("dashCD");
+        cooldownKey.Add("superAttackCD");
         doneLoading = true;
         SetPresets();
         damageNumber[0] = damageNumberObject;
@@ -57,13 +56,14 @@ public class Player : Entity
         doubleJumps = playerInfo.doubleJumps + 1;
         coolDowns.Add(cooldownKey[0], playerInfo.attackCD);
         coolDowns.Add(cooldownKey[1], playerInfo.dashCD);
+        coolDowns.Add(cooldownKey[2], playerInfo.attackCD * 3);
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
         dashDuration = playerInfo.dashDuration;
         jumpHeight = playerInfo.jumpHeight;
-        playerDamage = playerInfo.baseDamage;
-        playerKnockBack = playerInfo.baseKnockBack;
-        playerStun = playerInfo.stun;
+        damage = playerInfo.baseDamage;
+        knockBack = playerInfo.baseKnockBack;
+        stun = playerInfo.stun;
         health = playerInfo.health;
         maxHealth = playerInfo.health;
         
@@ -102,12 +102,13 @@ public class Player : Entity
         if(canFlip) Flip();
     }
     public void StartAttackCD() => timer.SetTimer(cooldownKey[0], coolDowns[cooldownKey[0]]);
-    
-    public void StartDashCD() => timer.SetTimer(cooldownKey[1], coolDowns[cooldownKey[1]]);
     public bool AttackReady() => !timer.TimerActive(cooldownKey[0]);
     
-    
+    public void StartDashCD() => timer.SetTimer(cooldownKey[1], coolDowns[cooldownKey[1]]);
     public bool DashReady() => !timer.TimerActive(cooldownKey[1]);
+    
+    public void StartSuperAttackCD() => timer.SetTimer(cooldownKey[2], coolDowns[cooldownKey[2]]);
+    public bool SuperAttackReady() => !timer.TimerActive(cooldownKey[2]);
     
     #endregion
 
@@ -115,8 +116,8 @@ public class Player : Entity
 
     protected override void Flip()
     {
-        if (rb.velocityX > 0.1f) sprite.flipX = false;
-        if (rb.velocityX < -0.1f) sprite.flipX = true;
+        if (InputSystemController.MovementInput().x > 0.1f) sprite.flipX = false;
+        if (InputSystemController.MovementInput().x < -0.1f) sprite.flipX = true;
     }
 
     #endregion

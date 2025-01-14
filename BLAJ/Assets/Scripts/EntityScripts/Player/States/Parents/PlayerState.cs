@@ -27,7 +27,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public override void EnterState()
     {
         base.EnterState();
-        //Debug.Log(StateKey);
+        Debug.Log(StateKey);
         player.Anim.Play(StateKey.ToString());
     }
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -48,7 +48,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x/1.3f,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),0, LayerMask.GetMask("Enemy"), 0.3f);
         foreach (var enemies in bcd)
         {
-            enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.playerDamage,player.playerKnockBack/2, player.playerStun, player.MovementDirection());
+            enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage,player.knockBack/2, player.stun, player.MovementDirection());
             Debug.Log(enemies);
         }
     }
@@ -58,7 +58,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x/1.3f,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),0, LayerMask.GetMask("Enemy"), 0.3f);
         foreach (var enemies in bcd)
         {
-            enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.playerDamage, player.playerKnockBack, player.playerStun, player.MovementDirection());
+            enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage, player.knockBack, player.stun, player.MovementDirection());
             Debug.Log(enemies);
         }
     }

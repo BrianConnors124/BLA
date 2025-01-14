@@ -15,7 +15,7 @@ public class CooldownSlider : MonoBehaviour
     public List<Image> image;
     private List<string> key;
     private float currentTimerValue;
-    private Dictionary<string, float> playerTimerValues;
+    private float timerMaxValue;
     private Dictionary<string, Image> images;
 
     private void Start()
@@ -26,7 +26,6 @@ public class CooldownSlider : MonoBehaviour
         while(!playerScript.doneLoading){}
         
         playerTimer = playerScript.GetUniversalTimer();
-        playerTimerValues = playerScript.GetCoolDowns();
         key = playerScript.cooldownKey;
         
         for (var i = 0; i < image.Count; i++)
@@ -45,11 +44,13 @@ public class CooldownSlider : MonoBehaviour
     {
         foreach (var a in key)
         {
+            
             if (playerTimer.TimerActive(a))
             {
                 currentTimerValue = playerTimer.GetTimerValue(a);
+                timerMaxValue = playerTimer.GetMaxValue(a);
                 
-                images[a].fillAmount = currentTimerValue / playerTimerValues[a];
+                images[a].fillAmount = currentTimerValue / timerMaxValue;
             }
         }
     }

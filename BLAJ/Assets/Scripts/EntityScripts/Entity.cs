@@ -1,10 +1,15 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [Header("Stats")]
+    public float damage;
+    public float knockBack;
+    public float stun;
     
     
     [Header("info")]
@@ -16,7 +21,7 @@ public class Entity : MonoBehaviour
     public float recentStun;
     public UniversalTimer timer;
     
-    protected static GameObject[] damageNumber = new GameObject[1];
+    protected static List<GameObject> damageNumber;
     
     public bool takingDamage;
     public bool canTakeDamage;
@@ -27,15 +32,18 @@ public class Entity : MonoBehaviour
     public float coyoteJump;
 
     protected Rigidbody2D rb => _rb;
+    protected ObjectPuller pull;
 
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         timer = GetComponent<UniversalTimer>();
+        damageNumber = new List<GameObject>();
         Anim = GetComponent<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
+        pull = new ObjectPuller();
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
@@ -50,36 +58,8 @@ public class Entity : MonoBehaviour
     public virtual void ReceiveDamage(float damage, float knockBack, float stun, int direction)
     {
         health -= damage;
-        int i;
-        bool needNewGameObject = true;
-        for (i = 0; i < damageNumber.Length; i++)
-        {
-            if (!damageNumber[i].activeInHierarchy)
-            {
-                needNewGameObject = false;
-            }
-            else
-            {
-                break;
-            }
-        }
-        if (needNewGameObject)
-        {
-            var placeholder = new GameObject[damageNumber.Length + 1];
-            for(var j = 0; j < damageNumber.Length; j++)
-            {
-                placeholder[j] = damageNumber[j];
-            }
-
-            placeholder[^1] = Instantiate(damageNumber[0]);
-            i = placeholder.Length - 1;
-            damageNumber = placeholder;
-        }
-        i--;
-        damageNumber[i].transform.position = transform.position;
-        var script = damageNumber[i].GetComponent<DamageNumber>(); 
-        script.damage.text = "" + damage;
-        damageNumber[i].SetActive(true);
+        pull.PullObjectAndSetText(damageNumber, transform.position, "" + damage);
+        
         if(health <= 0)Die();
         recentKnockBack = knockBack;
         recentStun = stun;
@@ -107,6 +87,13 @@ public class Entity : MonoBehaviour
         if (_rb.velocityX < -0.1f) sprite.flipX = true;
         
     }
+
+    public int FacingDirectionInt()
+    {
+        return sprite.flipX ? -1 : 1;
+    }
+    public bool FacingDirection() => sprite.flipX;
+    
 
     public bool Grounded() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.55f), new Vector2(hitBox.x - 0.1f, 0.2f), 0,
         Vector2.down, 0, LayerMask.GetMask("WorldObj"));

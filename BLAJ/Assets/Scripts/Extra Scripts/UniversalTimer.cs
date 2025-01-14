@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class UniversalTimer : MonoBehaviour
 {
     public List<string> key;
     private Dictionary<string, float> timer;
+    private Dictionary<string, float> startVal;
     private Dictionary<string, Action> action;
     
     private float timerLength;
@@ -19,6 +15,7 @@ public class UniversalTimer : MonoBehaviour
     {
         key = new List<string>();
         timer = new Dictionary<string, float>();
+        startVal = new Dictionary<string, float>();
         action = new Dictionary<string, Action>();
     }
 
@@ -34,6 +31,7 @@ public class UniversalTimer : MonoBehaviour
         if(!key.Contains(code)) key.Add(code);
         action.TryAdd(code, commit);
         timer.TryAdd(code, length);
+        startVal.TryAdd(code, length);
         timer[code] = length;
     }
 
@@ -41,10 +39,13 @@ public class UniversalTimer : MonoBehaviour
     {
         return key.Contains(code);
     }
+    
+    public float GetMaxValue(string code) => startVal[code];
 
     public void RemoveActionTimer(string code)
     {
         timer.Remove(code);
+        startVal.Remove(code);
         action.Remove(code);
         key.Remove(code);
     }
@@ -53,6 +54,7 @@ public class UniversalTimer : MonoBehaviour
     {
         if(!key.Contains(code)) key.Add(code);
         timer.TryAdd(code, length);
+        startVal.TryAdd(code, length);
         timer[code] = length;
     }
     
@@ -67,7 +69,8 @@ public class UniversalTimer : MonoBehaviour
                    action[key[i]].Invoke();
                     action.Remove(key[i]);
                 }  
-                timer.Remove(key[i]);  
+                timer.Remove(key[i]);
+                startVal.Remove(key[i]);
                 key.RemoveAt(i);
                 i--;                   
             }    

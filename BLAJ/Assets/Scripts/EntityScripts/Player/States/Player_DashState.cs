@@ -18,7 +18,7 @@ public class Player_DashState : PlayerState
         player.canTakeDamage = false;
         player.StartDashCD();
         rb.gravityScale = 0;
-        rb.velocity = new Vector2(player.dashSpeed * player.Direction(InputSystemController.MovementInput().x), 0);
+        rb.velocity = new Vector2(player.dashSpeed * player.FacingDirectionInt(), 0);
     }
 
     public override void UpdateState()
