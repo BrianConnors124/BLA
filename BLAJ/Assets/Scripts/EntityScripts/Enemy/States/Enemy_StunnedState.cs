@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public class Enemy_StunnedState : EnemyState
 {
@@ -9,7 +7,7 @@ public class Enemy_StunnedState : EnemyState
         
     }
 
-    protected bool doneStartUp = false;
+    private bool doneStartUp;
 
     public override void EnterState()
     {
@@ -38,6 +36,5 @@ public class Enemy_StunnedState : EnemyState
         base.ExitState();
         enemy.recentKnockBack = 0;
         enemy.recentStun = 0;
-        enemy.recentDamage = 0;
     }
 }

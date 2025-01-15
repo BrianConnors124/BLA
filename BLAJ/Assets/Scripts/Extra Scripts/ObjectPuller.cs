@@ -3,33 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class ObjectPuller
 {
 
-    public void PullObjectAndSetText(List<GameObject> arg, Vector3 origin, string text)
+    public void PullObjectAndSetText(List<GameObject> obj, Vector3 origin, string text)
     {
-        int currentPos;
+        int currentObj;
         var needNewGameObject = true;
-        for (currentPos = 0; currentPos < arg.Count; currentPos++)
+        for (currentObj = 0; currentObj < obj.Count; currentObj++)
         {
-            if (!arg[currentPos].activeInHierarchy)
+            if (!obj[currentObj].activeInHierarchy)
             {
                 needNewGameObject = false;
-            }
-            else
-            {
                 break;
             }
         }
+        
+        //Console.WriteLine(needNewGameObject);
         if (needNewGameObject)
         {
-            arg.Add(arg[0]);
+            obj.Add(Object.Instantiate(obj[0]));
+            currentObj = obj.Count - 1;
         }
-        currentPos--;
-        arg[currentPos].transform.position = origin;
-        arg[currentPos].GetComponent<TextMeshPro>().text = text;
-        arg[currentPos].SetActive(true);
+        obj[currentObj].transform.position = origin;
+        SetObjectText(text, obj[currentObj].GetComponent<TextMeshPro>());
+        obj[currentObj].GetComponent<TextMeshPro>().text = text;
+        obj[currentObj].SetActive(true);
     }
     
     public void PullObject(List<GameObject> arg, Vector3 origin)
@@ -56,9 +57,9 @@ public class ObjectPuller
         arg[currentPos].SetActive(true);
     }
 
-    private void SetObjectText(string text, GameObject obj)
+    private void SetObjectText(string text, TextMeshPro obj)
     {
-        
+        obj.text = text;
     }
 
     

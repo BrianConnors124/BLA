@@ -12,7 +12,6 @@ public class Player : Entity
 
     [Header("Input / Info")]
     
-    public GameObject damageNumberObject;
 
     public List<string> cooldownKey;
     public Dictionary<string, float> coolDowns;
@@ -46,9 +45,9 @@ public class Player : Entity
         cooldownKey.Add("attackCD");
         cooldownKey.Add("dashCD");
         cooldownKey.Add("superAttackCD");
-        doneLoading = true;
         SetPresets();
-        damageNumber[0] = damageNumberObject;
+        
+        doneLoading = true;
     }
 
     private void SetPresets()

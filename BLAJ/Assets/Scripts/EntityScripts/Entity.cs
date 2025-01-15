@@ -6,23 +6,27 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> damageVisual;
+    
     [Header("Stats")]
     public float damage;
     public float knockBack;
     public float stun;
     
+    [Header("DamageOBJ")]
+    public GameObject damageNumberController;
+    private IDontEvenKnow controller;
+    
+    
+    
     
     [Header("info")]
     public float health;
     public float maxHealth;
-    public float recentDamage;
     public float recentKnockBack;
     public int knockBackDirection;
     public float recentStun;
     public UniversalTimer timer;
-    
-    protected static List<GameObject> damageNumber;
-    
     public bool takingDamage;
     public bool canTakeDamage;
     protected Rigidbody2D _rb;
@@ -30,20 +34,23 @@ public class Entity : MonoBehaviour
     public Animator Anim;
     public Vector2 hitBox;
     public float coyoteJump;
-
-    protected Rigidbody2D rb => _rb;
     protected ObjectPuller pull;
 
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         timer = GetComponent<UniversalTimer>();
-        damageNumber = new List<GameObject>();
+        controller = damageNumberController.GetComponent<IDontEvenKnow>();
         Anim = GetComponent<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
         pull = new ObjectPuller();
+    }
+
+    private void Update()
+    {
+        damageVisual = controller.damageNumber;
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
@@ -58,7 +65,8 @@ public class Entity : MonoBehaviour
     public virtual void ReceiveDamage(float damage, float knockBack, float stun, int direction)
     {
         health -= damage;
-        pull.PullObjectAndSetText(damageNumber, transform.position, "" + damage);
+        
+        pull.PullObjectAndSetText(controller.damageNumber, transform.position, "" + damage);
         
         if(health <= 0)Die();
         recentKnockBack = knockBack;

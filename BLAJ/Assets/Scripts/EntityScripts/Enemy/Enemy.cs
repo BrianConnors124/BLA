@@ -82,7 +82,10 @@ public class Enemy : Entity
 
     #region Sight
 
-    public RaycastHit2D PlayerOutOfSight() => Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black);
+    public RaycastHit2D PlayerOutOfSight()
+    {
+        return player != null? Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black) : new RaycastHit2D();
+    }
     public RaycastHit2D DetectsObjectForward(){
     
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
@@ -144,7 +147,7 @@ public class Enemy : Entity
 [CreateAssetMenu(menuName = "Enemies/New Enemy", fileName = "New Enemy")]
 public class EnemyInfo : ScriptableObject
 {
-    public string name;
+    public string named;
     public string description;
     public float health;
     public float jumpHeight;

@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Player_DashState : PlayerState
 {
-    private Rigidbody2D rb;
+    
     
     public Player_DashState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
     {
         Console.WriteLine("Yo");
-        rb = RB;
     }
     public override void EnterState()
     {

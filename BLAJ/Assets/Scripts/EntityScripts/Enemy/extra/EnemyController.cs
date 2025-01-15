@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     
     [Header("Info")] 
     public EnemyInfo info;
-    private string name;
+    private string names;
     private float health;
     private string description;
     private float jumpHeight;
@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     [Header("Mechanics")]
     private Vector2 startingPos;
     private GameObject player;
-    private bool returning;
+    //private bool returning;
     private bool playerInProximity;
     private bool takingDamage;
     private bool stunned;
@@ -153,14 +153,14 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitUntil(() => transform.position.x > startingPos.x);
             rb.velocity = new Vector2(0, rb.velocity.y);
-            returning = false;
+            
             yield break;
         }
         if (Line.LeftOrRight(transform.position.x, startingPos.x) == -1)
         {
             yield return new WaitUntil(() => transform.position.x < startingPos.x);
             rb.velocity = new Vector2(0, rb.velocity.y);
-            returning = false;
+            
         }
         
     }
@@ -180,7 +180,6 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            returning = true;
             StartCoroutine(ReturnToOrigin());
             playerInProximity = false;
         }
