@@ -16,9 +16,15 @@ public class Enemy_TakingDamage : EnemyState
         enemy.sprite.color = Color.red;
         Timer.SetActionTimer("ChangeColorBack", 0.2f, () => enemy.sprite.color = Color.white);
         stateTimer = 0.1f;
-        enemy.SetVelocity(enemy.knockBackDirection == -100
-            ? new Vector2(enemy.recentKnockBack * -enemy.PlayerDirection(), enemy.recentKnockBack)
-            : new Vector2(enemy.recentKnockBack * enemy.knockBackDirection, enemy.recentKnockBack));
+
+        if (enemy.knockBackDirection == -100)
+        {
+            enemy.Move(enemy.recentKnockBack * -enemy.PlayerDirection(), enemy.recentKnockBack);
+        }
+        else
+        {
+            enemy.Move(enemy.recentKnockBack * enemy.knockBackDirection, enemy.recentKnockBack);
+        }
     }
 
     public override void UpdateState()

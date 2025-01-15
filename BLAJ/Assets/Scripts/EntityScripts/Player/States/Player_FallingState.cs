@@ -37,7 +37,7 @@ public class Player_FallingState : PlayerState
         if (player.AttackReady() && (InputSystemController.instance.TryingAttack()))
             return PlayerStateMachine.EPlayerState.attack;
         
-        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())
+        if (player.doubleJumps > 0 && InputSystemController.instance.TryingJump())
             return PlayerStateMachine.EPlayerState.doubleJump;
 
         if (rb.velocityY < -70 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;

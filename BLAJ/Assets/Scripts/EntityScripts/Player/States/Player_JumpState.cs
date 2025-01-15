@@ -34,8 +34,6 @@ public class Player_JumpState : PlayerState
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
-        if (player.doubleJumps > 0 && InputSystemController.instance.HandleJump())
-            return PlayerStateMachine.EPlayerState.doubleJump;
         
         if (rb.velocityY < 0) return PlayerStateMachine.EPlayerState.falling;
         

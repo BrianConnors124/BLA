@@ -39,7 +39,6 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     public override void UpdateState()
     {
         base.UpdateState();
-        playerController.GetInput();
         if(!animEnded) player.Anim.Play(StateKey.ToString());
     }
 

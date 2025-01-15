@@ -9,6 +9,7 @@ public class Player : Entity
     [Header("Controllers")]
     public PlayerInfo playerInfo;
     public PlayerStateMachine _stateMachine;
+    public InputSystemController playerController;
 
     [Header("Input / Info")]
     
@@ -46,7 +47,7 @@ public class Player : Entity
         cooldownKey.Add("dashCD");
         cooldownKey.Add("superAttackCD");
         SetPresets();
-        
+        playerController = GetComponent<InputSystemController>();
         doneLoading = true;
     }
 
@@ -67,6 +68,7 @@ public class Player : Entity
         maxHealth = playerInfo.health;
         
     }
+    
 
     public Dictionary<string, float> GetCoolDowns() => coolDowns;
 

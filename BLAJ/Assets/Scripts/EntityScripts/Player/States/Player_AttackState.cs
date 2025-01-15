@@ -23,7 +23,6 @@ public class Player_AttackState : PlayerState
 
     public override void UpdateState()
     {
-        playerController.GetInput();
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);

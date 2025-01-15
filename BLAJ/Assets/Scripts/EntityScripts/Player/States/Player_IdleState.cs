@@ -13,7 +13,7 @@ public class Player_IdleState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.SetVelocity(new Vector2(0,0));
+        player.ZeroVelocity();
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()

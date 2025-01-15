@@ -48,16 +48,10 @@ public class Entity : MonoBehaviour
         pull = new ObjectPuller();
     }
 
-    private void Update()
-    {
-        damageVisual = controller.damageNumber;
-    }
-
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
-    public void SetVelocity(Vector2 newVelocity) => _rb.velocity = newVelocity;
     public virtual void Move(float x, float y)
     {
-        _rb.velocity = new Vector2(x, y);
+        _rb.velocity = new Vector2(x * Time.timeScale, y * Time.timeScale);
     }
     public Vector2 Velocity => _rb.velocity;
     

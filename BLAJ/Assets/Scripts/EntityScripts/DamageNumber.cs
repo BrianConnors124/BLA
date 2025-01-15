@@ -27,7 +27,7 @@ public class DamageNumber : MonoBehaviour
         randomNum = Random.Range(0f, 100f);
         var negOrPos = 1;
         if (randomNum <= 50) negOrPos = -1;
-        print(negOrPos);
+        //print(negOrPos);
         damage.fontSize = size;
         rb.velocity = new Vector2(2 * negOrPos, 6);
         time = 0.6f;
