@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour
     public float recentStun;
     public UniversalTimer timer;
     public bool takingDamage;
-    public bool canTakeDamage;
+    public bool canTakeDamage = true;
     protected Rigidbody2D _rb;
     public SpriteRenderer sprite;
     public Animator Anim;

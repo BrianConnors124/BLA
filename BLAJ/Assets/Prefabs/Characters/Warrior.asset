@@ -18,7 +18,7 @@ MonoBehaviour:
   attackCD: 1.2
   dashCD: 1
   dashDuration: 0.08
-  doubleJumps: 1
+  doubleJumps: 2
   coyoteJump: 0.2
   gravityScale: 10
   baseDamage: 25
