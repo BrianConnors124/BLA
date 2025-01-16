@@ -6,17 +6,14 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> damageVisual;
     
     [Header("Stats")]
     public float damage;
     public float knockBack;
     public float stun;
-    
-    [Header("DamageOBJ")]
-    public GameObject damageNumberController;
 
-    protected static List<GameObject> controller;
+    [Header("DamageOBJ")] 
+    public GameObject controller;
     
     
     
@@ -60,7 +57,7 @@ public class Entity : MonoBehaviour
     {
         health -= damage;
         
-        ObjectPuller.PullObjectAndSetText(controller, transform.position, "" + damage);
+        ObjectPuller.PullObjectAndSetText(controller.GetComponent<DamageNumberList>().damageNumbers, transform.position, "" + damage);
         
         if(health <= 0)Die();
         recentKnockBack = knockBack;

@@ -49,7 +49,6 @@ public class Player : Entity
         SetPresets();
         playerController = GetComponent<InputSystemController>();
         doneLoading = true;
-        controller.Add(damageNumberController);
     }
 
     private void SetPresets()

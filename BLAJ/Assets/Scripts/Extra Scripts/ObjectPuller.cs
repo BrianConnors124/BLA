@@ -33,6 +33,38 @@ public static class ObjectPuller
         obj[currentObj].GetComponent<TextMeshPro>().text = text;
         obj[currentObj].SetActive(true);
     }
+    public static void PullObjectAndSetText(GameObject[] obj, Vector3 origin, string text)
+    {
+        int currentObj;
+        var needNewGameObject = true;
+        for (currentObj = 0; currentObj < obj.Length; currentObj++)
+        {
+            if (!obj[currentObj].activeInHierarchy)
+            {
+                needNewGameObject = false;
+                break;
+            }
+        }
+        
+        //Console.WriteLine(needNewGameObject);
+        if (needNewGameObject)
+        {
+            GameObject[] newObj = new GameObject[obj.Length + 1];
+
+            for(int i = 0; i < obj.Length; i++)
+            {
+                newObj[i] = obj[i];
+            }
+
+            newObj[^1] = Object.Instantiate(obj[0]);
+            obj = newObj;
+            currentObj = obj.Length - 1;
+        }
+        obj[currentObj].transform.position = origin;
+        SetObjectText(text, obj[currentObj].GetComponent<TextMeshPro>());
+        obj[currentObj].GetComponent<TextMeshPro>().text = text;
+        obj[currentObj].SetActive(true);
+    }
     
 
     public static void PullObject(List<GameObject> arg, Vector3 origin)
