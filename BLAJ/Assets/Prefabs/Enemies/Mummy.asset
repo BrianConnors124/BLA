@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mummy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInfo
   named: 
-  anim: {fileID: 0}
+  anim: {fileID: 9100000, guid: 4c52f17f58d02774ba590bb8b5f2cbd1, type: 2}
   description: 
   health: 100
   jumpHeight: 12
