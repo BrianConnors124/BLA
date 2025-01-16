@@ -1,6 +1,6 @@
-using UnityEngine;
+using UnityEngine; 
 
-[CreateAssetMenu(menuName = "Items/New Item")]
+
 public class ItemData : ScriptableObject
 {
     public string named;

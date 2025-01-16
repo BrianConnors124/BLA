@@ -15,7 +15,8 @@ public class Entity : MonoBehaviour
     
     [Header("DamageOBJ")]
     public GameObject damageNumberController;
-    private IDontEvenKnow controller;
+
+    protected static List<GameObject> controller;
     
     
     
@@ -34,18 +35,18 @@ public class Entity : MonoBehaviour
     public Animator Anim;
     public Vector2 hitBox;
     public float coyoteJump;
-    protected ObjectPuller pull;
+
+    public Vector2 Location => _rb.position;
 
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         timer = GetComponent<UniversalTimer>();
-        controller = damageNumberController.GetComponent<IDontEvenKnow>();
         Anim = GetComponent<Animator>();
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
-        pull = new ObjectPuller();
+        AddToStaticList.Add(controller,damageNumberController);
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
@@ -60,7 +61,7 @@ public class Entity : MonoBehaviour
     {
         health -= damage;
         
-        pull.PullObjectAndSetText(controller.damageNumber, transform.position, "" + damage);
+        ObjectPuller.PullObjectAndSetText(controller, transform.position, "" + damage);
         
         if(health <= 0)Die();
         recentKnockBack = knockBack;

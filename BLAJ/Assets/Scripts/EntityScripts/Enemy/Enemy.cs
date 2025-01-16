@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -23,12 +24,15 @@ public class Enemy : Entity
     [Header("Output")]
     public bool returned;
     public bool playerInPursuitRange;
-    public bool playerInAttackRange;
+    public bool playerInMeleeRange;
+    
+    public bool longRangeAttack;
     public bool canAttack = true;
     
 
     protected override void Awake()
     {
+        GetComponent<Animator>().runtimeAnimatorController = info.anim;
         base.Awake();
         startingXPos = transform.position.x;
         _stateMachine = GetComponent<EnemyStateMachine>();
@@ -59,7 +63,7 @@ public class Enemy : Entity
 
         #region Detection
 
-        playerInAttackRange = BoxCastDrawer.BoxCastAndDraw(new Vector2(position.x + .4f * MovementDirection(), position.y),
+        playerInMeleeRange = BoxCastDrawer.BoxCastAndDraw(new Vector2(position.x + .4f * MovementDirection(), position.y),
             new Vector2(transform.localScale.x * hitbox.size.x * 1.4f, transform.localScale.y * 1.1f), 0, Vector2.right, 0,
             LayerMask.GetMask("Player"));
 
@@ -70,13 +74,22 @@ public class Enemy : Entity
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) player = other.gameObject;
-        if (other.CompareTag("Player")) playerInPursuitRange = true;
+        if (other.CompareTag("Player"))
+        {
+            player = other.gameObject;
+            playerInPursuitRange = true;
+            timer.SetActionTimer("LongRangeAttack", 1, () => longRangeAttack = true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) playerInPursuitRange = false;
+        if (other.CompareTag("Player"))
+        {
+            playerInPursuitRange = false;
+            timer.RemoveActionTimer("LongRangeAttack");
+            longRangeAttack = false;
+        }
     }
 
 
@@ -148,6 +161,7 @@ public class Enemy : Entity
 public class EnemyInfo : ScriptableObject
 {
     public string named;
+    public AnimatorController anim;
     public string description;
     public float health;
     public float jumpHeight;

@@ -56,7 +56,7 @@ public class Player : Entity
         doubleJumps = playerInfo.doubleJumps + 1;
         coolDowns.Add(cooldownKey[0], playerInfo.attackCD);
         coolDowns.Add(cooldownKey[1], playerInfo.dashCD);
-        coolDowns.Add(cooldownKey[2], playerInfo.attackCD * 3);
+        coolDowns.Add(cooldownKey[2], playerInfo.superAttackCD);
         movementSpeed = playerInfo.movementSpeed;
         dashSpeed = playerInfo.dashSpeed;
         dashDuration = playerInfo.dashDuration;
@@ -130,6 +130,7 @@ public class PlayerInfo : ScriptableObject
     public float dashSpeed = 64;
     public float jumpHeight = 24;
     public float attackCD = .5f;
+    public float superAttackCD = 40;
     public float dashCD = 1;
     public float dashDuration = 0.08f;
     public float doubleJumps = 1;

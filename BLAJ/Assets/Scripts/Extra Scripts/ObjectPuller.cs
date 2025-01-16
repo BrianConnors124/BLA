@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class ObjectPuller
+public static class ObjectPuller
 {
 
-    public void PullObjectAndSetText(List<GameObject> obj, Vector3 origin, string text)
+    public static void PullObjectAndSetText(List<GameObject> obj, Vector3 origin, string text)
     {
         int currentObj;
         var needNewGameObject = true;
@@ -33,7 +34,8 @@ public class ObjectPuller
         obj[currentObj].SetActive(true);
     }
     
-    public void PullObject(List<GameObject> arg, Vector3 origin)
+
+    public static void PullObject(List<GameObject> arg, Vector3 origin)
     {
         int currentPos;
         var needNewGameObject = true;
@@ -57,7 +59,7 @@ public class ObjectPuller
         arg[currentPos].SetActive(true);
     }
 
-    private void SetObjectText(string text, TextMeshPro obj)
+    private static void SetObjectText(string text, TextMeshPro obj)
     {
         obj.text = text;
     }

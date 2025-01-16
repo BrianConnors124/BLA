@@ -29,7 +29,7 @@ public class Player_SlamAttack : PlayerState
             bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(rb.position.x, rb.position.y - .5f), new Vector2(player.hitBox.x * 10, player.hitBox.y * 2), 0, Vector2.down, 0, LayerMask.GetMask("Enemy"), 5f);
             foreach (var a in bcd)
             {
-                a.collider.gameObject.GetComponent<Enemy>().ReceiveDamage((int)maxVelo, player.knockBack * 1.5f, player.stun, -100);
+                a.collider.gameObject.GetComponent<Enemy>().ReceiveDamage((int)maxVelo * player.damage * .33f, player.knockBack * 1.5f, player.stun, -100);
                 //Debug.Log(a.collider.name);
             }
             attacked = true;
