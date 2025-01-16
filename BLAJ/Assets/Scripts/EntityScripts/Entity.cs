@@ -16,7 +16,7 @@ public class Entity : MonoBehaviour
     [Header("DamageOBJ")]
     public GameObject damageNumberController;
 
-    protected List<GameObject> controller;
+    protected static List<GameObject> controller;
     
     
     
@@ -46,7 +46,6 @@ public class Entity : MonoBehaviour
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
-        controller.Add(damageNumberController);
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
