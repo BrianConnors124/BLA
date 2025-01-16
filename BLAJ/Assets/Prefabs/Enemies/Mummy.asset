@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Mummy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInfo
-  name: Mummy
-  description: n/a
+  named: 
+  anim: {fileID: 0}
+  description: 
   health: 100
-  jumpHeight: 20
-  movementSpeed: 4
+  jumpHeight: 12
+  movementSpeed: 6
   damage: 10
   baseReach: 1
   stun: 0
