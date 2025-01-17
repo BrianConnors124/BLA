@@ -14,6 +14,8 @@ public class Entity : MonoBehaviour
 
     [Header("DamageOBJ")] 
     public GameObject controller;
+
+    public DamageNumberList objPuller;
     
     
     
@@ -43,6 +45,7 @@ public class Entity : MonoBehaviour
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
+        objPuller = controller.GetComponent<DamageNumberList>();
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
@@ -57,7 +60,7 @@ public class Entity : MonoBehaviour
     {
         health -= damage;
         
-        ObjectPuller.PullObjectAndSetText(controller.GetComponent<DamageNumberList>().damageNumbers, transform.position, "" + damage);
+        ObjectPuller.PullObjectAndSetText(controller.GetComponent<DamageNumberList>().damageNumbers, transform.position, "" + (int) damage);
         
         if(health <= 0)Die();
         recentKnockBack = knockBack;

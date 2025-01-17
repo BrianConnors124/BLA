@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: TriangleTest
+  m_Name: EnemyBullet
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileInfo
   anim: {fileID: 0}
-  damage: 0
-  speed: 0
+  damage: 10
+  speed: 6

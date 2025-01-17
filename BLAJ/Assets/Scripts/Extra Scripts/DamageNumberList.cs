@@ -7,5 +7,6 @@ using Object = System.Object;
 public class DamageNumberList : MonoBehaviour
 {
     public GameObject[] damageNumbers;
+    public List<GameObject> enemyProjectilesFromAir;
     
 }

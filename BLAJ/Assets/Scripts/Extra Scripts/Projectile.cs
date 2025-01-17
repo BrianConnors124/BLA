@@ -14,25 +14,36 @@ public class Projectile : MonoBehaviour
     public float speed;
 
     public Vector2 aim;
+    private bool aimEnabled;
+    private bool startTimer;
+    private float timer;
     
     private void Awake()
     {
-        GetComponent<Animator>().runtimeAnimatorController = info.anim;
         rb = GetComponent<Rigidbody2D>();
         damage = info.damage;
         speed = info.speed;
     }
 
-    public void SetAim(Vector2 a) => aim = a;
+    public void SetAim(Vector2 a)
+    {
+        aim = a;
+        Begin();
+    } 
 
     private void OnEnable()
     {
-        Begin();
+        timer = .2f;
+    }
+
+    private void OnDisable()
+    {
+        startTimer = false;
     }
 
     private void Begin()
     {
-        rb.velocity = Direction(transform.position, aim).normalized * speed;
+        rb.velocity = Direction(aim,transform.position).normalized * speed;
     }
 
     private Vector2 Direction(Vector2 a, Vector2 b)
@@ -43,6 +54,13 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.collider.CompareTag("Player"))other.collider.GetComponent<Player>().ReceiveDamage(damage, 0, 0, 0);
+        startTimer = true;
+    }
+
+    private void Update()
+    {
+        if (startTimer) timer -= Time.deltaTime;
+        if(timer <= 0) gameObject.SetActive(false);
     }
 }
 

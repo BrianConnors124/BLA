@@ -46,7 +46,7 @@ public static class ObjectPuller
             }
         }
         
-        //Console.WriteLine(needNewGameObject);
+        
         if (needNewGameObject)
         {
             GameObject[] newObj = new GameObject[obj.Length + 1];
@@ -89,6 +89,29 @@ public static class ObjectPuller
         currentPos--;
         arg[currentPos].transform.position = origin;
         arg[currentPos].SetActive(true);
+    }
+    
+    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction)
+    {
+        int currentObj;
+        var needNewGameObject = true;
+        for (currentObj = 0; currentObj < obj.Count; currentObj++)
+        {
+            if (!obj[currentObj].activeInHierarchy)
+            {
+                needNewGameObject = false;
+                break;
+            }
+        }
+        
+        if (needNewGameObject)
+        {
+            obj.Add(Object.Instantiate(obj[0]));
+            currentObj = obj.Count - 1;
+        }
+        obj[currentObj].transform.position = origin;
+        obj[currentObj].SetActive(true);
+        obj[currentObj].GetComponent<Projectile>().SetAim(direction);
     }
 
     private static void SetObjectText(string text, TextMeshPro obj)

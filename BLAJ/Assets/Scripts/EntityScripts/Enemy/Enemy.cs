@@ -25,9 +25,11 @@ public class Enemy : Entity
     public bool returned;
     public bool playerInPursuitRange;
     public bool playerInMeleeRange;
-    
-    public bool longRangeAttack;
     public bool canAttack = true;
+    
+    public bool longRangeAttackReady = true;
+    public bool playerInLongRange;
+    public bool hasALongRangeAttack;
     
 
     protected override void Awake()
@@ -78,7 +80,7 @@ public class Enemy : Entity
         {
             player = other.gameObject;
             playerInPursuitRange = true;
-            timer.SetActionTimer("LongRangeAttack", 1, () => longRangeAttack = true);
+            timer.SetActionTimer("LongRangeAttack", 1, () => playerInLongRange = true);
         }
     }
 
@@ -88,7 +90,7 @@ public class Enemy : Entity
         {
             playerInPursuitRange = false;
             timer.RemoveActionTimer("LongRangeAttack");
-            longRangeAttack = false;
+            playerInLongRange = false;
         }
     }
 
@@ -114,7 +116,7 @@ public class Enemy : Entity
             transform.position.x +
             (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
             transform.position.y + transform.localScale.y / 5), new Vector2(MovementDirection(), 0),
-        transform.localScale.x * .5f, LayerMask.GetMask("World"), Color.gray);
+        transform.localScale.x * .35f, LayerMask.GetMask("WorldObj"), Color.gray);
     
     public RaycastHit2D ObjectForwardTooClose(){
     
@@ -154,6 +156,7 @@ public class Enemy : Entity
     #endregion
 
 
+    
 
 }
 
