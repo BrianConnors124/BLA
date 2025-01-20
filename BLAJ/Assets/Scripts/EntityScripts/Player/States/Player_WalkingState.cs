@@ -35,14 +35,19 @@ public class Player_WalkingState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+        if (player.takingDamage) 
+            return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if (!player.IsTouchingGround()) return PlayerStateMachine.EPlayerState.falling;
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+            return PlayerStateMachine.EPlayerState.dashAttack;
+        
+        if (!player.IsTouchingGround()) 
+            return PlayerStateMachine.EPlayerState.falling;
         
         if (InputSystemController.instance.TryingJump())
             return PlayerStateMachine.EPlayerState.jump;
         
-        if (InputSystemController.instance.TryingAttack() && player.AttackReady())
+        if (InputSystemController.instance.TryingAttack() && player.AttackReady() && timer.TimerDone("minorCD"))
             return PlayerStateMachine.EPlayerState.attack;
         
         

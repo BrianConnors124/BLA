@@ -8,38 +8,31 @@ public class Player_SlamAttack : PlayerState
     {
         
     }
-
-    private bool attacked;
+    
     private float maxVelo;
+    private bool once;
     public override void EnterState()
     {
         base.EnterState();
-        attacked = false;
+        once = true;
         rb.gravityScale *= 3;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        RaycastHit2D[] bcd;
-        //Debug.Log(player.CloseToGround());
         if (-player.Velocity.y > maxVelo) maxVelo = -player.Velocity.y;
-        if (player.CloseToGround() && !attacked)
+
+        if (player.CloseToGround() && once)
         {
-            bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(rb.position.x, rb.position.y - .5f), new Vector2(player.hitBox.x * 10, player.hitBox.y * 2), 0, Vector2.down, 0, LayerMask.GetMask("Enemy"), 5f);
-            foreach (var a in bcd)
-            {
-                a.collider.gameObject.GetComponent<Enemy>().ReceiveDamage((int)maxVelo * player.damage * .33f, player.knockBack * 1.5f, player.stun, -100);
-                //Debug.Log(a.collider.name);
-            }
-            attacked = true;
+            DoSlamAttack(maxVelo);
+            once = false;
         }
-        
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.IsTouchingGround() && attacked) return PlayerStateMachine.EPlayerState.idle;
+        if (player.IsTouchingGround() && !once) return PlayerStateMachine.EPlayerState.idle;
         return StateKey;
     }
 

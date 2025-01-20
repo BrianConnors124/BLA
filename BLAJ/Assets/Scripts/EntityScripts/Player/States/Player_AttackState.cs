@@ -13,19 +13,17 @@ public class Player_AttackState : PlayerState
     public override void EnterState()
     {
         animEnded = false;
+        attackInt++;
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        timer.SetActionTimer("PlayerCanFlip", 0.01f, () => player.canFlip = false);
-        timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 1);
-        if(attackInt == 3)player.StartAttackCD();
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 5, rb.velocityY);
+        timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 0);
     }
 
     public override void UpdateState()
     {
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 1.3f, rb.velocityY);
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 5, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -40,14 +38,13 @@ public class Player_AttackState : PlayerState
             return PlayerStateMachine.EPlayerState.falling;
         }
         
-         
         return StateKey;
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        attackInt++;
-        player.canFlip = true;
+        if(attackInt == 3) player.StartAttackCD();
+        timer.SetTimer("minorCD", player.coolDowns[player.cooldownKey[0]]/2f);
     }
 }

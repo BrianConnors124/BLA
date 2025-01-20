@@ -14,6 +14,7 @@ public class Enemy_LongRangeAttackState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        enemy.ZeroVelocity();
         stateTimer = .2f;
         enemy.longRangeAttackReady = false;
         ObjectPuller.PullProjectile(enemy.objPuller.enemyProjectilesFromAir, new Vector3(enemy.player.transform.position.x, enemy.player.transform.position.y + enemy.transform.localScale.y * 3), enemy.player.transform.position);

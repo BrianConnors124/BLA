@@ -34,13 +34,12 @@ public class Player_FallingState : PlayerState
         if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
             return PlayerStateMachine.EPlayerState.slamAttack;
         
-        if (player.AttackReady() && (InputSystemController.instance.TryingAttack()))
+        
+        if (player.AttackReady() && InputSystemController.instance.TryingAttack() && timer.TimerDone("minorCD"))
             return PlayerStateMachine.EPlayerState.attack;
         
         if (player.doubleJumps > 0 && InputSystemController.instance.TryingJump())
             return PlayerStateMachine.EPlayerState.doubleJump;
-
-        if (rb.velocityY < -70 && player.CloseToGround()) return PlayerStateMachine.EPlayerState.contactWithGround;
 
         return StateKey;
     }

@@ -28,13 +28,13 @@ public class Enemy_PursuitState : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
+        if (enemy.playerInMeleeRange && !enemy.canAttack || !enemy.ThereIsAFloor() || enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.idle;
         if (enemy.hasALongRangeAttack && enemy.playerInLongRange && enemy.longRangeAttackReady && !enemy.playerInMeleeRange) return EnemyStateMachine.EEnemyState.longRange;
         if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
         if (playerLost) return EnemyStateMachine.EEnemyState.retrieve;
         if (enemy.ObjectForwardTooClose() && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.situateJump;
         if (rb.velocityY < 0) return EnemyStateMachine.EEnemyState.falling;
-        if (!enemy.player.GetComponent<Player>().IsTouchingGround() && enemy.playerInMeleeRange && !enemy.canAttack || !enemy.ThereIsAFloor() || enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.idle;
-        if (enemy.playerInMeleeRange && enemy.canAttack) return EnemyStateMachine.EEnemyState.attack;
+        if (enemy.playerInMeleeRange && enemy.canAttack && enemy.player.GetComponent<Player>().IsTouchingGround()) return EnemyStateMachine.EEnemyState.attack;
         
         
         

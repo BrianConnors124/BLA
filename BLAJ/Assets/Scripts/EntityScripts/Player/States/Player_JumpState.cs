@@ -27,8 +27,11 @@ public class Player_JumpState : PlayerState
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+            return PlayerStateMachine.EPlayerState.slamAttack;
         
-        if ((InputSystemController.instance.TryingAttack()) && player.AttackReady())
+        if ((InputSystemController.instance.TryingAttack()) && player.AttackReady() && timer.TimerDone("minorCD"))
             return PlayerStateMachine.EPlayerState.attack;
         
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())

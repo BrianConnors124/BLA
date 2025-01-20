@@ -130,7 +130,7 @@ public class PlayerInfo : ScriptableObject
     public float dashSpeed = 64;
     public float jumpHeight = 24;
     public float attackCD = .5f;
-    public float superAttackCD = 40;
+    public float superAttackCD = 20;
     public float dashCD = 1;
     public float dashDuration = 0.08f;
     public float doubleJumps = 1;

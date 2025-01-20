@@ -59,7 +59,7 @@ public class UniversalTimer : MonoBehaviour
     }
     
     
-    private void Update()
+    private void FixedUpdate()
     {
         for (int i = 0; i < timer.Count; i++)
         { timer[key[i]] -= Time.deltaTime;

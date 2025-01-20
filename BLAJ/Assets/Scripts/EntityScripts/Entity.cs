@@ -89,11 +89,6 @@ public class Entity : MonoBehaviour
         if (_rb.velocityX < -0.1f) sprite.flipX = true;
         
     }
-
-    public int FacingDirectionInt()
-    {
-        return sprite.flipX ? -1 : 1;
-    }
     public bool FacingDirection() => sprite.flipX;
     
 

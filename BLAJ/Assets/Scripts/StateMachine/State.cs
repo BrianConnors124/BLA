@@ -42,11 +42,7 @@ public abstract class State<EState> where EState : Enum
     {
      throw new NotImplementedException();
     }
-
-    public virtual void DoAttackKnockBack()
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public virtual void FacePlayer()
     {

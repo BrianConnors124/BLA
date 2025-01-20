@@ -69,6 +69,9 @@ public class Enemy : Entity
             new Vector2(transform.localScale.x * hitbox.size.x * 1.4f, transform.localScale.y * 1.1f), 0, Vector2.right, 0,
             LayerMask.GetMask("Player"));
 
+        if (!playerInMeleeRange && player != null)
+            playerInMeleeRange = Math.Abs(player.transform.position.x - transform.position.x) <
+                                 transform.localScale.x * hitbox.size.x * 1.4f;
 
 
         #endregion

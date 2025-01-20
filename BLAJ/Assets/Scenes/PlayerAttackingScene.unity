@@ -128,6 +128,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2726402589501242619, guid: cc49a1a120848554d9760f59ab66cc48, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4c52f17f58d02774ba590bb8b5f2cbd1, type: 2}
     - target: {fileID: 5787954300973033482, guid: cc49a1a120848554d9760f59ab66cc48, type: 3}
       propertyPath: info
       value: 
@@ -160,6 +164,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7542807296956278112, guid: cc49a1a120848554d9760f59ab66cc48, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3180846704607362029, guid: 80b2df112fe13ae458f8feaf0d1f63f5, type: 3}
     - target: {fileID: 8435178042611782179, guid: cc49a1a120848554d9760f59ab66cc48, type: 3}
       propertyPath: m_LocalPosition.x
       value: 80.78
@@ -638,10 +646,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 375
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1051,8 +1059,8 @@ Transform:
   m_GameObject: {fileID: 549254378}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 92.72, y: -16.1453, z: 0}
-  m_LocalScale: {x: 1.6594937, y: 1.8026541, z: 0}
+  m_LocalPosition: {x: 92.72, y: -16.3579, z: 0}
+  m_LocalScale: {x: 1.6594937, y: 1.377408, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

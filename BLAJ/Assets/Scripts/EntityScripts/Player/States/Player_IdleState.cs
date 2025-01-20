@@ -18,12 +18,17 @@ public class Player_IdleState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
+        if (player.takingDamage) 
+            return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if (InputSystemController.MovementInput().magnitude > 0) return PlayerStateMachine.EPlayerState.walking;
+        if (InputSystemController.MovementInput().magnitude > 0) 
+            return PlayerStateMachine.EPlayerState.walking;
+
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+            return PlayerStateMachine.EPlayerState.dashAttack;
         
         
-        if ((InputSystemController.instance.TryingAttack()) && player.AttackReady())
+        if ((InputSystemController.instance.TryingAttack()) && player.AttackReady() && timer.TimerDone("minorCD"))
             return PlayerStateMachine.EPlayerState.attack;
 
         if (InputSystemController.instance.TryingJump())

@@ -8,16 +8,16 @@ public class Player_DashState : PlayerState
     
     public Player_DashState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
     {
-        Console.WriteLine("Yo");
+        
     }
     public override void EnterState()
     {
         base.EnterState();
-        stateTimer = player.dashDuration;
+        timer.SetTimer("dashTimer", player.dashDuration);
         player.canTakeDamage = false;
         player.StartDashCD();
         rb.gravityScale = 1;
-        player.Move(player.dashSpeed * player.FacingDirectionInt(), 0);
+        player.Move(player.dashSpeed * player.MovementDirection(), 0);
     }
 
     public override void UpdateState()
@@ -27,7 +27,7 @@ public class Player_DashState : PlayerState
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
-        if (StateTimerDone())
+        if (timer.TimerDone("dashTimer"))
         {
             if (player.Grounded())
             {

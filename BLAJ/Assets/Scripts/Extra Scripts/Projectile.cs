@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
-        timer = .2f;
+        timer = .01f;
     }
 
     private void OnDisable()
