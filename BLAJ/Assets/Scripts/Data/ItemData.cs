@@ -1,15 +1,24 @@
+using System;
 using UnityEngine; 
 
 
-public class ItemData : ScriptableObject
+public class ItemData : MonoBehaviour
 {
-    public string named;
-    public string GUID;
-    public Sprite icon;
-    public int stackSize;
+    [SerializeField] private string itemName;
+    [SerializeField] private int quantity;
+    [SerializeField] private Sprite image;
+    private InventoryManager _inventoryManager;
 
-    public void Attack()
+    private void Start()
     {
-        Debug.Log("yo");
+        _inventoryManager = GameObject.Find("PlayerInventory").GetComponent<InventoryManager>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.CompareTag("Player"))
+        {
+            _inventoryManager.AddItem(itemName, quantity, image);
+        }
     }
 }

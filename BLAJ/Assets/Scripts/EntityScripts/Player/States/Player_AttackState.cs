@@ -16,6 +16,7 @@ public class Player_AttackState : PlayerState
         attackInt++;
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
+        timer.SetActionTimer("canFlip", 0.1f, () => player.canFlip = false);
         timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 0);
     }
 
@@ -23,7 +24,7 @@ public class Player_AttackState : PlayerState
     {
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 5, rb.velocityY);
+        if(player.Grounded())player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 5, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -45,6 +46,7 @@ public class Player_AttackState : PlayerState
     {
         base.ExitState();
         if(attackInt == 3) player.StartAttackCD();
+        player.canFlip = true;
         timer.SetTimer("minorCD", player.coolDowns[player.cooldownKey[0]]/2f);
     }
 }

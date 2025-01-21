@@ -25,11 +25,7 @@ public class InputSystemController : MonoBehaviour
     private string dashKey = "Dash";
     
     [SerializeField] private InputActionReference Walk;
-    [SerializeField] private InputActionReference Jump;
-    [SerializeField] private InputActionReference Dash;
-    [SerializeField] private InputActionReference Attack;
-    [SerializeField] private InputActionReference SuperAttack;
-    [SerializeField] private InputActionReference pauseGame;
+    public Action pauseGame;
     
     
 
@@ -82,9 +78,7 @@ public class InputSystemController : MonoBehaviour
         
         if (context.performed)
         {
-            currentPause %= 2;
-            Time.timeScale = currentPause;
-            currentPause++;
+            pauseGame.Invoke();
         }
         
     } 
