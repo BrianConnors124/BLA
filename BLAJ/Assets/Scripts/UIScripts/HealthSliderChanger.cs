@@ -14,7 +14,7 @@ public class HealthSliderChanger : MonoBehaviour
 
     private float previousHp;
 
-    private void Awake()
+    private void Start()
     {
         playerController = player.GetComponent<Player>();
     }
