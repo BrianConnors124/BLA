@@ -228,12 +228,12 @@
         },
         {
             "name": "MenuNav",
-            "id": "4b19362f-520f-4071-99e9-d2e3ed291ec9",
+            "id": "ee57cfe3-5ab7-42ca-a8a0-fb477efa5a65",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "ExitMenu",
                     "type": "Button",
-                    "id": "3284f28d-fc50-44a5-b2d7-b04b62cab816",
+                    "id": "ecb43f35-89bc-41bc-9a39-3829e7a02717",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -243,12 +243,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "6c7782ab-290b-4505-a254-199d983d39e8",
-                    "path": "",
+                    "id": "4f51e6fc-af30-4370-8e8f-59a5d552f335",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "ExitMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -13,7 +13,7 @@ public class ItemData : MonoBehaviour
     private void Start()
     {
         itemImage = image.GetComponent<SpriteRenderer>().sprite;
-        _inventoryManager = GameObject.Find("PlayerUI").GetComponent<InventoryManager>();
+        _inventoryManager = GameObject.Find("Canvas").GetComponent<InventoryManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D other)

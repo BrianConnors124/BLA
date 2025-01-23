@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -15,14 +17,13 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         InputSystemController.instance.pauseGame += PauseGame;
-        inventoryMenu.SetActive(false);
-        
     }
 
     private void PauseGame()
     {
         currentPause %= 2;
         Time.timeScale = currentPause;
+        InputSystemController.instance.playerInput.SwitchCurrentActionMap(InputSystemController.instance.actionMaps[currentPause]);
 
         if (currentPause == 0)
         {
@@ -34,6 +35,8 @@ public class InventoryManager : MonoBehaviour
         }
         currentPause++;
     }
+    
+    
 
     public void AddItem(string itemName, int quantity, Sprite itemImage)
     {

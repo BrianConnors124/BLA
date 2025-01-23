@@ -685,6 +685,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: WarriorCharacter_0
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b665a48094fbf9e40b73cf8f4eceaf76
+      internalID: -914217310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -722,6 +743,7 @@ TextureImporter:
       ShepardCharacter_7: 6054701739453610520
       ShepardCharacter_8: 1862229296917631168
       ShepardCharacter_9: 849396839548566559
+      WarriorCharacter_0: 1582027416
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
