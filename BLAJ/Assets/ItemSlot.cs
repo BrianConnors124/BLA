@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,9 @@ using TMPro;
 
 public class ItemSlot : MonoBehaviour
 {
-    [Header("Item Data")]
-    public string itemName;
-    public Sprite itemSprite;
+    [Header("Item Data")] 
+    public ItemInfo currentItem;
+    
     public int quantity;
     public bool isFull;
 
@@ -16,14 +17,60 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Image itemImage;
 
+    private InventoryManager manager;
 
-    public void AddItem(string itemName, int quantity, Sprite image)
+    private void Awake()
     {
-        this.itemName = itemName;
-        this.quantity = quantity;
-        itemImage.sprite = image;
+        manager = GameObject.Find("Canvas").GetComponent<InventoryManager>();
+    }
+    
+
+
+    public void AddItem(ItemInfo item)
+    {
+        currentItem = item;
+        quantity = currentItem.quantity;
+        itemImage.sprite = currentItem.itemImage;
 
         quantityText.text = quantity.ToString();
         quantityText.enabled = true;
+    }
+    private void ChangeItem(ItemInfo item)
+    {
+        currentItem = item;
+        quantity = currentItem.quantity;
+        itemImage.sprite = currentItem.itemImage;
+
+        quantityText.text = quantity.ToString();
+        quantityText.enabled = true;
+        if(currentItem.quantity == 0) quantityText.enabled = false;
+    }
+
+    public void SlotSelected()
+    {
+        if (manager.slotSelected)
+        {
+            ReplaceSlot();
+        }
+        else
+        {
+            PickUpSlot();
+        }
+    }
+
+    private void ReplaceSlot()
+    {
+        manager.slotSelected = false;
+        var extra = currentItem;
+        ChangeItem(manager.selectedSlot.currentItem);
+        manager.selectedSlot.ChangeItem(extra);
+        Debug.Log("ReplaceSlot");
+    }
+
+    private void PickUpSlot()
+    {
+        manager.slotSelected = true;
+        manager.selectedSlot = this;
+        Debug.Log("SelectSlot");
     }
 }

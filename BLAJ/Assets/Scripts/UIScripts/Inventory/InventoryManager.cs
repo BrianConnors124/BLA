@@ -13,6 +13,8 @@ public class InventoryManager : MonoBehaviour
     private int currentPause;
     private Action setPauseButton;
     public ItemSlot[] itemSlot;
+    public ItemSlot selectedSlot;
+    public bool slotSelected;
 
     private void Start()
     {
@@ -38,13 +40,13 @@ public class InventoryManager : MonoBehaviour
     
     
 
-    public void AddItem(string itemName, int quantity, Sprite itemImage)
+    public void AddItem(ItemInfo item)
     {
         for (int i = 0; i < itemSlot.Length; i++)
         {
             if (!itemSlot[i].isFull)
             {
-                itemSlot[i].AddItem(itemName, quantity, itemImage);
+                itemSlot[i].AddItem(item);
                 return;
             }
         }
