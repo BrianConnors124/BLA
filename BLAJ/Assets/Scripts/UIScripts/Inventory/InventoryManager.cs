@@ -14,7 +14,9 @@ public class InventoryManager : MonoBehaviour
     private Action setPauseButton;
     public ItemSlot[] itemSlot;
     public ItemSlot selectedSlot;
+    public GameObject description;
     public bool slotSelected;
+    
 
     private void Start()
     {
@@ -33,18 +35,22 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            inventoryMenu.SetActive(false);
+            inventoryMenu.GetComponent<AnimationDone>().Disable();
         }
         currentPause++;
     }
-    
-    
+
+    private void Update()
+    {
+        if(selectedSlot != null && selectedSlot.currentItem.quantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(selectedSlot.currentItem);
+    }
+
 
     public void AddItem(ItemInfo item)
     {
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            if (!itemSlot[i].isFull)
+            if (!itemSlot[i].isFull && (!itemSlot[i].isOccupied || itemSlot[i].currentItem.itemName.Equals(item.itemName)))
             {
                 itemSlot[i].AddItem(item);
                 return;

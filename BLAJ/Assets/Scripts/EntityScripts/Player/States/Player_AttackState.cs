@@ -13,10 +13,10 @@ public class Player_AttackState : PlayerState
     public override void EnterState()
     {
         animEnded = false;
+        player.canFlip = false;
         attackInt++;
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        timer.SetActionTimer("canFlip", 0.1f, () => player.canFlip = false);
         timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 0);
     }
 

@@ -12,6 +12,7 @@ public class ItemSlot : MonoBehaviour
     
     public int quantity;
     public bool isFull;
+    public bool isOccupied;
 
     [Header("Item Slot")] 
     [SerializeField] private TMP_Text quantityText;
@@ -28,7 +29,10 @@ public class ItemSlot : MonoBehaviour
 
     public void AddItem(ItemInfo item)
     {
-        currentItem = item;
+        if (currentItem.quantity == 0)
+            currentItem = item;
+        
+        currentItem.quantity = item.quantity + quantity;
         quantity = currentItem.quantity;
         itemImage.sprite = currentItem.itemImage;
 
@@ -44,6 +48,12 @@ public class ItemSlot : MonoBehaviour
         quantityText.text = quantity.ToString();
         quantityText.enabled = true;
         if(currentItem.quantity == 0) quantityText.enabled = false;
+    }
+
+    private void Update()
+    {
+        isOccupied = quantity > 0;
+        isFull = quantity >= 10;
     }
 
     public void SlotSelected()

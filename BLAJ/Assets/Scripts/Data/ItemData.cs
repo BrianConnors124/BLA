@@ -31,6 +31,7 @@ public class ItemData : MonoBehaviour
 public class ItemInfo : ScriptableObject
 {
     public string itemName;
+    public string description;
     public Sprite itemImage;
     public int quantity;
 
