@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Gold Poop
   description: This can be used as currency to exchange with the poop tribe
   itemImage: {fileID: 1956397070, guid: 164ee04bd02f1564e9a37eaf2779d3f4, type: 3}
-  quantity: 1
+  quantity: 5
