@@ -23,7 +23,12 @@ public class InputSystemController : MonoBehaviour
 
     [SerializeField] private InputActionReference walk;
     [SerializeField] private InputActionReference navigateUI;
+    
     public Action pauseGame;
+    public Action useItem;
+    public Action selectItem;
+    public Action unselectItem;
+    public Action sortItem;
 
 
     private void Awake()
@@ -71,15 +76,26 @@ public void HandleJump(InputAction.CallbackContext context)
     
     public bool TryingSuperAttack() => _queueTimer.TimerActive(superAttackKey);
     
+    
+    //~~~~~~~~~~~~~~~Inventory~~~~~~~~~~~~~~~~\\
     public void PauseGame(InputAction.CallbackContext context)
     {
-        
-        if (context.performed)
-        {
-            pauseGame.Invoke();
-            
-        }
-        
-    } 
+        if (context.performed) pauseGame.Invoke();
+    }
+
+    public void HandleItemUsage(InputAction.CallbackContext context)
+    {
+        if(context.performed) useItem.Invoke();
+    }
+    public void HandleItemSort(InputAction.CallbackContext context)
+    {
+        if(context.performed) print("Sort Item");
+    }
+
+    public void HandleItemSelect(InputAction.CallbackContext context)
+    {
+        if(context.performed) selectItem.Invoke();
+        if(context.canceled) unselectItem.Invoke();
+    }
     
 }

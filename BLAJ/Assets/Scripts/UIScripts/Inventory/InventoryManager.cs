@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    
+    [SerializeField] private EventSystem eventSystem;
     public GameObject inventoryMenu;
     private int currentPause;
     private Action setPauseButton;
@@ -21,6 +21,8 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         InputSystemController.instance.pauseGame += PauseGame;
+        InputSystemController.instance.selectItem += SelectItem;
+        InputSystemController.instance.unselectItem += UnSelectItem;
     }
 
     private void PauseGame()
@@ -42,7 +44,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if(selectedSlot != null && selectedSlot.currentItem.quantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(selectedSlot.currentItem);
+        if(eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem.quantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
     }
 
 
@@ -56,5 +58,21 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void SelectItem()
+    {
+        selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
+        slotSelected = true;
+    }
+    private void UnSelectItem()
+    {
+        slotSelected = false;
+        var placeHolder = selectedSlot.currentItem;
+        selectedSlot.currentItem = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem;
+        selectedSlot.UpdateInfo(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity);
+        selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
+        selectedSlot.currentItem = placeHolder.currentItem;
+        selectedSlot.UpdateInfo(placeHolder.slotQuantity);
     }
 }
