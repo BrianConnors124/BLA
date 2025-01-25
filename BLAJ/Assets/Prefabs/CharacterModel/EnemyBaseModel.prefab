@@ -429,7 +429,6 @@ MonoBehaviour:
   jumpHeight: 0
   reach: 0
   primaryCD: 0
-  returned: 0
   playerInPursuitRange: 0
   playerInMeleeRange: 0
   canAttack: 1

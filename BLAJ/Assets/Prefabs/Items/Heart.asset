@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 93f5ccc1781a38f41a6ca1f2c04cc4e5, type: 3}
   m_Name: Heart
-  m_EditorClassIdentifier: Assembly-CSharp::ItemInfo
-  itemName: THE Heart
-  description: This heart gives you a whopping 1 HP
+  m_EditorClassIdentifier: 
+  itemName: The heart
+  description: At this point you're gonna lose HP
   itemImage: {fileID: 2068525458738161848, guid: 7a790df8768763b4283303ce01b9e17a, type: 3}

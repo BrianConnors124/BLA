@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 4901dac5da7c8ff40ba4e9c1c6965113, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
   movementSpeed: 8
   dashSpeed: 64
   jumpHeight: 24
-  attackCD: 1
-  superAttackCD: 2
+  attackCD: 0.5
+  superAttackCD: 20
   dashCD: 1
   dashDuration: 0.08
   doubleJumps: 1
@@ -26,4 +26,4 @@ MonoBehaviour:
   baseKnockBack: 12
   stun: 0.5
   health: 100
-  playerAnimator: {fileID: 9100000, guid: 1701c3909d9cd1443a0cc2309fec4314, type: 2}
+  playerAnimator: {fileID: 0}
