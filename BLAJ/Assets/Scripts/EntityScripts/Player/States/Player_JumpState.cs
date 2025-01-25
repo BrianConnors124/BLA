@@ -13,7 +13,7 @@ public class Player_JumpState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.timer.RemoveActionTimer("Jump");
+        player.timer.RemoveTimer("Jump");
         player.doubleJumps--;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
     }

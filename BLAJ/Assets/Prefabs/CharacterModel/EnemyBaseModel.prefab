@@ -230,10 +230,10 @@ GameObject:
   - component: {fileID: 5787954300973033482}
   - component: {fileID: 2726402589501242619}
   - component: {fileID: 177365907341555814}
-  - component: {fileID: 5376427764209029084}
+  - component: {fileID: 3479868666483701920}
   m_Layer: 8
   m_Name: EnemyBaseModel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,7 +246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6565572173383317939}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 80.78, y: -15.91, z: -0.25779223}
   m_LocalScale: {x: 2.15, y: 2.15, z: 0}
   m_ConstrainProportionsScale: 1
@@ -368,7 +368,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4338671501594190093, guid: 2124325283f34a4459556549534d11d2, type: 3}
+  m_Sprite: {fileID: -3180846704607362029, guid: 80b2df112fe13ae458f8feaf0d1f63f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -403,11 +403,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f2528cfe97531488b179b1617e48a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageVisual: []
   damage: 0
   knockBack: 0
   stun: 0
-  damageNumberController: {fileID: 0}
+  controller: {fileID: 0}
+  objPuller: {fileID: 0}
   health: 0
   maxHealth: 0
   recentKnockBack: 0
@@ -423,7 +423,7 @@ MonoBehaviour:
   startingXPos: 0
   _stateMachine: {fileID: 0}
   player: {fileID: 0}
-  info: {fileID: 0}
+  info: {fileID: 11400000, guid: b871630229cc6314a91be46b2d2999fe, type: 2}
   origin: {x: 0, y: 0}
   movementSpeed: 0
   jumpHeight: 0
@@ -431,8 +431,11 @@ MonoBehaviour:
   primaryCD: 0
   returned: 0
   playerInPursuitRange: 0
-  playerInAttackRange: 0
+  playerInMeleeRange: 0
   canAttack: 1
+  longRangeAttackReady: 1
+  playerInLongRange: 0
+  hasALongRangeAttack: 0
 --- !u!95 &2726402589501242619
 Animator:
   serializedVersion: 7
@@ -443,7 +446,7 @@ Animator:
   m_GameObject: {fileID: 6565572173383317939}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4c52f17f58d02774ba590bb8b5f2cbd1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -468,8 +471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: []
---- !u!58 &5376427764209029084
-CircleCollider2D:
+--- !u!61 &3479868666483701920
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -503,4 +506,14 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 5.87
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 11.68, y: 4.53}
+  m_EdgeRadius: 0

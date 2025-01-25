@@ -25,6 +25,7 @@ public class Enemy : Entity
     public bool returned;
     public bool playerInPursuitRange;
     public bool playerInMeleeRange;
+    public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < transform.localScale.x * hitbox.size.x * 1.4f;
     public bool canAttack = true;
     
     public bool longRangeAttackReady = true;
@@ -69,10 +70,6 @@ public class Enemy : Entity
             new Vector2(transform.localScale.x * hitbox.size.x * 1.4f, transform.localScale.y * 1.1f), 0, Vector2.right, 0,
             LayerMask.GetMask("Player"));
 
-        if (!playerInMeleeRange && player != null)
-            playerInMeleeRange = Math.Abs(player.transform.position.x - transform.position.x) <
-                                 transform.localScale.x * hitbox.size.x * 1.4f;
-
 
         #endregion
     }
@@ -92,7 +89,7 @@ public class Enemy : Entity
         if (other.CompareTag("Player"))
         {
             playerInPursuitRange = false;
-            timer.RemoveActionTimer("LongRangeAttack");
+            timer.RemoveTimer("LongRangeAttack");
             playerInLongRange = false;
         }
     }

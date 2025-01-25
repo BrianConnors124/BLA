@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   health: 200
   jumpHeight: 24
-  movementSpeed: 6
+  movementSpeed: 4
   damage: 10
   baseReach: 1
   stun: 0

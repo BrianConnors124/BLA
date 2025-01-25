@@ -26,7 +26,7 @@ public class Enemy_AttackState : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
-        return animEnded ? EnemyStateMachine.EEnemyState.idle : StateKey;
+        return animEnded ? EnemyStateMachine.EEnemyState.retreat : StateKey;
     }
 
     public override void ExitState()

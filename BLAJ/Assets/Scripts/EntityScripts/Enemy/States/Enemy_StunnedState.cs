@@ -26,7 +26,7 @@ public class Enemy_StunnedState : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if(!doneStartUp) return StateKey;
-        if (StateTimerDone()) return EnemyStateMachine.EEnemyState.idle;
+        if (StateTimerDone()) return EnemyStateMachine.EEnemyState.retreat;
         return StateKey;
 
     }

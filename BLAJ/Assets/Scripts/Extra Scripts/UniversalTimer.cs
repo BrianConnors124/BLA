@@ -42,12 +42,12 @@ public class UniversalTimer : MonoBehaviour
     
     public float GetMaxValue(string code) => startVal[code];
 
-    public void RemoveActionTimer(string code)
+    public void RemoveTimer(string code)
     {
         timer.Remove(code);
         startVal.Remove(code);
-        action.Remove(code);
         key.Remove(code);
+        action.Remove(code);
     }
     
     public void SetTimer(string code, float length)

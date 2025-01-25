@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 993344871259942363}
   - component: {fileID: 7731353031252206761}
   m_Layer: 7
-  m_Name: Player
+  m_Name: PlayerBaseModel
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,13 +80,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -5369697482517811180, guid: 6bff90fa518a64244b3a290a656a823b, type: 3}
+  m_SortingOrder: 50
+  m_Sprite: {fileID: -4066602484736472129, guid: 377e94f738418944d8e687406c320b7a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.31}
+  m_Size: {x: 0.5, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -102,7 +102,7 @@ Animator:
   m_GameObject: {fileID: 2060444991934993580}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1701c3909d9cd1443a0cc2309fec4314, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -175,17 +175,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0013843775, y: -0.06287789}
+  m_Offset: {x: -0.0059792995, y: -0.04909587}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.8, y: 0}
-    oldSize: {x: 0.2, y: 0.31}
-    newSize: {x: 0.2, y: 0.31}
+    pivot: {x: 0.53898335, y: 0.5194917}
+    oldSize: {x: 0.5, y: 1}
+    newSize: {x: 0.5, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.31412947, y: 0.875744}
+  m_Size: {x: 0.23756155, y: 0.84817994}
   m_EdgeRadius: 0
 --- !u!114 &8118404653728457826
 MonoBehaviour:
@@ -211,28 +211,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce8c11abffdd334db838528a35ae792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  knockBack: 0
+  stun: 0
+  controller: {fileID: 0}
+  objPuller: {fileID: 0}
+  health: 0
+  maxHealth: 0
+  recentKnockBack: 0
+  knockBackDirection: 0
+  recentStun: 0
+  timer: {fileID: 0}
+  takingDamage: 0
+  canTakeDamage: 1
+  sprite: {fileID: 0}
   Anim: {fileID: 0}
   hitBox: {x: 0, y: 0}
   coyoteJump: 0
+  playerInfo: {fileID: 11400000, guid: 851883c94b63fc646bf4d630635ab720, type: 2}
   _stateMachine: {fileID: 0}
-  playerInfo: {fileID: 0}
-  timer: {fileID: 0}
-  controller: {fileID: 0}
+  playerController: {fileID: 0}
   cooldownKey: []
   speed: {x: 0, y: 0}
   dashDuration: 0
-  recentDamage: 0
-  recentKnockBack: 0
-  recentStun: 0
-  takingDamage: 0
-  canTakeDamage: 0
-  enemyLocation: {x: 0, y: 0}
   canFlip: 1
-  health: 0
-  maxHealth: 0
-  playerDamage: 0
-  playerKnockBack: 0
-  playerStun: 0
   doubleJumps: 0
   dashSpeed: 0
   movementSpeed: 0
@@ -250,10 +252,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b17a3b79fd9b644ca748c3a828e2858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Walk: {fileID: -2091348598716597423, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  Jump: {fileID: 7310677065945019850, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  Dash: {fileID: 5922499169187862635, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  Attack: {fileID: -4030069277412980263, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
+  playerInput: {fileID: 7731353031252206761}
+  actionMaps:
+  - MenuNav
+  - Movement
+  currentPause: 0
+  walk: {fileID: -2091348598716597423, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
+  navigateUI: {fileID: 4978618482269707356, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
 --- !u!114 &993344871259942363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: a9d15e3a92e267344bd8881528bdedf3, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -291,7 +296,159 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c17bcfa-93f0-4d05-b191-4a12470a0011
+    m_ActionName: 'Movement/Walking[/DualSenseGamepadHID/leftStick,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 64dc6c46-7a82-4201-aef9-9a2dc9fd0967
+    m_ActionName: 'Movement/HandMovement[/DualSenseGamepadHID/rightStick]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f273893f-426d-4ebf-99e4-9c5d29fce755
+    m_ActionName: 'Movement/Jump[/DualSenseGamepadHID/buttonSouth,/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dda055e8-b727-4fbe-ac6a-e9db7f9df504
+    m_ActionName: 'Movement/Dash[/DualSenseGamepadHID/rightTrigger,/Keyboard/ctrl]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e2c34079-951e-4c5f-8367-6c83b9599541
+    m_ActionName: 'Movement/Primary[/DualSenseGamepadHID/buttonWest,/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleSuperAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d0c79c96-a477-4f14-aa82-08b493f0b258
+    m_ActionName: 'Movement/Secondary[/DualSenseGamepadHID/leftTrigger,/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: ToggleInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c3b97fa7-f1cb-46e9-9991-84104bd939cb
+    m_ActionName: 'Movement/PauseGame[/DualSenseGamepadHID/dpad/right]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: ToggleInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ecb43f35-89bc-41bc-9a39-3829e7a02717
+    m_ActionName: 'MenuNav/ExitMenu[/XInputControllerWindows/dpad/right]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleItemSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7f2eabf6-4b30-4878-a72c-814a65af71ea
+    m_ActionName: 'MenuNav/SelectItem[/DualSenseGamepadHID/buttonSouth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleItemUsage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d8358e04-6e56-41e7-9c80-5571dcca79ec
+    m_ActionName: 'MenuNav/UseItem[/DualSenseGamepadHID/buttonWest]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2654378839634255985}
+        m_TargetAssemblyTypeName: InputSystemController, Assembly-CSharp
+        m_MethodName: HandleItemSort
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6cc480fe-0d55-4a73-8329-bc1939558330
+    m_ActionName: 'MenuNav/SortItem[/DualSenseGamepadHID/buttonNorth]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement

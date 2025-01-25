@@ -5,18 +5,22 @@ using UnityEngine;
 
 public class EnemyState : State<EnemyStateMachine.EEnemyState>
 {
-    public Enemy enemy;
-    public Rigidbody2D rb;
-    public UniversalTimer Timer;
-    public string jumpKey;
-    public bool playerLost = false;
+    protected Enemy enemy;
+    protected Rigidbody2D rb;
+    protected UniversalTimer Timer;
+    protected string jumpKey;
+    protected bool playerLost;
     protected string code = "Player Lost";
+    
+    
+    protected EnemyStateMachine enemyStateMachine;
     public EnemyState(EnemyStateMachine.EEnemyState key, Enemy entity) : base(key)
     {
         enemy = entity;
         rb = enemy.GetComponent<Rigidbody2D>();
         Timer = enemy.GetComponent<UniversalTimer>();
         jumpKey = "jumpCD";
+        enemyStateMachine = enemy.GetComponent<EnemyStateMachine>();
     }
     
 
@@ -37,7 +41,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
         if(enemy.PlayerOutOfSight() && !Timer.TimerActive(code)) Timer.SetActionTimer(code, 1, () => playerLost = true);
         if (!enemy.PlayerOutOfSight())
         {
-            Timer.RemoveActionTimer(code);
+            Timer.RemoveTimer(code);
             playerLost = false;
         }
         enemy.Anim.Play(StateKey.ToString());

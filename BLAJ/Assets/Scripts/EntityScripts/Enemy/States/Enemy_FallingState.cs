@@ -12,7 +12,6 @@ public class Enemy_FallingState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        Timer.SetTimer(jumpKey, .3f);
     }
 
     public override void UpdateState()
@@ -23,13 +22,13 @@ public class Enemy_FallingState : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
-        if (enemy.IsTouchingGround()) return EnemyStateMachine.EEnemyState.idle;
+        if (enemy.IsTouchingGround()) return enemyStateMachine.GetLastState().StateKey;
         return StateKey;
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        //enemy.SetVelocity(new Vector2(rb.velocity.x, 0));
+        Timer.SetTimer(jumpKey, .3f);
     }
 }
