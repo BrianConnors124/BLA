@@ -652,7 +652,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4458165569034832144}
-  - component: {fileID: 1902782299494066667}
   - component: {fileID: 2642719158855461413}
   - component: {fileID: 1933059136246843466}
   m_Layer: 0
@@ -680,23 +679,6 @@ Transform:
   - {fileID: 8893030282435289339}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1902782299494066667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5818943748801104375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 874bd183726043b4ba7e339df1e04135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level:
-  - {fileID: 5818943748801104375, guid: 08635986718ac1e42a40dc1a69ad6ac0, type: 3}
-  - {fileID: 5818943748801104375}
-  _once: 0
-  background: {fileID: 0}
 --- !u!61 &2642719158855461413
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -780,7 +762,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8893030282435289339}
   - component: {fileID: 3343953431915475357}
-  - component: {fileID: 5663377320219583930}
   m_Layer: 0
   m_Name: Teleport (1)
   m_TagString: Untagged
@@ -849,15 +830,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.5366516, y: 2.3334045}
   m_EdgeRadius: 0
---- !u!114 &5663377320219583930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826134425972699895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fa0feb53a036964a952b212cf2eab39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

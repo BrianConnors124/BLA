@@ -1,0 +1,102 @@
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+
+
+public class InputSystemController : MonoBehaviour
+{
+
+    public static InputSystemController instance;
+    public PlayerInput playerInput;
+    public string[] actionMaps;
+    
+    private bool queueActive;
+    private bool buttonPressed;
+    private UniversalTimer _queueTimer;
+    [SerializeField] private int currentPause;
+
+    [Header("ActionKeys")] 
+    private string jumpKey = "Jump";
+    private string attackKey = "Attack";
+    private string superAttackKey = "SuperAttack";
+    private string dashKey = "Dash";
+
+    [SerializeField] private InputActionReference walk;
+    [SerializeField] private InputActionReference navigateUI;
+    
+    public Action openInventory;
+    public Action useItem;
+    public Action selectItem;
+    public Action unselectItem;
+    public Action sortItem;
+
+
+    private void Awake()
+    {
+        instance = this;
+        _queueTimer = GetComponent<UniversalTimer>();
+        
+
+    }
+
+    public static Vector2 MovementInput() => instance.walk.action.ReadValue<Vector2>();
+
+public void HandleJump(InputAction.CallbackContext context)
+    {
+        
+        if(context.performed)_queueTimer.SetTimer(jumpKey, 0.1f);
+        
+    }  
+    public bool TryingJump() => _queueTimer.TimerActive(jumpKey);
+    
+    
+    public void HandleDash(InputAction.CallbackContext context)
+    {
+        
+        if(context.performed)_queueTimer.SetTimer(dashKey, 0.1f);
+        
+    } 
+    public bool TryingDash() => _queueTimer.TimerActive(dashKey);
+    
+    public void HandleAttack(InputAction.CallbackContext context)
+    {
+        
+        if(context.performed)_queueTimer.SetTimer(attackKey, 0.1f);
+        
+    } 
+    
+    public bool TryingAttack() => _queueTimer.TimerActive(attackKey);
+    
+    public void HandleSuperAttack(InputAction.CallbackContext context)
+    {
+        
+        if(context.performed)_queueTimer.SetTimer(superAttackKey, 0.1f);
+        
+    } 
+    
+    public bool TryingSuperAttack() => _queueTimer.TimerActive(superAttackKey);
+    
+    
+    //~~~~~~~~~~~~~~~Inventory~~~~~~~~~~~~~~~~\\
+    public void ToggleInventory(InputAction.CallbackContext context)
+    {
+        if (context.performed) openInventory.Invoke();
+    }
+
+    public void HandleItemUsage(InputAction.CallbackContext context)
+    {
+        if(context.performed) useItem.Invoke();
+    }
+    public void HandleItemSort(InputAction.CallbackContext context)
+    {
+        if(context.performed) print("Sort Item");
+    }
+
+    public void HandleItemSelect(InputAction.CallbackContext context)
+    {
+        if(context.performed) selectItem.Invoke();
+        if(context.canceled) unselectItem.Invoke();
+    }
+    
+}

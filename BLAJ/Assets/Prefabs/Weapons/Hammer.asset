@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6611b0bf9d0d90a42bd4ce9e9efccf9d, type: 3}
+  m_Name: Hammer
+  m_EditorClassIdentifier: 
+  weaponName: Hammer
+  description: A thorned object given to you by zues
+  artWork: {fileID: 0}
+  baseDamage: 50
+  baseReach: 5
+  primaryCD: 0.5
+  secondaryCD: 1
+  knockback: 15
+  stun: 1

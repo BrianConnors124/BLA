@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Mummy
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyInfo
+  named: 
+  anim: {fileID: 9100000, guid: 4c52f17f58d02774ba590bb8b5f2cbd1, type: 2}
+  description: 
+  health: 200
+  jumpHeight: 24
+  movementSpeed: 4
+  damage: 10
+  baseReach: 1
+  stun: 0
+  knockBack: 10
+  primaryCD: 1
+  bossType: 0

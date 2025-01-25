@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player_DashState : PlayerState
+{
+    
+    
+    public Player_DashState(PlayerStateMachine.EPlayerState key, Player entity, Rigidbody2D RB) : base(key, entity)
+    {
+        
+    }
+    public override void EnterState()
+    {
+        base.EnterState();
+        timer.SetTimer("dashTimer", player.dashDuration);
+        player.canTakeDamage = false;
+        player.StartDashCD();
+        rb.gravityScale = 1;
+        player.Move(player.dashSpeed * player.MovementDirection(), 0);
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+    }
+
+    public override PlayerStateMachine.EPlayerState GetNextState()
+    {
+        if (timer.TimerDone("dashTimer"))
+        {
+            if (player.Grounded())
+            {
+                return PlayerStateMachine.EPlayerState.walking;
+            }
+            
+            return PlayerStateMachine.EPlayerState.falling; 
+        }
+         
+        return StateKey;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        player.canTakeDamage = true;
+        rb.gravityScale = player.playerInfo.gravityScale;
+        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
+    }
+}
