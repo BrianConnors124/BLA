@@ -23,7 +23,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public override void EnterState()
     {
         base.EnterState();
-        //Debug.Log(StateKey);
+        Debug.Log(StateKey);
         enemy.Anim.Play(StateKey.ToString());
     }
     public override EnemyStateMachine.EEnemyState GetNextState()
@@ -34,6 +34,12 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public override void UpdateState()
     {
         base.UpdateState();
+        if(enemy.PlayerOutOfSight() && !Timer.TimerActive(code)) Timer.SetActionTimer(code, 1, () => playerLost = true);
+        if (!enemy.PlayerOutOfSight())
+        {
+            Timer.RemoveActionTimer(code);
+            playerLost = false;
+        }
         enemy.Anim.Play(StateKey.ToString());
     }
 

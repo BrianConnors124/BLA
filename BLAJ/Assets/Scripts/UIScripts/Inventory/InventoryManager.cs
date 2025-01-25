@@ -15,17 +15,19 @@ public class InventoryManager : MonoBehaviour
     public ItemSlot[] itemSlot;
     public ItemSlot selectedSlot;
     public GameObject description;
-    public bool slotSelected;
+
+    public ItemInfo emptyItem;
     
 
     private void Start()
     {
-        InputSystemController.instance.pauseGame += PauseGame;
+        inventoryMenu.SetActive(true);
+        InputSystemController.instance.openInventory += OpenInventory;
         InputSystemController.instance.selectItem += SelectItem;
         InputSystemController.instance.unselectItem += UnSelectItem;
     }
 
-    private void PauseGame()
+    private void OpenInventory()
     {
         currentPause %= 2;
         Time.timeScale = currentPause;
@@ -44,17 +46,17 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if(eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem.quantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
+        if(eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
     }
 
 
-    public void AddItem(ItemInfo item)
+    public void AddItem(ItemInfo item, int quantity)
     {
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            if (!itemSlot[i].isFull && (!itemSlot[i].isOccupied || itemSlot[i].currentItem.itemName.Equals(item.itemName)))
+            if (!itemSlot[i].isOccupied || itemSlot[i].currentItem.itemName.Equals(item.itemName))
             {
-                itemSlot[i].AddItem(item);
+                itemSlot[i].AddItem(item, quantity);
                 return;
             }
         }
@@ -63,16 +65,34 @@ public class InventoryManager : MonoBehaviour
     private void SelectItem()
     {
         selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
-        slotSelected = true;
     }
     private void UnSelectItem()
     {
-        slotSelected = false;
-        var placeHolder = selectedSlot.currentItem;
-        selectedSlot.currentItem = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem;
-        selectedSlot.UpdateInfo(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity);
-        selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
-        selectedSlot.currentItem = placeHolder.currentItem;
-        selectedSlot.UpdateInfo(placeHolder.slotQuantity);
+        if(selectedSlot != eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>())
+            SwitchItems(selectedSlot, eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>());
+    }
+
+    private void SwitchItems(ItemSlot firstSlot, ItemSlot newSlot)
+    {
+        if (firstSlot.currentItem.itemName.Equals(newSlot.currentItem.itemName))
+        {
+            newSlot.UpdateInfo(newSlot.slotQuantity += firstSlot.slotQuantity);
+            
+            firstSlot.currentItem = emptyItem;
+            firstSlot.UpdateInfo(0);
+        }
+        else
+        {
+            var placeHolder = ScriptableObject.CreateInstance<ItemInfo>();
+
+            placeHolder = firstSlot.currentItem;
+            
+            firstSlot.currentItem = newSlot.currentItem;
+            newSlot.currentItem = placeHolder;
+
+            var placeHolderInt = firstSlot.slotQuantity;
+            firstSlot.UpdateInfo(newSlot.slotQuantity);
+            newSlot.UpdateInfo(placeHolderInt);   
+        }
     }
 }

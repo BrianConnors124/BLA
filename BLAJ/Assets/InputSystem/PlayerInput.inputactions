@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PauseGame",
+                    "name": "OpenInventory",
                     "type": "Button",
                     "id": "c3b97fa7-f1cb-46e9-9991-84104bd939cb",
                     "expectedControlType": "Button",
@@ -216,11 +216,11 @@
                 {
                     "name": "",
                     "id": "8dfdc594-5533-43ae-97b6-5f859d522479",
-                    "path": "<Gamepad>/dpad/right",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PauseGame",
+                    "action": "OpenInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -271,7 +271,7 @@
                 {
                     "name": "",
                     "id": "4f51e6fc-af30-4370-8e8f-59a5d552f335",
-                    "path": "<Gamepad>/dpad/right",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

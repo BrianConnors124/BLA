@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Heart
   m_EditorClassIdentifier: Assembly-CSharp::ItemInfo
-  itemName: Heart
-  description: This heart heals you for 10% hp
+  itemName: THE Heart
+  description: This heart gives you a whopping 1 HP
   itemImage: {fileID: 2068525458738161848, guid: 7a790df8768763b4283303ce01b9e17a, type: 3}
-  quantity: 1

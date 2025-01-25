@@ -10,26 +10,20 @@ public class Player_WalkingState : PlayerState
     {
         
     }
-
-    private bool canIdle;
+    
     public override void EnterState()
     {
         base.EnterState();
-        canIdle = false;
         player.coyoteJump = player.playerInfo.coyoteJump;
         player.doubleJumps = player.playerInfo.doubleJumps + 1;
-        player.Move(Speed.Calculator(player.Velocity.x, Speed.Calculator(0.15f, 0.05f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
+        if(player.Grounded())player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
         player.Anim.speed = Mathf.Abs(player.Velocity.x) / player.movementSpeed;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        
-        if(player.Velocity.x == 0 && !timer.TimerActive(idleWaitTime)) timer.SetActionTimer(idleWaitTime, .1f, () => canIdle = true);
-        if(player.Velocity.x != 0) timer.RemoveActionTimer(idleWaitTime);
-        
-        player.Move(Speed.Calculator(player.Velocity.x, Speed.Calculator(0.15f, 0.05f, 0.28f) * InputSystemController.MovementInput().x, player.movementSpeed * Mathf.Abs(InputSystemController.MovementInput().x)), player.Velocity.y);
+        if(player.Grounded())player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
         player.Anim.speed = Mathf.Abs(player.Velocity.x) / player.movementSpeed;
     }
 
@@ -54,7 +48,7 @@ public class Player_WalkingState : PlayerState
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
-        if (InputSystemController.MovementInput().magnitude == 0 && canIdle) return PlayerStateMachine.EPlayerState.idle;
+        if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;
         
          
         return StateKey;

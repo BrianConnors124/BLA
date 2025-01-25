@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Gold Poop
   m_EditorClassIdentifier: Assembly-CSharp::ItemInfo
-  itemName: Gold Poop
-  description: This can be used as currency to exchange with the poop tribe
+  itemName: Golden Poop
+  description: This luxurious fine piece of poop can be used to trade with the poop
+    tribe
   itemImage: {fileID: 1956397070, guid: 164ee04bd02f1564e9a37eaf2779d3f4, type: 3}
-  quantity: 5

@@ -14,7 +14,6 @@ public class Player_DoubleJumpState : PlayerState
     {
         base.EnterState();
         player.doubleJumps--;
-        rb.velocity = new Vector2(rb.velocityX, 0);
     }
     
 

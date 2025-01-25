@@ -24,7 +24,7 @@ public class Player_AttackState : PlayerState
     {
         var a = StateKey.ToString() + attackInt;
         player.Anim.Play(a);
-        if(player.Grounded())player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 5, rb.velocityY);
+        if(player.Grounded())player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 3, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()

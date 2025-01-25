@@ -16,7 +16,8 @@ public class InputSystemController : MonoBehaviour
     private UniversalTimer _queueTimer;
     [SerializeField] private int currentPause;
 
-    [Header("ActionKeys")] private string jumpKey = "Jump";
+    [Header("ActionKeys")] 
+    private string jumpKey = "Jump";
     private string attackKey = "Attack";
     private string superAttackKey = "SuperAttack";
     private string dashKey = "Dash";
@@ -24,7 +25,7 @@ public class InputSystemController : MonoBehaviour
     [SerializeField] private InputActionReference walk;
     [SerializeField] private InputActionReference navigateUI;
     
-    public Action pauseGame;
+    public Action openInventory;
     public Action useItem;
     public Action selectItem;
     public Action unselectItem;
@@ -44,7 +45,7 @@ public class InputSystemController : MonoBehaviour
 public void HandleJump(InputAction.CallbackContext context)
     {
         
-        if(context.performed)_queueTimer.SetTimer(jumpKey, 0.2f);
+        if(context.performed)_queueTimer.SetTimer(jumpKey, 0.1f);
         
     }  
     public bool TryingJump() => _queueTimer.TimerActive(jumpKey);
@@ -53,7 +54,7 @@ public void HandleJump(InputAction.CallbackContext context)
     public void HandleDash(InputAction.CallbackContext context)
     {
         
-        if(context.performed)_queueTimer.SetTimer(dashKey, 0.2f);
+        if(context.performed)_queueTimer.SetTimer(dashKey, 0.1f);
         
     } 
     public bool TryingDash() => _queueTimer.TimerActive(dashKey);
@@ -61,7 +62,7 @@ public void HandleJump(InputAction.CallbackContext context)
     public void HandleAttack(InputAction.CallbackContext context)
     {
         
-        if(context.performed)_queueTimer.SetTimer(attackKey, 0.2f);
+        if(context.performed)_queueTimer.SetTimer(attackKey, 0.1f);
         
     } 
     
@@ -70,7 +71,7 @@ public void HandleJump(InputAction.CallbackContext context)
     public void HandleSuperAttack(InputAction.CallbackContext context)
     {
         
-        if(context.performed)_queueTimer.SetTimer(superAttackKey, 0.2f);
+        if(context.performed)_queueTimer.SetTimer(superAttackKey, 0.1f);
         
     } 
     
@@ -78,9 +79,9 @@ public void HandleJump(InputAction.CallbackContext context)
     
     
     //~~~~~~~~~~~~~~~Inventory~~~~~~~~~~~~~~~~\\
-    public void PauseGame(InputAction.CallbackContext context)
+    public void ToggleInventory(InputAction.CallbackContext context)
     {
-        if (context.performed) pauseGame.Invoke();
+        if (context.performed) openInventory.Invoke();
     }
 
     public void HandleItemUsage(InputAction.CallbackContext context)

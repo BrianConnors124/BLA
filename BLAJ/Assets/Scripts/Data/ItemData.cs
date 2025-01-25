@@ -5,13 +5,11 @@ using UnityEngine;
 public class ItemData : MonoBehaviour
 {
     public ItemInfo itemInfo;
-    
-    
-    
+    public int quantity;
     public GameObject image;
     private InventoryManager _inventoryManager;
 
-    private void Start()
+    private void Awake()
     {
         _inventoryManager = GameObject.Find("Canvas").GetComponent<InventoryManager>();
         image.GetComponent<SpriteRenderer>().sprite = itemInfo.itemImage;
@@ -21,7 +19,7 @@ public class ItemData : MonoBehaviour
     {
         if (other.collider.CompareTag("Player"))
         {
-            _inventoryManager.AddItem(itemInfo);
+            _inventoryManager.AddItem(itemInfo, quantity);
             Destroy(gameObject);
         }
     }
@@ -33,6 +31,5 @@ public class ItemInfo : ScriptableObject
     public string itemName;
     public string description;
     public Sprite itemImage;
-    public int quantity;
 
 }

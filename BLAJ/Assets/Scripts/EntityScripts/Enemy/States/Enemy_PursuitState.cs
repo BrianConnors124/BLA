@@ -20,8 +20,6 @@ public class Enemy_PursuitState : EnemyState
     public override void UpdateState()
     {
         base.UpdateState();
-        if((enemy.PlayerOutOfSight() || !enemy.playerInPursuitRange) && !Timer.TimerActive(code)) Timer.SetActionTimer(code, 1, () => playerLost = true);
-        if (!enemy.PlayerOutOfSight()) Timer.RemoveActionTimer(code);
         rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.player.transform.position.x), rb.velocity.y);
     }
 
@@ -44,6 +42,5 @@ public class Enemy_PursuitState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        if((enemy.PlayerOutOfSight() || !enemy.playerInPursuitRange) && !Timer.TimerActive(code)) Timer.SetActionTimer(code, 1, () => playerLost = true);
     }
 }

@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AnimationDone : MonoBehaviour
 {
     public GameObject[] setActiveOnAnimDone;
-
+    public EventSystem eventSystem;
     public Animator anim;
     public bool animDone;
 
@@ -23,6 +24,7 @@ public class AnimationDone : MonoBehaviour
     public void OnEnable()
     {
         animDone = false;
+        eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
         StartCoroutine(OnAnimFinishedOpen());
     }
     

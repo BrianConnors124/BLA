@@ -13,8 +13,8 @@ public class Player_JumpState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.timer.RemoveActionTimer("Jump");
         player.doubleJumps--;
-        stateTimer = 0.4f;
         player.Move(player.movementSpeed * InputSystemController.MovementInput().x, player.jumpHeight);
     }
 
@@ -37,10 +37,11 @@ public class Player_JumpState : PlayerState
         if ((InputSystemController.instance.TryingDash()) && player.DashReady())
             return PlayerStateMachine.EPlayerState.dash;
         
+        if (player.doubleJumps > 0 && InputSystemController.instance.TryingJump())
+            return PlayerStateMachine.EPlayerState.doubleJump;
         
-        if (rb.velocityY < 0) return PlayerStateMachine.EPlayerState.falling;
+        if (rb.velocityY <= 0) return PlayerStateMachine.EPlayerState.falling;
         
-        if (player.Grounded()) return PlayerStateMachine.EPlayerState.walking;
         
         return StateKey;
     }
