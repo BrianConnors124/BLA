@@ -49,7 +49,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         foreach (var enemies in bcd)
         {
             enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage, player.knockBack/1.4f, player.stun, player.MovementDirection());
-            Debug.Log(enemies);
+            //Debug.Log(enemies);
         }
     }
 

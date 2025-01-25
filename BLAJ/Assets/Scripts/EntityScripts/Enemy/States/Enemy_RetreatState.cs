@@ -14,7 +14,7 @@ public class Enemy_RetreatState : EnemyState
         base.EnterState();
         
         rb.velocity = new Vector2(enemy.movementSpeed * -Line.LeftOrRight(enemy.transform.position.x, enemy.player.transform.position.x), rb.velocity.y);
-        if(!Timer.TimerActive("retreat"))Timer.SetTimer("retreat", .8f);
+        if(!Timer.TimerActive("retreat"))Timer.SetTimer("retreat", Random.Range(0.3f, 1.2f));
     }
 
     public override void UpdateState()

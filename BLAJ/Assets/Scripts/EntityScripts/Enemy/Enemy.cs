@@ -22,10 +22,10 @@ public class Enemy : Entity
     public float primaryCD;
     
     [Header("Output")]
-    public bool returned;
     public bool playerInPursuitRange;
     public bool playerInMeleeRange;
     public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < transform.localScale.x * hitbox.size.x * 1.4f;
+    public bool returned => Math.Abs(transform.position.x - origin.x) < 0.3f;
     public bool canAttack = true;
     
     public bool longRangeAttackReady = true;
@@ -62,7 +62,6 @@ public class Enemy : Entity
         var position = transform.position;
         
         if(!takingDamage) Flip();
-        returned = position.x < origin.x + .3f && position.x > origin.x - .3f;
 
         #region Detection
 

@@ -14,7 +14,7 @@ public class Player_TakingDamage : PlayerState
     {
         base.EnterState();
         player.canFlip = false;
-        Debug.Log("Taking Damage");
+        //Debug.Log("Taking Damage");
         if (player.recentKnockBack == 0) return;
         player.Move(player.recentKnockBack * player.knockBackDirection,player.recentKnockBack);
         stateTimer = 0.2f;

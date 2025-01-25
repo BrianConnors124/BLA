@@ -39,6 +39,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void Awake()
     {
+        controller = GameObject.Find("Main Camera");
         _rb = GetComponent<Rigidbody2D>();
         timer = GetComponent<UniversalTimer>();
         Anim = GetComponent<Animator>();

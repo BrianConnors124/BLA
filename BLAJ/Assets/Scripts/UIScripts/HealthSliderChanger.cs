@@ -16,6 +16,7 @@ public class HealthSliderChanger : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         playerController = player.GetComponent<Player>();
     }
 

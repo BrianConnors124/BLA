@@ -20,6 +20,7 @@ public class CooldownSlider : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         playerScript = player.GetComponent<Player>();
         images = new Dictionary<string, Image>();
         

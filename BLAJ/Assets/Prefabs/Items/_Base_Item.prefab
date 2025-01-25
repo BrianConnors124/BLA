@@ -96,7 +96,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.096220255}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -106,7 +106,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3125, y: 0.98099554}
+  m_Size: {x: 0.82177734, y: 0.06689882}
   m_EdgeRadius: 0
 --- !u!114 &6262471683729651428
 MonoBehaviour:
@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0230aa5e53f24c64ba4f1b64bb9927b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo: {fileID: 0}
-  quantity: 1
+  itemInfo: {fileID: 11400000, guid: 0850fa6b646943349ae192244d7d7904, type: 2}
+  quantity: 5
   image: {fileID: 6013296923111505498}
 --- !u!1 &6013296923111505498
 GameObject:
@@ -195,7 +195,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_Sprite: {fileID: -8808946869829465133, guid: 2124325283f34a4459556549534d11d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

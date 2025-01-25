@@ -9,7 +9,6 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     protected Rigidbody2D rb;
     protected UniversalTimer Timer;
     protected string jumpKey;
-    protected bool playerLost;
     protected string code = "Player Lost";
     
     
@@ -38,12 +37,6 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public override void UpdateState()
     {
         base.UpdateState();
-        if(enemy.PlayerOutOfSight() && !Timer.TimerActive(code)) Timer.SetActionTimer(code, 1, () => playerLost = true);
-        if (!enemy.PlayerOutOfSight())
-        {
-            Timer.RemoveTimer(code);
-            playerLost = false;
-        }
         enemy.Anim.Play(StateKey.ToString());
     }
 

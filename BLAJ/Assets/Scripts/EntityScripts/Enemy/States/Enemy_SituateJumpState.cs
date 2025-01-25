@@ -24,7 +24,7 @@ public class Enemy_SituateJumpState : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
-        if (!enemy.DetectsObjectBackwards() && playerLost) return EnemyStateMachine.EEnemyState.retrieve;
+        if (!enemy.DetectsObjectBackwards() && enemy.PlayerOutOfSight()) return EnemyStateMachine.EEnemyState.retrieve;
         if (!enemy.DetectsObjectBackwards()) return enemy.GetComponent<EnemyStateMachine>().LastState.StateKey;
         if (StateTimerDone()) return EnemyStateMachine.EEnemyState.retrieve;
         

@@ -18,7 +18,7 @@ public class Player_DashAttackState : PlayerState
         timer.SetTimer("attackDashTimer", player.dashDuration);
         startingPos = rb.position;
         once = true;
-        player.Move(player.dashSpeed * 1.2f * player.MovementDirection(), 0);
+        player.Move(player.dashSpeed * player.MovementDirection(), 0);
     }
 
     public override void UpdateState()

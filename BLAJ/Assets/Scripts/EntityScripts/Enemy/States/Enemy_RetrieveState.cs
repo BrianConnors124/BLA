@@ -9,6 +9,7 @@ public class Enemy_RetrieveState : EnemyState
         
     }
 
+    private bool pathObst;
     public override void EnterState()
     {
         base.EnterState();
@@ -19,18 +20,30 @@ public class Enemy_RetrieveState : EnemyState
     public override void UpdateState()
     {
         base.UpdateState();
-        rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
-        
+        if(!pathObst) rb.velocity = new Vector2(enemy.movementSpeed * Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
+        if (!enemy.ThereIsAFloor() || enemy.ObjectTooHigh())
+        {
+            pathObst = true;
+            enemy.Move(enemy.movementSpeed * -Line.LeftOrRight(enemy.transform.position.x, enemy.startingXPos), rb.velocity.y);
+            if(!Timer.TimerActive("FindingNewOrigin"))Timer.SetActionTimer("FindingNewOrigin", Random.Range(.3f,1), ()=> enemy.origin = enemy.transform.position);
+        }
+
+        if (pathObst && enemy.DetectsObjectForward())
+        {
+            enemy.origin = enemy.transform.position;
+            Timer.RemoveTimer("FindingNewOrigin");
+        }
     }
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
+        
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
-        if (enemy.returned) return EnemyStateMachine.EEnemyState.idle;
+        if (enemy.returned || (pathObst && Timer.TimerDone("FindingNewOrigin"))) return EnemyStateMachine.EEnemyState.idle;
         if (rb.velocity.y < -0.1f) return EnemyStateMachine.EEnemyState.falling;
         
-        if (StateTimerDone()) if (!enemy.PlayerOutOfSight() && enemy.playerInPursuitRange) return EnemyStateMachine.EEnemyState.pursuit;
+        if (!enemy.PlayerOutOfSight() && enemy.playerInPursuitRange) return EnemyStateMachine.EEnemyState.pursuit;
         
         
 
@@ -41,5 +54,6 @@ public class Enemy_RetrieveState : EnemyState
     {
         base.ExitState();
         enemy.ZeroVelocity();
+        pathObst = false;
     }
 }
