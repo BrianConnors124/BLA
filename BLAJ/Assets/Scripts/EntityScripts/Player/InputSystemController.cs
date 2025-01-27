@@ -86,7 +86,7 @@ public void HandleJump(InputAction.CallbackContext context)
 
     public void HandleItemUsage(InputAction.CallbackContext context)
     {
-        if(context.performed) useItem.Invoke();
+        if(context.performed) print("Use Item");
     }
     public void HandleItemSort(InputAction.CallbackContext context)
     {

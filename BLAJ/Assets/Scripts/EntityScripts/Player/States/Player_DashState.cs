@@ -12,12 +12,15 @@ public class Player_DashState : PlayerState
     }
     public override void EnterState()
     {
+        player.GetComponent<BoxCollider2D>().excludeLayers += LayerMask.GetMask("WorldObj");
+        player.GetComponent<BoxCollider2D>().includeLayers -= LayerMask.GetMask("WorldObj");
         base.EnterState();
+        
         timer.SetTimer("dashTimer", player.dashDuration);
         player.canTakeDamage = false;
         player.StartDashCD();
-        rb.gravityScale = 1;
-        player.Move(player.dashSpeed * player.MovementDirection(), 0);
+
+        player.Move(InputSystemController.MovementInput().normalized.x * player.dashSpeed, InputSystemController.MovementInput().normalized.y * player.dashSpeed/1.5f);
     }
 
     public override void UpdateState()
@@ -43,6 +46,8 @@ public class Player_DashState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        player.GetComponent<BoxCollider2D>().excludeLayers -= LayerMask.GetMask("WorldObj");
+        player.GetComponent<BoxCollider2D>().includeLayers += LayerMask.GetMask("WorldObj");
         player.canTakeDamage = true;
         rb.gravityScale = player.playerInfo.gravityScale;
         rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);

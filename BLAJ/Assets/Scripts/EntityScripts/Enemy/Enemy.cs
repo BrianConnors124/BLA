@@ -98,7 +98,7 @@ public class Enemy : Entity
 
     public RaycastHit2D PlayerOutOfSight()
     {
-        return player != null? Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj"), Color.black) : new RaycastHit2D();
+        return player != null? Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.black) : new RaycastHit2D();
     }
     public RaycastHit2D DetectsObjectForward(){
     
@@ -106,7 +106,7 @@ public class Enemy : Entity
         new Vector2(
             transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
             transform.position.y), new Vector2(transform.localScale.x * .5f, transform.localScale.y * .94f), 0,
-        Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f);
+        Vector2.right, 0, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), 0.001f);
         return a; 
     }
 
@@ -115,7 +115,7 @@ public class Enemy : Entity
             transform.position.x +
             (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
             transform.position.y + transform.localScale.y / 5), new Vector2(MovementDirection(), 0),
-        transform.localScale.x * .35f, LayerMask.GetMask("WorldObj"), Color.gray);
+        transform.localScale.x * .35f, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.gray);
     
     public RaycastHit2D ObjectForwardTooClose(){
     
@@ -123,7 +123,7 @@ public class Enemy : Entity
             new Vector2(
                 transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x * MovementDirection()),
                 transform.position.y), new Vector2(transform.localScale.x * .1f, transform.localScale.y * .94f), 0,
-            Vector2.right, 0, LayerMask.GetMask("WorldObj"), 0.001f);
+            Vector2.right, 0, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), 0.001f);
         return a; 
     }
     public RaycastHit2D DetectsObjectBackwards(){
@@ -150,7 +150,7 @@ public class Enemy : Entity
         return 1;
     }
           
-    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection(), transform.position.y), Vector2.down, transform.localScale.y * 1.4f, LayerMask.GetMask("WorldObj"), Color.red);
+    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection(), transform.position.y), Vector2.down, transform.localScale.y * 1.4f, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.red);
           
     #endregion
 

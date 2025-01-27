@@ -10,6 +10,7 @@ public class AnimationDone : MonoBehaviour
     public EventSystem eventSystem;
     public Animator anim;
     public bool animDone;
+    private bool disabled;
 
     private void Start()
     {
@@ -23,6 +24,8 @@ public class AnimationDone : MonoBehaviour
 
     public void OnEnable()
     {
+        StopCoroutine(OnAnimFinishedClose());
+        disabled = false;
         animDone = false;
         eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
         StartCoroutine(OnAnimFinishedOpen());
@@ -31,9 +34,11 @@ public class AnimationDone : MonoBehaviour
 
     public void Disable()
     {
+        StopCoroutine(OnAnimFinishedOpen());
         animDone = false;
         anim.Play("InventoryClose");
-        StartCoroutine(OnAnimFinishedClose());
+        if(!disabled) StartCoroutine(OnAnimFinishedClose());
+        disabled = true;
     }
 
     private IEnumerator OnAnimFinishedOpen()

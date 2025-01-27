@@ -21,11 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 5811162890578944056, guid: 377e94f738418944d8e687406c320b7a, type: 3}
-    - time: 0.10000014
-      value: {fileID: -2899612565362022604, guid: 377e94f738418944d8e687406c320b7a, type: 3}
-    - time: 0.20000014
-      value: {fileID: -2899612565362022604, guid: 377e94f738418944d8e687406c320b7a, type: 3}
+      value: {fileID: 4188567927437842610, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
+    - time: 0.06
+      value: {fileID: 251277528355725035, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
+    - time: 0.11
+      value: {fileID: 1080834148378547367, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
+    - time: 0.17
+      value: {fileID: -8199057755455258953, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,15 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 5811162890578944056, guid: 377e94f738418944d8e687406c320b7a, type: 3}
-    - {fileID: -2899612565362022604, guid: 377e94f738418944d8e687406c320b7a, type: 3}
-    - {fileID: -2899612565362022604, guid: 377e94f738418944d8e687406c320b7a, type: 3}
+    - {fileID: 4188567927437842610, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
+    - {fileID: 251277528355725035, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
+    - {fileID: 1080834148378547367, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
+    - {fileID: -8199057755455258953, guid: d9fbaacbb395c27428004e7e564b5ae5, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.25
+    m_StopTime: 0.2
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -76,14 +79,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.1
+  - time: 0.06
     functionName: DoAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
+  - time: 0.2
     functionName: AnimEndTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
