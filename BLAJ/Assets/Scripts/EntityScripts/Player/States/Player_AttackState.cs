@@ -47,6 +47,6 @@ public class Player_AttackState : PlayerState
         base.ExitState();
         if(attackInt == 3) player.StartAttackCD();
         player.canFlip = true;
-        timer.SetTimer("minorCD", player.coolDowns[player.cooldownKey[0]]/2f);
+        timer.SetTimer("minorCD", player.coolDowns[player.cooldownKey[0]]/4f);
     }
 }

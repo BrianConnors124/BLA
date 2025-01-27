@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_DashState : PlayerState
@@ -12,15 +13,16 @@ public class Player_DashState : PlayerState
     }
     public override void EnterState()
     {
-        player.GetComponent<BoxCollider2D>().excludeLayers += LayerMask.GetMask("WorldObj");
-        player.GetComponent<BoxCollider2D>().includeLayers -= LayerMask.GetMask("WorldObj");
+        TurnOnPhase();
         base.EnterState();
         
         timer.SetTimer("dashTimer", player.dashDuration);
         player.canTakeDamage = false;
         player.StartDashCD();
-
-        player.Move(InputSystemController.MovementInput().normalized.x * player.dashSpeed, InputSystemController.MovementInput().normalized.y * player.dashSpeed/1.5f);
+        var MoveScale = new Vector2(0, 1);
+        if (Math.Abs(InputSystemController.MovementInput().x) > Math.Abs(InputSystemController.MovementInput().y))
+            MoveScale = new Vector2(1, 0);
+        player.Move(MoveScale.x * InputSystemController.MovementInput().normalized.x * player.dashSpeed, MoveScale.y * InputSystemController.MovementInput().normalized.y * player.dashSpeed/1.7f);
     }
 
     public override void UpdateState()
@@ -46,10 +48,21 @@ public class Player_DashState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
-        player.GetComponent<BoxCollider2D>().excludeLayers -= LayerMask.GetMask("WorldObj");
-        player.GetComponent<BoxCollider2D>().includeLayers += LayerMask.GetMask("WorldObj");
+        TurnOffPhase();
         player.canTakeDamage = true;
         rb.gravityScale = player.playerInfo.gravityScale;
-        rb.velocity = new Vector2(player.movementSpeed * player.Direction(InputSystemController.MovementInput().x), rb.velocityY);
     }
+
+    private void TurnOnPhase()
+    {
+        player.GetComponent<BoxCollider2D>().excludeLayers += LayerMask.GetMask("WorldObj");
+        player.GetComponent<BoxCollider2D>().includeLayers -= LayerMask.GetMask("WorldObj");
+    }
+
+    private void TurnOffPhase()
+    {
+        player.GetComponent<BoxCollider2D>().excludeLayers -= LayerMask.GetMask("WorldObj");
+        player.GetComponent<BoxCollider2D>().includeLayers += LayerMask.GetMask("WorldObj");
+    }
+    
 }
