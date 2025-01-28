@@ -7,14 +7,13 @@ public class Enemy_StunnedState : EnemyState
         
     }
 
-    private bool doneStartUp;
 
     public override void EnterState()
     {
         stateTimer = enemy.recentStun;
+        enemy.recentStun = 0;
         base.EnterState();
         enemy.ZeroVelocity();
-        doneStartUp = true;
     }
 
     public override void UpdateState()
@@ -25,7 +24,7 @@ public class Enemy_StunnedState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if(!doneStartUp) return StateKey;
+        if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         if (StateTimerDone()) return EnemyStateMachine.EEnemyState.retreat;
         return StateKey;
 
@@ -34,7 +33,6 @@ public class Enemy_StunnedState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        enemy.recentKnockBack = 0;
-        enemy.recentStun = 0;
+        
     }
 }

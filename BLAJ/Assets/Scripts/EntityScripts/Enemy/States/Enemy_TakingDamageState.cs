@@ -47,5 +47,6 @@ public class Enemy_TakingDamage : EnemyState
     {
         base.ExitState();
         enemy.takingDamage = false;
+        enemy.recentKnockBack = 0;
     }
 }
