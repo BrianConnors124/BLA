@@ -67,13 +67,13 @@ public static class ObjectPuller
     }
     
 
-    public static void PullObject(List<GameObject> arg, Vector3 origin)
+    public static void PullObject(GameObject[] obj, Vector3 origin)
     {
-        int currentPos;
+        int currentObj;;
         var needNewGameObject = true;
-        for (currentPos = 0; currentPos < arg.Count; currentPos++)
+        for (currentObj = 0; currentObj < obj.Length; currentObj++)
         {
-            if (!arg[currentPos].activeInHierarchy)
+            if (!obj[currentObj].activeInHierarchy)
             {
                 needNewGameObject = false;
             }
@@ -84,11 +84,20 @@ public static class ObjectPuller
         }
         if (needNewGameObject)
         {
-            arg.Add(arg[0]);
+            GameObject[] newObj = new GameObject[obj.Length + 1];
+
+            for(int i = 0; i < obj.Length; i++)
+            {
+                newObj[i] = obj[i];
+            }
+
+            newObj[^1] = Object.Instantiate(obj[0]);
+            obj = newObj;
+            currentObj = obj.Length - 1;
         }
-        currentPos--;
-        arg[currentPos].transform.position = origin;
-        arg[currentPos].SetActive(true);
+        currentObj--;
+        obj[currentObj].transform.position = origin;
+        obj[currentObj].SetActive(true);
     }
     
     public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction)
