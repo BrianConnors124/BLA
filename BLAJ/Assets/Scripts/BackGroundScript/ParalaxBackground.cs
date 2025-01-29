@@ -5,26 +5,29 @@ using UnityEngine;
 
 public class ParalaxBackground : MonoBehaviour
 {
-    private GameObject player;
-    public List<GameObject> backGroundpt2;
+    public float length, startPos;
+
+    public GameObject camera;
+
+    public float parallaxEffect;
 
     private void Start()
     {
-        player = GameObject.Find("Player");
+        startPos = transform.position.x;
+        length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void FixedUpdate()
     {
-        if (other.CompareTag("Background"))
-        {
-            NeedNewBackground(other);
-            print("delete");
-        }
+        float temp = camera.transform.position.x * (1 - parallaxEffect);
+        var distance = camera.transform.position.x * parallaxEffect;
+
+        transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
+
+        if (temp > startPos + length)
+            startPos += length;
+        else if (temp < startPos - length)
+            startPos -= length;
         
-    }
-
-    private void NeedNewBackground(Collider2D other)
-    {
-        ObjectPuller.PullObject(backGroundpt2, new Vector2(transform.parent.position.x + (player.GetComponent<Player>().MovementDirection() * (backGroundpt2[0].GetComponent<BoxCollider2D>().size.x + 14.8f + backGroundpt2[0].transform.localScale.x)), transform.position.y), other.gameObject);
     }
 }
