@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -69,16 +70,13 @@ public static class ObjectPuller
 
     public static void PullObject(GameObject[] obj, Vector3 origin)
     {
-        int currentObj;;
+        int currentObj;
         var needNewGameObject = true;
         for (currentObj = 0; currentObj < obj.Length; currentObj++)
         {
             if (!obj[currentObj].activeInHierarchy)
             {
                 needNewGameObject = false;
-            }
-            else
-            {
                 break;
             }
         }
@@ -98,6 +96,50 @@ public static class ObjectPuller
         currentObj--;
         obj[currentObj].transform.position = origin;
         obj[currentObj].SetActive(true);
+    }
+    
+    public static void PullObject(List<GameObject> obj, Vector3 origin)
+    {
+        int currentObj;
+        var needNewGameObject = true;
+        for (currentObj = 0; currentObj < obj.Count; currentObj++)
+        {
+            if (!obj[currentObj].activeInHierarchy)
+            {
+                needNewGameObject = false;
+                break;
+            }
+        }
+        if (needNewGameObject)
+        {
+            obj.Add(Object.Instantiate(obj[0]));
+        }
+        
+        obj[^1].transform.position = origin;
+        obj[^1].SetActive(true);
+    }
+    
+    public static void PullObject(List<GameObject> obj, Vector3 origin, GameObject other)
+    {
+        int currentObj;
+        var needNewGameObject = true;
+        for (currentObj = 0; currentObj < obj.Count; currentObj++)
+        {
+            if (!obj[currentObj].activeInHierarchy)
+            {
+                needNewGameObject = false;
+                Debug.Log("Hey Niggar");
+                break;
+            }
+        }
+        if (needNewGameObject)
+        {
+            obj.Add(Object.Instantiate(obj[0]));
+        }
+        
+        obj[currentObj].transform.position = origin;
+        obj[currentObj].SetActive(true);
+        other.SetActive(false);
     }
     
     public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction)
