@@ -24,6 +24,6 @@ MonoBehaviour:
   gravityScale: 10
   baseDamage: 10
   baseKnockBack: 12
-  stun: 0.5
+  stun: 0.2
   health: 100
   playerAnimator: {fileID: 9100000, guid: 1701c3909d9cd1443a0cc2309fec4314, type: 2}
