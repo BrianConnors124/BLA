@@ -42,6 +42,11 @@ public abstract class State<EState> where EState : Enum
     {
      throw new NotImplementedException();
     }
+
+    public virtual void Die()
+    {
+        
+    }
     
 
     public virtual void FacePlayer()

@@ -16,6 +16,7 @@ public class Entity : MonoBehaviour
     public GameObject controller;
 
     public DamageNumberList objPuller;
+    public bool dead;
     
     
     
@@ -72,7 +73,13 @@ public class Entity : MonoBehaviour
     
     protected virtual void Die()
     {
+        dead = true;
+    }
+
+    public void DestroyGameObject()
+    {
         Destroy(gameObject);
+
     }
     
     public float Direction(float a)

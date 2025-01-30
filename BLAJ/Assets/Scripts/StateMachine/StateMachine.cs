@@ -60,4 +60,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         CurrentState.FacePlayer();
     }
+
+    public virtual void DoDie()
+    {
+        CurrentState.Die();
+    }
 }
