@@ -17,6 +17,7 @@ public class Entity : MonoBehaviour
 
     public DamageNumberList objPuller;
     public bool dead;
+    public Action onDeath;
     
     
     
@@ -35,7 +36,7 @@ public class Entity : MonoBehaviour
     public Animator Anim;
     public Vector2 hitBox;
     public float coyoteJump;
-
+    public GameObject player;
     public Vector2 Location => _rb.position;
 
     protected virtual void Awake()
@@ -78,8 +79,8 @@ public class Entity : MonoBehaviour
 
     public void DestroyGameObject()
     {
+        player.GetComponent<UniversalTimer>().SetActionTimer("OnDeath", 0.2f, () => onDeath?.Invoke());
         Destroy(gameObject);
-
     }
     
     public float Direction(float a)

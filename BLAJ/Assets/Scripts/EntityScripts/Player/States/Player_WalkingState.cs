@@ -32,7 +32,7 @@ public class Player_WalkingState : PlayerState
         if (player.takingDamage) 
             return PlayerStateMachine.EPlayerState.takingDamage;
         
-        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack() && player.hasDashAttack)
             return PlayerStateMachine.EPlayerState.dashAttack;
         
         if (!player.IsTouchingGround()) 
@@ -45,7 +45,7 @@ public class Player_WalkingState : PlayerState
             return PlayerStateMachine.EPlayerState.attack;
         
         
-        if ((InputSystemController.instance.TryingDash()) && player.DashReady())
+        if ((InputSystemController.instance.TryingDash()) && player.DashReady() && player.hasDash)
             return PlayerStateMachine.EPlayerState.dash;
         
         if (InputSystemController.MovementInput().magnitude == 0) return PlayerStateMachine.EPlayerState.idle;

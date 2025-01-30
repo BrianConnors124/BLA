@@ -28,10 +28,10 @@ public class Player_FallingState : PlayerState
         
         if (player.Grounded()) return PlayerStateMachine.EPlayerState.walking;
         
-        if (player.DashReady() && (InputSystemController.instance.TryingDash()))
+        if (player.DashReady() && InputSystemController.instance.TryingDash() && player.hasDash)
             return PlayerStateMachine.EPlayerState.dash;
 
-        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack() && player.hasSlamAttack)
             return PlayerStateMachine.EPlayerState.slamAttack;
         
         

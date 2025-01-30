@@ -38,6 +38,7 @@ public class Enemy_TakingDamage : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
+        if (enemy.dead) return EnemyStateMachine.EEnemyState.dying;
         if (enemy.IsTouchingGround() && StateTimerDone()) return EnemyStateMachine.EEnemyState.stunned;
         
         return StateKey;

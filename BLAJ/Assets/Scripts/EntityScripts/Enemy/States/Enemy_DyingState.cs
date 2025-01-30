@@ -9,8 +9,18 @@ public class EnemyDyingState : EnemyState
         
     }
 
+    public override void EnterState()
+    {
+        base.EnterState();
+        enemy.ZeroVelocity();
+    }
+
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
+        if (animEnded)
+        {
+            enemy.DestroyGameObject();
+        }
         return StateKey;
     }
 }

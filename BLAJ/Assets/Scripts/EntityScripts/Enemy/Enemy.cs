@@ -10,7 +10,6 @@ public class Enemy : Entity
     [Header("Info")]
     public float startingXPos;
     public EnemyStateMachine _stateMachine;
-    public GameObject player;
     public EnemyInfo info;
     public Vector2 origin;
     private BoxCollider2D hitbox;

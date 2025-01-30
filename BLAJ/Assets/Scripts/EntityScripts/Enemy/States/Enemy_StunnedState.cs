@@ -24,6 +24,7 @@ public class Enemy_StunnedState : EnemyState
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
+        if (enemy.dead) return EnemyStateMachine.EEnemyState.dying;
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
         if (StateTimerDone()) return EnemyStateMachine.EEnemyState.retreat;
         return StateKey;

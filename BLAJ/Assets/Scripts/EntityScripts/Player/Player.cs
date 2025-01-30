@@ -32,10 +32,14 @@ public class Player : Entity
 
 
     public bool doneLoading;
+
+    [Header("Unlockables")] 
+    public bool hasDash, hasDashAttack, hasSlamAttack;
     
     
     protected override void Awake()
     {
+        
         GetComponent<Animator>().runtimeAnimatorController = playerInfo.playerAnimator;
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();

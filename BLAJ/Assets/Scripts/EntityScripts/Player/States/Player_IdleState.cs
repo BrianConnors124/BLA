@@ -24,7 +24,7 @@ public class Player_IdleState : PlayerState
         if (InputSystemController.MovementInput().magnitude > 0) 
             return PlayerStateMachine.EPlayerState.walking;
 
-        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack())
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack() && player.hasDashAttack)
             return PlayerStateMachine.EPlayerState.dashAttack;
         
         
