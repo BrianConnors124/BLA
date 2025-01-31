@@ -16,7 +16,7 @@ MonoBehaviour:
   anim: {fileID: 9100000, guid: 4c52f17f58d02774ba590bb8b5f2cbd1, type: 2}
   description: 
   health: 100
-  jumpHeight: 12
+  jumpHeight: 18
   movementSpeed: 6
   damage: 10
   baseReach: 3
