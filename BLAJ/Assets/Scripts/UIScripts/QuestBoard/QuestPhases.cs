@@ -11,7 +11,8 @@ public class QuestPhases : MonoBehaviour
     public bool phase1T, phase2T;
     public TextMeshProUGUI text;
     public Scene currentScene;
-
+    public GameObject[] setActiveOnCompletion;
+ 
     [Header("PhaseOne")]
     //kill all of the mobs in the room
     public List<GameObject> mobs;
@@ -58,6 +59,10 @@ public class QuestPhases : MonoBehaviour
             if (!phase1T)
             {
                 player.hasDash = true;
+                foreach (var gameObj in setActiveOnCompletion)
+                {
+                    gameObj.SetActive(true);
+                }
                 text.SetText("Quests Completed");
             }
         }
