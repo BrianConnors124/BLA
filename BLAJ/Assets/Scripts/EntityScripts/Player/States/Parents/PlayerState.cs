@@ -45,6 +45,9 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
 
     public override void DoAttack()
     {
+        
+        player.playerAudio.clip = player.soundEffect["Slash"];
+        player.playerAudio.Play();
         var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),0, LayerMask.GetMask("Enemy"), 0.3f);
         foreach (var enemies in bcd)
         {
@@ -73,6 +76,28 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
             a.collider.gameObject.GetComponent<Enemy>().ReceiveDamage((int)maxVelo * player.damage * .05f, player.knockBack * 1.5f, player.stun, -100);
         }
     }
+
+    public override void WalkingSound()
+    {
+        player.playerAudio.clip = player.soundEffect["Walking"];
+        
+        player.playerAudio.Play();
+    }
+
+    public override void TakeDamage()
+    {
+        player.playerAudio.volume = player.volume;
+        player.playerAudio.clip = player.soundEffect["TakeDamage"];
+        player.playerAudio.Play();
+    }
+    
+    public override void DashSound()
+    {
+        
+        player.playerAudio.clip = player.soundEffect["Dash"];
+        player.playerAudio.Play();
+    }
+    
 
     public override void ExitState()
     {

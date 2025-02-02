@@ -65,4 +65,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         CurrentState.Die();
     }
+
+    public void PlayWalkingSound()
+    {
+        CurrentState.WalkingSound();
+    }
 }

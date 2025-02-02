@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class Projectile : MonoBehaviour
 {
-    public ProjectileInfo info;
+    
     private Rigidbody2D rb;
     public float damage;
     public float speed;
@@ -21,8 +16,6 @@ public class Projectile : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        damage = info.damage;
-        speed = info.speed;
     }
 
     public void SetAim(Vector2 a)
@@ -62,14 +55,4 @@ public class Projectile : MonoBehaviour
         if (startTimer) timer -= Time.deltaTime;
         if(timer <= 0) gameObject.SetActive(false);
     }
-}
-
-
-
-[CreateAssetMenu(menuName = "Projectile/New Projectile")]
-public class ProjectileInfo : ScriptableObject
-{
-    public AnimatorController anim;
-    public float damage;
-    public float speed;
 }

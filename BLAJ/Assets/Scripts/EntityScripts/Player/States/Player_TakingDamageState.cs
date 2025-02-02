@@ -13,6 +13,7 @@ public class Player_TakingDamage : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        TakeDamage();
         player.canFlip = false;
         //Debug.Log("Taking Damage");
         if (player.recentKnockBack == 0) return;

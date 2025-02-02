@@ -45,7 +45,21 @@ public abstract class State<EState> where EState : Enum
 
     public virtual void Die()
     {
-        
+        throw new NotImplementedException();
+    }
+
+    public virtual void TakeDamage()
+    {
+        throw new NotImplementedException();
+    }
+    
+    public virtual void DashSound()
+    {
+        throw new NotImplementedException();
+    }
+    public virtual void WalkingSound()
+    {
+        throw new NotImplementedException();
     }
     
 

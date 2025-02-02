@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -34,7 +33,6 @@ public class Enemy : Entity
 
     protected override void Awake()
     {
-        GetComponent<Animator>().runtimeAnimatorController = info.anim;
         base.Awake();
         startingXPos = transform.position.x;
         _stateMachine = GetComponent<EnemyStateMachine>();

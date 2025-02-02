@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Players/NewPlayer", fileName = "NewPlayer")]
@@ -20,5 +17,4 @@ public class PlayerInfo : ScriptableObject
     public float baseKnockBack = 12;
     public float stun = 0.5f;
     public float health = 100;
-    public AnimatorController playerAnimator;
 }

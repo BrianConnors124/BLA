@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -32,15 +29,18 @@ public class Player : Entity
 
 
     public bool doneLoading;
-
-    [Header("Unlockables")] 
     public bool hasDash, hasDashAttack, hasSlamAttack;
+
+    [Header("Sound Effects")] 
+    public string[] soundKey;
+    public AudioClip[] sound;
+    public Dictionary<string, AudioClip> soundEffect;
+    public AudioSource playerAudio;
+    public float volume;
     
     
     protected override void Awake()
     {
-        
-        GetComponent<Animator>().runtimeAnimatorController = playerInfo.playerAnimator;
         base.Awake();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _stateMachine.Initialize(this, _rb);
@@ -53,6 +53,17 @@ public class Player : Entity
         SetPresets();
         playerController = GetComponent<InputSystemController>();
         doneLoading = true;
+        InitializeSound();
+    }
+
+    private void InitializeSound()
+    {
+        volume = playerAudio.volume;
+        soundEffect = new Dictionary<string, AudioClip>();
+        for (var i = 0; i < sound.Length; i++)
+        {
+            soundEffect.Add(soundKey[i], sound[i]);
+        }
     }
 
     private void SetPresets()

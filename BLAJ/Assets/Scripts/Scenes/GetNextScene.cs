@@ -11,6 +11,11 @@ public class GetNextScene : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))SceneManager.LoadScene(sceneName);
+        if(other.CompareTag("Player"))GetScene();
+    }
+
+    public void GetScene()
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

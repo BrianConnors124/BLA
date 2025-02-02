@@ -15,7 +15,7 @@ public class Player_DashState : PlayerState
     {
         TurnOnPhase();
         base.EnterState();
-        
+        DashSound();
         timer.SetTimer("dashTimer", player.dashDuration);
         player.canTakeDamage = false;
         player.StartDashCD();
