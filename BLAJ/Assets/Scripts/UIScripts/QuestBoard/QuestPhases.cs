@@ -1,83 +1,57 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class QuestPhases : MonoBehaviour
 {
-    private Action phase1, phase2;
-    public bool phase1T, phase2T;
-    public TextMeshProUGUI text;
-    public Scene currentScene;
-    public GameObject[] setActiveOnCompletion;
- 
-    [Header("PhaseOne")]
-    //kill all of the mobs in the room
-    public List<GameObject> mobs;
+    private int maxCount;
+    public List<GameObject> objectives;
+    public string currentObjective;
+    public TextMeshProUGUI questText;
 
-    public Player player;
-    
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    public GameObject[] activateOnCompletion;
+
+
+    private Player player;
+
+    private void Start()
     {
-        currentScene = SceneManager.GetActiveScene();
         player = GameObject.Find("Player").GetComponent<Player>();
-        foreach (var mob in mobs)
-        {
-            mob.GetComponent<Enemy>().onDeath += RemoveEnemyOnDeath;
-        }
-        UpdateQuestBoard();
+        maxCount = objectives.Count;
     }
 
-    private void RemoveEnemyOnDeath()
+    private void FixedUpdate()
     {
-        for (int i = 0; i < mobs.Count; i++)
-        {
-            if (!mobs[i])
-            {
-                mobs.Remove(mobs[i]);
-            }
-        }
-        UpdateQuestBoard();
-        
+        questText.SetText(currentObjective + ": " + (maxCount - objectives.Count) + "/" + maxCount);
     }
 
-    private void UpdateQuestBoard()
+    public void RemoveObjective(GameObject obj)
     {
-        if (currentScene.name.Equals("Phase1"))
-        {
-            if (phase1T)
-            {
-                if (mobs.Count <= 0) phase1T = false;
-                text.SetText("Kill x" + mobs.Count + " mummy");
-            }
+        if(objectives.Contains(obj))
+            objectives.Remove(obj);
 
-            if (!phase1T)
+        if (objectives.Count == 0)
+            ObjectiveCompleted();
+    }
+
+    private void ObjectiveCompleted()
+    {
+        for (int i = 0; i < player.unlockables.Length; i++)
+        {
+            if (!player.unlockables[i])
             {
-                player.hasDash = true;
-                foreach (var gameObj in setActiveOnCompletion)
-                {
-                    gameObj.SetActive(true);
-                }
-                text.SetText("Quests Completed");
+                player.unlockables[i] = true;
+                break;
             }
         }
-        else
+
+        foreach (var obj in activateOnCompletion)
         {
-            if (phase2T)
-            {
-                if (mobs.Count <= 0) phase2T = false;
-                text.SetText("Kill x" + mobs.Count + " mummy");
-            }
-            if (!phase2T)
-            {
-                player.hasDashAttack = true;
-                text.SetText("Quests Completed");
-            }   
+            obj.SetActive(true);
         }
     }
 }

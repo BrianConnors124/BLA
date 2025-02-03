@@ -39,8 +39,12 @@ public class Entity : MonoBehaviour
     public GameObject player;
     public Vector2 Location => _rb.position;
 
+    
+    public QuestPhases quest;
+
     protected virtual void Awake()
     {
+        quest = GameObject.Find("Quest").GetComponent<QuestPhases>();
         controller = GameObject.Find("Main Camera");
         _rb = GetComponent<Rigidbody2D>();
         timer = GetComponent<UniversalTimer>();
@@ -74,6 +78,7 @@ public class Entity : MonoBehaviour
     
     protected virtual void Die()
     {
+        quest.RemoveObjective(gameObject);
         dead = true;
     }
 

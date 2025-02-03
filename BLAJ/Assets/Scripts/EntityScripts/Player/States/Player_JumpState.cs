@@ -28,13 +28,13 @@ public class Player_JumpState : PlayerState
     {
         if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
 
-        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack() && player.hasSlamAttack)
+        if (player.SuperAttackReady() && InputSystemController.instance.TryingSuperAttack() && player.unlockables[2])
             return PlayerStateMachine.EPlayerState.slamAttack;
         
         if ((InputSystemController.instance.TryingAttack()) && player.AttackReady() && timer.TimerDone("minorCD"))
             return PlayerStateMachine.EPlayerState.attack;
         
-        if ((InputSystemController.instance.TryingDash()) && player.DashReady() && player.hasDash)
+        if ((InputSystemController.instance.TryingDash()) && player.DashReady() && player.unlockables[0])
             return PlayerStateMachine.EPlayerState.dash;
         
         if (player.doubleJumps > 0 && InputSystemController.instance.TryingJump())
