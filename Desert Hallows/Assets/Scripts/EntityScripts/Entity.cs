@@ -15,7 +15,7 @@ public class Entity : MonoBehaviour
     [Header("DamageOBJ")] 
     public GameObject controller;
 
-    public DamageNumberList objPuller;
+    public ObjectLists objPuller;
     public bool dead;
     public Action onDeath;
     
@@ -37,7 +37,9 @@ public class Entity : MonoBehaviour
     public Vector2 hitBox;
     public float coyoteJump;
     public GameObject player;
+    public GameObject sheild;
     public Vector2 Location => _rb.position;
+    
 
     
     public QuestPhases quest;
@@ -52,7 +54,7 @@ public class Entity : MonoBehaviour
         hitBox = GetComponent<BoxCollider2D>().size;
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
-        objPuller = controller.GetComponent<DamageNumberList>();
+        objPuller = controller.GetComponent<ObjectLists>();
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
@@ -65,15 +67,23 @@ public class Entity : MonoBehaviour
     
     public virtual void ReceiveDamage(float damage, float knockBack, float stun, int direction)
     {
-        health -= damage;
+        if (canTakeDamage && !sheild)
+        {
+            health -= damage;
         
-        ObjectPuller.PullObjectAndSetText(controller.GetComponent<DamageNumberList>().damageNumbers, transform.position, "" + (int) damage);
+            ObjectPuller.PullObjectAndSetTextAndColor(controller.GetComponent<ObjectLists>().damageNumbers, transform.position, "" + (int) damage, Color.red);
         
-        if(health <= 0)Die();
-        recentKnockBack = knockBack;
-        recentStun = stun;
-        takingDamage = true;
-        knockBackDirection = direction;
+            if(health <= 0)Die();
+            recentKnockBack = knockBack;
+            recentStun = stun;
+            takingDamage = true;
+            knockBackDirection = direction;   
+        }
+
+        if (sheild)
+        {
+            sheild.GetComponent<SheildScript>().ReceiveDamage(damage);
+        }
     }
     
     protected virtual void Die()
@@ -87,23 +97,13 @@ public class Entity : MonoBehaviour
         player.GetComponent<UniversalTimer>().SetActionTimer("OnDeath", 0.2f, () => onDeath?.Invoke());
         Destroy(gameObject);
     }
-    
-    public float Direction(float a)
-    {
-        if (a != 0) 
-            return Mathf.Abs(a) / a;
-        return 0;
-    }
 
-    public int MovementDirection() => sprite.flipX ? -1 : 1;
+    public int MovementDirection() => transform.localScale.x > 0 ? 1 : -1;
     protected virtual void Flip()
     {
-        
-        if (_rb.velocityX > 0.1f) sprite.flipX = false;
-        if (_rb.velocityX < -0.1f) sprite.flipX = true;
-        
+        if(_rb.velocityX > 0.01f)transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
+        if(_rb.velocityX < -0.01f)transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * -1, transform.localScale.y);
     }
-    public bool FacingDirection() => sprite.flipX;
     
 
     public bool Grounded() => BoxCastDrawer.BoxCastAndDraw(new Vector2(transform.position.x, transform.position.y - hitBox.y * 0.55f), new Vector2(hitBox.x - 0.05f, 0.2f), 0,

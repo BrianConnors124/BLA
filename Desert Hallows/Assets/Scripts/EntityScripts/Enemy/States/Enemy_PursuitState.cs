@@ -30,7 +30,7 @@ public class Enemy_PursuitState : EnemyState
         if (playerLost) return EnemyStateMachine.EEnemyState.retrieve;
         if (enemy.ObjectForwardTooClose() && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.situateJump;
         if (rb.velocityY < -0.1f) return EnemyStateMachine.EEnemyState.falling;
-        if (enemy.playerInMeleeRange && enemy.canAttack && enemy.player.GetComponent<Player>().IsTouchingGround()) return EnemyStateMachine.EEnemyState.attack;
+        if (enemy.playerInMeleeRange && enemy.canAttack && enemy.player.GetComponent<Player>().IsTouchingGround() && enemy.hasAMeleAttack) return EnemyStateMachine.EEnemyState.attack;
         
         
         

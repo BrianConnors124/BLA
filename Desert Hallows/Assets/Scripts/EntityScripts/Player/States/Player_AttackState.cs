@@ -12,23 +12,21 @@ public class Player_AttackState : PlayerState
     }
     public override void EnterState()
     {
-        animEnded = false;
+        base.EnterState();
         player.canFlip = false;
         attackInt++;
-        var a = StateKey.ToString() + attackInt;
-        player.Anim.Play(a);
         timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 0);
     }
 
     public override void UpdateState()
     {
-        var a = StateKey.ToString() + attackInt;
-        player.Anim.Play(a);
+        base.UpdateState();
         if(player.Grounded())player.Move(player.movementSpeed * InputSystemController.MovementInput().x / 3, rb.velocityY);
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
+        if (player.takingDamage) return PlayerStateMachine.EPlayerState.takingDamage;
         if (animEnded)
         {
             if (player.Grounded())

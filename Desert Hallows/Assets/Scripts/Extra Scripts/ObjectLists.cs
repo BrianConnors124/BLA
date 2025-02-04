@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = System.Object;
 
-public class DamageNumberList : MonoBehaviour
+public class ObjectLists : MonoBehaviour
 {
     public GameObject[] dontDestroy;
     public GameObject[] damageNumbers;
