@@ -19,10 +19,8 @@ public class Player_DashState : PlayerState
         timer.SetTimer("dashTimer", player.dashDuration);
         player.canTakeDamage = false;
         player.StartDashCD();
-        var MoveScale = new Vector2(0, 1);
-        if (Math.Abs(InputSystemController.MovementInput().x) > Math.Abs(InputSystemController.MovementInput().y))
-            MoveScale = new Vector2(1, 0);
-        player.Move(MoveScale.x * InputSystemController.MovementInput().normalized.x * player.dashSpeed, MoveScale.y * InputSystemController.MovementInput().normalized.y * player.dashSpeed/1.7f);
+        
+        player.Move(InputSystemController.MovementInput().x * player.dashSpeed, InputSystemController.MovementInput().y * player.dashSpeed/1.7f);
     }
 
     public override void UpdateState()

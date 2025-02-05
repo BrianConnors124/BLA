@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PuaseGame",
+                    "type": "Button",
+                    "id": "20ce9e3b-9753-4864-aee2-259a91da4482",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -223,6 +232,17 @@
                     "action": "OpenInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8ec2321-79e7-4e53-a75e-4904b952c402",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PuaseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -261,6 +281,15 @@
                     "name": "SortItem",
                     "type": "Button",
                     "id": "6cc480fe-0d55-4a73-8329-bc1939558330",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ExitPauseMenu",
+                    "type": "Button",
+                    "id": "532cbeaf-e3d7-481b-a6ba-5ea20c059180",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -309,6 +338,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SortItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1aafcfba-0999-427f-ba13-f5adee62a11e",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

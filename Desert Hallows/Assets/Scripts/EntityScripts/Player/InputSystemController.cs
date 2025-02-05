@@ -14,7 +14,6 @@ public class InputSystemController : MonoBehaviour
     private bool queueActive;
     private bool buttonPressed;
     private UniversalTimer _queueTimer;
-    [SerializeField] private int currentPause;
 
     [Header("ActionKeys")] 
     private string jumpKey = "Jump";
@@ -23,9 +22,9 @@ public class InputSystemController : MonoBehaviour
     private string dashKey = "Dash";
 
     [SerializeField] private InputActionReference walk;
-    [SerializeField] private InputActionReference navigateUI;
     
     public Action openInventory;
+    public Action pauseMenu;
     public Action useItem;
     public Action selectItem;
     public Action unselectItem;
@@ -82,6 +81,11 @@ public void HandleJump(InputAction.CallbackContext context)
     public void ToggleInventory(InputAction.CallbackContext context)
     {
         if (context.performed) openInventory.Invoke();
+    }
+    
+    public void TogglePauseMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed) pauseMenu.Invoke();
     }
 
     public void HandleItemUsage(InputAction.CallbackContext context)

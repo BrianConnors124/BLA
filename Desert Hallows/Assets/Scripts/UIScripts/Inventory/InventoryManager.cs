@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private EventSystem eventSystem;
     public GameObject inventoryMenu;
+    public GameObject pauseScreen;
     private int currentPause;
     private Action setPauseButton;
     public ItemSlot[] itemSlot;
@@ -23,6 +24,7 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryMenu.SetActive(true);
         InputSystemController.instance.openInventory += OpenInventory;
+        InputSystemController.instance.pauseMenu += OpenPauseMenu;
         InputSystemController.instance.selectItem += SelectItem;
         InputSystemController.instance.unselectItem += UnSelectItem;
     }
@@ -43,10 +45,27 @@ public class InventoryManager : MonoBehaviour
         }
         currentPause++;
     }
-
-    private void Update()
+    
+    private void OpenPauseMenu()
     {
-        if(eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
+        currentPause %= 2;
+        Time.timeScale = currentPause;
+        InputSystemController.instance.playerInput.SwitchCurrentActionMap(InputSystemController.instance.actionMaps[currentPause]);
+
+        if (currentPause == 0)
+        {
+            pauseScreen.SetActive(true);
+        }
+        else
+        {
+            pauseScreen.SetActive(false);
+        }
+        currentPause++;
+    }
+
+    private void FixedUpdate()
+    {
+        if(eventSystem.currentSelectedGameObject != null && inventoryMenu.activeInHierarchy && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
     }
 
 

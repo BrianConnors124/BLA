@@ -142,7 +142,7 @@ public static class ObjectPuller
         other.SetActive(false);
     }
     
-    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction)
+    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction, Enemy enemy)
     {
         int currentObj;
         var needNewGameObject = true;
@@ -162,7 +162,7 @@ public static class ObjectPuller
         }
         obj[currentObj].transform.position = origin;
         obj[currentObj].SetActive(true);
-        obj[currentObj].GetComponent<Projectile>().SetAim(direction);
+        obj[currentObj].GetComponent<Projectile>().Initialize(direction, enemy);
     }
 
     private static void SetObjectText(string text, TextMeshPro obj)
