@@ -70,4 +70,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         CurrentState.WalkingSound();
     }
+
+    public void DoLongRangeAttack()
+    {
+        CurrentState.DoLongRangeAttack();
+    }
 }

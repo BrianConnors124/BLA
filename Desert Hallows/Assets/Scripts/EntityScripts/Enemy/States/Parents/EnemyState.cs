@@ -66,6 +66,11 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     {
         enemy.PlayerDirection();
     }
+
+    public override void DoLongRangeAttack()
+    {
+        ObjectPuller.PullProjectile(enemy.objPuller.enemyProjectilesFromAir, enemy.transform.position, enemy.player.transform.position, enemy);
+    }
     
     
 }

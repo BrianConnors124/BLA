@@ -65,7 +65,7 @@ public class InventoryManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(eventSystem.currentSelectedGameObject != null && inventoryMenu.activeInHierarchy && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
+        if(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>() != null && inventoryMenu.activeInHierarchy && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
     }
 
 

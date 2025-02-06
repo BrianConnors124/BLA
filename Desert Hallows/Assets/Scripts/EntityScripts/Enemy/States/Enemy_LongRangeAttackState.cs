@@ -17,12 +17,11 @@ public class Enemy_LongRangeAttackState : EnemyState
         enemy.ZeroVelocity();
         stateTimer = .2f;
         enemy.longRangeAttackReady = false;
-        ObjectPuller.PullProjectile(enemy.objPuller.enemyProjectilesFromAir, enemy.transform.position, enemy.player.transform.position, enemy);
     }
 
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
-        if (StateTimerDone()) return EnemyStateMachine.EEnemyState.idle;
+        if (animEnded) return EnemyStateMachine.EEnemyState.idle;
         return StateKey;
     }
 

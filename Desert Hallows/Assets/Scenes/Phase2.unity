@@ -585,9 +585,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5580932433190237986, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: hasAMeleAttack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6123256874845369920, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
       propertyPath: m_Name
-      value: Wizard Enemy
+      value: Shepard Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1332,9 +1336,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5580932433190237986, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: hasAMeleAttack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6123256874845369920, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
       propertyPath: m_Name
-      value: Wizard Enemy (1)
+      value: Shepard Enemy (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

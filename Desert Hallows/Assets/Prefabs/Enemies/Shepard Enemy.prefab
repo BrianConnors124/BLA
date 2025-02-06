@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5735822786458056985}
   - component: {fileID: 8448847113519154142}
   m_Layer: 8
-  m_Name: Wizard Enemy
+  m_Name: Shepard Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,8 +103,8 @@ BoxCollider2D:
   m_Offset: {x: -0.0000038146973, y: -0.011295319}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    pivot: {x: 0.267707, y: 0.5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -153,7 +153,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1126091028, guid: 80b2df112fe13ae458f8feaf0d1f63f5, type: 3}
+  m_Sprite: {fileID: 2388112453488082486, guid: 5a66f6c81cd41244bab18dd6067ac1b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -234,7 +234,7 @@ Animator:
   m_GameObject: {fileID: 6123256874845369920}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4c52f17f58d02774ba590bb8b5f2cbd1, type: 2}
+  m_Controller: {fileID: 9100000, guid: c753b1b5a4cb8d044aa152c78bcb4e89, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -296,8 +296,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    pivot: {x: 0.267707, y: 0.5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

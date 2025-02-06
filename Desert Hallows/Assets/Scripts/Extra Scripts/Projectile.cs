@@ -23,7 +23,10 @@ public class Projectile : MonoBehaviour
 
     public void Initialize(Vector2 a, Enemy enemy)
     {
+        var mult = 1;
+        if (a.x < 0) mult = -1;
         aim = a;
+        transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * mult, transform.localScale.y);
         this.enemy = enemy;
         Begin();
     } 
@@ -42,6 +45,9 @@ public class Projectile : MonoBehaviour
     private void Begin()
     {
         rb.velocity = new Vector2(Uno(transform.position,aim) * speed, rb.velocityY);
+        var mult = 1;
+        if (rb.velocity.x < 0) mult = -1;
+        transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * mult, transform.localScale.y);
     }
 
     private Vector2 Direction(Vector2 a, Vector2 b)
