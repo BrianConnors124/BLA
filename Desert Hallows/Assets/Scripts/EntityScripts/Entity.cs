@@ -18,6 +18,7 @@ public class Entity : MonoBehaviour
     public ObjectLists objPuller;
     public bool dead;
     public Action onDeath;
+    public Action onTakeDamage;
     
     
     
@@ -84,6 +85,7 @@ public class Entity : MonoBehaviour
         {
             sheild.GetComponent<SheildScript>().ReceiveDamage(damage);
         }
+        onTakeDamage?.Invoke();
     }
     
     protected virtual void Die()
