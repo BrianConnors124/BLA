@@ -112,6 +112,7 @@ public class InventoryManager : MonoBehaviour
     private void UseItem()
     {
         eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().UseItem();
+        simpleUpdate.Invoke();
     }
 
     private void SwitchItems(ItemSlot firstSlot, ItemSlot newSlot)

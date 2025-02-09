@@ -26,7 +26,7 @@ public class Enemy : Entity
     public bool playerInMeleeRange => BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(.01f, 
             transform.localScale.y * 1.1f), 0, new Vector2(MovementDirection(), 0), reach * .75f,
         LayerMask.GetMask("Player"));
-    public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < hitbox.size.x + reach * .8f;
+    public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < reach * .8f;
     public bool returned => Math.Abs(transform.position.x - origin.x) < 0.3f;
     public bool canAttack = true;
     

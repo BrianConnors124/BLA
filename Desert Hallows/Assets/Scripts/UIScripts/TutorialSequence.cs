@@ -35,9 +35,15 @@ public class TutorialSequence : MonoBehaviour
         sequence = 0;
         textDone = true;
         GameObject.Find("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("TutorialSequence");
-        Sequence();
         Time.timeScale = 0;
         timer = sequenceLength;
+        var obj = GameObject.Find("QuestCanvas");
+        for (int i = 0; i < makeMagicHappen.Length; i++)
+        {
+            if (!makeMagicHappen[i]) makeMagicHappen[i] = obj;
+        }
+        
+        Sequence();
     }
 
     private void OnDisable()
@@ -51,7 +57,7 @@ public class TutorialSequence : MonoBehaviour
         if (sequence > 0 && textDone)
         {
             arrow[sequence - 1].SetActive(false);
-            makeMagicHappen[sequence - 1].SetActive(true);
+            makeMagicHappen[sequence - 1]?.SetActive(true);
         }
 
         if (sequence == sequences && textDone)

@@ -33,7 +33,7 @@ public class InventoryAnimationDone : MonoBehaviour
         inAnimation = true;
         if (a == 1)
         {
-            disableOnFirstOpen.SetActive(false);
+            Destroy(disableOnFirstOpen);
             enableOnFirstOpen.SetActive(true);
             a++;
         } else if (a < 1) a++;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mummy
   m_EditorClassIdentifier: 
   named: 
-  aoe: 0.5
+  aoe: 0.85
   description: 
   health: 30
   jumpHeight: 18

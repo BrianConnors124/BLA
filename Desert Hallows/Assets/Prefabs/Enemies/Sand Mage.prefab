@@ -442,7 +442,7 @@ MonoBehaviour:
   _stateMachine: {fileID: 0}
   info: {fileID: 11400000, guid: 92efc9fd125b09843a7db76ae3032100, type: 2}
   origin: {x: 0, y: 0}
-  canJump: 0
+  canJump: 1
   movementSpeed: 0
   jumpHeight: 0
   reach: 0

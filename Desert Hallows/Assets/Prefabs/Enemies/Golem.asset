@@ -19,7 +19,7 @@ MonoBehaviour:
   jumpHeight: 0
   movementSpeed: 3
   damage: 20
-  baseReach: 3.8
+  baseReach: 3.75
   stun: 2
   knockBack: 15
   primaryCD: 2.5

@@ -12,7 +12,7 @@ public class MiniQuestCompletion : MonoBehaviour
     public void Completed(int numba)
     {
         
-        if(enableOnCompletion[numba] && disableOnCompletion[numba].activeInHierarchy) enableOnCompletion[numba].SetActive(true);
+        if(enableOnCompletion[numba] && disableOnCompletion[numba] && disableOnCompletion[numba].activeInHierarchy) enableOnCompletion[numba].SetActive(true);
         if(disableOnCompletion[numba]&& disableOnCompletion[numba].activeInHierarchy) Destroy(disableOnCompletion[numba]);
     }
 }

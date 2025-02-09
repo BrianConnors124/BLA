@@ -259,7 +259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You can dash in the direction that you are aiming (Up\u2191)"
+  m_text: You can dash in the direction that you are aiming (Up)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b3090e52e69d5945838a3b073e26de3, type: 2}
   m_sharedMaterial: {fileID: -4764614230316165262, guid: 3b3090e52e69d5945838a3b073e26de3, type: 2}
@@ -1162,6 +1162,10 @@ PrefabInstance:
     - target: {fileID: 2546184161272656122, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717051079862401872, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
+      propertyPath: canJump
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8127,6 +8131,10 @@ PrefabInstance:
     - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5580932433190237986, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: canJump
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6123256874845369920, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
       propertyPath: m_Name
@@ -34493,6 +34501,10 @@ PrefabInstance:
     - target: {fileID: 2546184161272656122, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717051079862401872, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
+      propertyPath: canJump
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

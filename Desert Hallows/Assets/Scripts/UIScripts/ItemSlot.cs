@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.Controls;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -70,9 +71,10 @@ public class ItemSlot : MonoBehaviour
         print("Use Item" + gameObject.name);
         #region Heart
 
-        if (currentItem.itemName.ToUpper().Equals("THE HEART"))
+        if (currentItem.itemName.ToUpper().Equals("THE HEART") && player.health != player.maxHealth)
         {
             player.health += 50;
+            if (player.health > player.maxHealth) player.health = player.maxHealth;
             slotQuantity--;
             UpdateInfo();
         }
