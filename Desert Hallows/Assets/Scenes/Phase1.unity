@@ -22820,35 +22820,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4321400748087568135, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
   m_PrefabInstance: {fileID: 1997352711}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1249660100 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2654378839634255985, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-  m_PrefabInstance: {fileID: 1997352711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625153179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b17a3b79fd9b644ca748c3a828e2858, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1249660110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625153179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37bcd0adfbce074f80a1f1357477621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableOnCompletion:
-  - {fileID: 1565403181}
-  - {fileID: 0}
-  disableOnCompletion:
-  - {fileID: 710588743}
-  - {fileID: 1565403181}
 --- !u!1 &1253689354
 GameObject:
   m_ObjectHideFlags: 0
@@ -26438,105 +26409,22 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 281330804}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_DefaultActionMap
-      value: Movement
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_ActionId
-      value: 63bd73c4-0bc6-4aae-8447-c925b878b3fd
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
-      value: f524f265-e549-42b0-aa2e-f7a2ae326420
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_ActionId
-      value: 42bba98f-1bdb-4305-80fa-bac44a1693bf
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_ActionName
-      value: 'TutorialSequence/Continue[/XInputControllerWindows/buttonWest]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
-      value: 'MenuNav/Move[/XInputControllerWindows/leftStick/left]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_ActionName
-      value: 'PauseMenuNav/CloseMenu[/XInputControllerWindows/start]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+    - target: {fileID: 8997830308941254095, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
+      propertyPath: 'enableOnCompletion.Array.data[0]'
       value: 
-      objectReference: {fileID: 1249660100}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      objectReference: {fileID: 1565403181}
+    - target: {fileID: 8997830308941254095, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
+      propertyPath: 'disableOnCompletion.Array.data[0]'
       value: 
-      objectReference: {fileID: 1249660100}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NextTutorialSequence
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateSelectedItem
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TogglePauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: InputSystemController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: InputSystemController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7731353031252206761, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 710588743}
+    - target: {fileID: 8997830308941254095, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
+      propertyPath: 'disableOnCompletion.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1565403181}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2060444991934993580, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1249660110}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
 --- !u!1001 &2005730140
 PrefabInstance:
