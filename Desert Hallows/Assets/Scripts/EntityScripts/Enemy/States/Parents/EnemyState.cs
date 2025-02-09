@@ -59,10 +59,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
         if(a) a.collider.GetComponent<Player>().ReceiveDamage(enemy.damage, enemy.knockBack,enemy.stun, enemy.MovementDirection());
     }
 
-    public override void Die()
-    {
-        enemy.DestroyGameObject();
-    }
+    
 
     public override void FacePlayer()
     {

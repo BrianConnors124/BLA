@@ -8,11 +8,20 @@ public class ItemData : MonoBehaviour
     public int quantity;
     public GameObject image;
     private InventoryManager _inventoryManager;
+    private SpriteRenderer sprite; 
 
     private void Awake()
     {
         _inventoryManager = GameObject.Find("Canvas").GetComponent<InventoryManager>();
-        image.GetComponent<SpriteRenderer>().sprite = itemInfo.itemImage;
+        sprite = image.GetComponent<SpriteRenderer>();
+        UpdateInfo(itemInfo);
+    }
+
+    public void UpdateInfo(ItemInfo item)
+    {
+        itemInfo = item;
+        quantity = 1;
+        sprite.sprite = item.itemImage;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

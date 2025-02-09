@@ -11,6 +11,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         rb = player.GetComponent<Rigidbody2D>();
         timer = entity.GetComponent<UniversalTimer>();
         playerController = entity.GetComponent<InputSystemController>();
+        quest = player.GetComponent<MiniQuestCompletion>();
     }
 
     [Header("AttackInfo")] 
@@ -23,6 +24,8 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     protected InputSystemController playerController;
 
     protected string idleWaitTime = "idleWaitTime";
+
+    protected MiniQuestCompletion quest;
     
 
     public override void EnterState()

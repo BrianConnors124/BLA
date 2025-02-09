@@ -54,7 +54,7 @@ public class TutorialSequence : MonoBehaviour
             makeMagicHappen[sequence - 1].SetActive(true);
         }
 
-        if (sequence == sequences)
+        if (sequence == sequences && textDone)
         {
             textBoard.SetActive(false);
             grayOut.SetActive(false);
@@ -108,11 +108,10 @@ public class TutorialSequence : MonoBehaviour
 
         
 
-        for (int i = 0; i < setText.Length;)
+        for (int i = 0; i < setText.Length; i++)
         {
             visibleText.text += setText.Substring(i, 1);
             yield return new WaitForSecondsRealtime(typeSpeed);
-            i++;
         }
 
         textDone = true;

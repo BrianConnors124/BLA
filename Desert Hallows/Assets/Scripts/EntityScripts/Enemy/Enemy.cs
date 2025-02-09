@@ -114,10 +114,8 @@ public class Enemy : Entity
     public RaycastHit2D ObjectForwardTooClose(){
     
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
-            new Vector2(
-                transform.position.x + hitbox.size.x,
-                transform.position.y), new Vector2(transform.localScale.x * .1f * MovementDirection(), transform.localScale.y * .94f), 0,
-            Vector2.right, 0, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"));
+            transform.position, new Vector2(.1f, hitBox.y * .94f), 0,
+            new Vector2(MovementDirection(), 0), reach, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"));
         return a; 
     }
     #endregion

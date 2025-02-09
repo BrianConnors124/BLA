@@ -97,11 +97,11 @@ public class Entity : MonoBehaviour
     {
         quest.RemoveObjective(gameObject);
         dead = true;
+        onDeath?.Invoke();
     }
 
-    public void DestroyGameObject()
+    public void DeathAnimFinished()
     {
-        player.GetComponent<UniversalTimer>().SetActionTimer("OnDeath", 0.2f, () => onDeath?.Invoke());
         Destroy(gameObject);
     }
 

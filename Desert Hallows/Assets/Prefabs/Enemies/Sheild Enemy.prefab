@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5743645365806065075}
   - component: {fileID: 6397453834919450284}
   - component: {fileID: 4772584419105298487}
+  - component: {fileID: 5887340279638791414}
   m_Layer: 8
   m_Name: Sheild Enemy
   m_TagString: Enemy
@@ -309,6 +310,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 11.68, y: 4.53}
   m_EdgeRadius: 0
+--- !u!114 &5887340279638791414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205093252077393160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d13009fd0eec44ca3110d3f5a6a049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemToDrop:
+  - {fileID: 11400000, guid: 654d8df9c75998b45a08547050eddc1a, type: 2}
+  rarity: 02000000
+  baseItem: {fileID: 3556213510739215126, guid: ff4615ed224f9ac4f96c0d0707cbb759, type: 3}
 --- !u!1 &711046069244357367
 GameObject:
   m_ObjectHideFlags: 0

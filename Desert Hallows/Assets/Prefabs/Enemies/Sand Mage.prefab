@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 8699129460850416530}
   - component: {fileID: 5735822786458056985}
   - component: {fileID: 8448847113519154142}
+  - component: {fileID: 2632298823834825596}
   m_Layer: 8
   m_Name: Sand Mage
   m_TagString: Enemy
@@ -534,6 +535,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 11.68, y: 4.53}
   m_EdgeRadius: 0
+--- !u!114 &2632298823834825596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123256874845369920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d13009fd0eec44ca3110d3f5a6a049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemToDrop:
+  - {fileID: 11400000, guid: 654d8df9c75998b45a08547050eddc1a, type: 2}
+  rarity: 00000000
+  baseItem: {fileID: 3556213510739215126, guid: ff4615ed224f9ac4f96c0d0707cbb759, type: 3}
 --- !u!1 &8712409583477466072
 GameObject:
   m_ObjectHideFlags: 0

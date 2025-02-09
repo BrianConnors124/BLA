@@ -9,7 +9,6 @@ public class InputSystemController : MonoBehaviour
 
     public static InputSystemController instance;
     public PlayerInput playerInput;
-    public string[] actionMaps;
     
     private bool queueActive;
     private bool buttonPressed;
@@ -29,7 +28,7 @@ public class InputSystemController : MonoBehaviour
     public Action useItem;
     public Action selectItem;
     public Action unselectItem;
-    public Action sortItem;
+    public Action updateDescription;
 
 
     private void Awake()
@@ -84,6 +83,12 @@ public void HandleJump(InputAction.CallbackContext context)
         if (context.performed) openInventory.Invoke();
     }
     
+    public void UpdateSelectedItem(InputAction.CallbackContext context)
+    {
+        if (context.performed) updateDescription.Invoke();
+        if (context.canceled) updateDescription.Invoke();
+    }
+    
     public void NextTutorialSequence(InputAction.CallbackContext context)
     {
         if (context.performed) nextSequence.Invoke();
@@ -96,7 +101,7 @@ public void HandleJump(InputAction.CallbackContext context)
 
     public void HandleItemUsage(InputAction.CallbackContext context)
     {
-        if(context.performed) print("Use Item");
+        if(context.performed) useItem.Invoke();
     }
     public void HandleItemSort(InputAction.CallbackContext context)
     {

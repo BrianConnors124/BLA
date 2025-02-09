@@ -9,8 +9,14 @@ public class InventoryAnimationDone : MonoBehaviour
     public GameObject[] setActiveOnAnimDone;
     public EventSystem eventSystem;
     public Animator anim;
+
+    public GameObject disableOnFirstOpen;
+    public GameObject enableOnFirstOpen;
+
+    public InventoryManager manager;
     
-    private bool inAnimation;
+    public bool inAnimation;
+    private int a;
 
     private void Start()
     {
@@ -25,7 +31,14 @@ public class InventoryAnimationDone : MonoBehaviour
     public void OnEnable()
     {
         inAnimation = true;
+        if (a == 1)
+        {
+            disableOnFirstOpen.SetActive(false);
+            enableOnFirstOpen.SetActive(true);
+            a++;
+        } else if (a < 1) a++;
         eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
+        
     }
     
 
@@ -53,6 +66,7 @@ public class InventoryAnimationDone : MonoBehaviour
         }
 
         inAnimation = false;
+        manager.simpleUpdate.Invoke();
     }
     
     

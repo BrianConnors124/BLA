@@ -13,6 +13,7 @@ public class QuestPhases : MonoBehaviour
     public string currentObjective;
     public TextMeshProUGUI questText;
 
+    private bool questComplete;
     public GameObject[] activateOnCompletion;
 
 
@@ -26,7 +27,7 @@ public class QuestPhases : MonoBehaviour
 
     private void FixedUpdate()
     {
-        questText.SetText(currentObjective + ": " + (maxCount - objectives.Count) + "/" + maxCount);
+        if(!questComplete)questText.SetText(currentObjective + ": " + (maxCount - objectives.Count) + "/" + maxCount);
     }
 
     public void RemoveObjective(GameObject obj)
@@ -49,9 +50,12 @@ public class QuestPhases : MonoBehaviour
             }
         }
 
+        questComplete = true;
         foreach (var obj in activateOnCompletion)
         {
             obj.SetActive(true);
         }
+        
+        questText.SetText("Quest Completed!");
     }
 }
