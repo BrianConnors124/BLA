@@ -34,7 +34,7 @@ public static class ObjectPuller
         obj[currentObj].GetComponent<TextMeshPro>().text = text;
         obj[currentObj].SetActive(true);
     }
-    public static void PullObjectAndSetText(GameObject[] obj, Vector3 origin, string text)
+    public static void PullObjectAndSetTextAndColor(GameObject[] obj, Vector3 origin, string text, Color color)
     {
         int currentObj;
         var needNewGameObject = true;
@@ -62,7 +62,7 @@ public static class ObjectPuller
             currentObj = obj.Length - 1;
         }
         obj[currentObj].transform.position = origin;
-        SetObjectText(text, obj[currentObj].GetComponent<TextMeshPro>());
+        SetObjectTextAndColor(text, obj[currentObj].GetComponent<TextMeshPro>(), color);
         obj[currentObj].GetComponent<TextMeshPro>().text = text;
         obj[currentObj].SetActive(true);
     }
@@ -142,7 +142,7 @@ public static class ObjectPuller
         other.SetActive(false);
     }
     
-    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction)
+    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction, Enemy enemy)
     {
         int currentObj;
         var needNewGameObject = true;
@@ -162,13 +162,20 @@ public static class ObjectPuller
         }
         obj[currentObj].transform.position = origin;
         obj[currentObj].SetActive(true);
-        obj[currentObj].GetComponent<Projectile>().SetAim(direction);
+        obj[currentObj].GetComponent<Projectile>().Initialize(direction, enemy);
     }
 
     private static void SetObjectText(string text, TextMeshPro obj)
     {
         obj.text = text;
     }
+    
+    private static void SetObjectTextAndColor(string text, TextMeshPro obj, Color color)
+    {
+        obj.text = text;
+        obj.color = color;
+    }
+
 
     
     

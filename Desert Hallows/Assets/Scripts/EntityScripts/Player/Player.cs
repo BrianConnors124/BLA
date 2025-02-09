@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
@@ -100,6 +101,7 @@ public class Player : Entity
     protected override void Die()
     {
         print("Player Has Died");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         health = playerInfo.health;
     }
 
@@ -130,13 +132,4 @@ public class Player : Entity
     
     #endregion
 
-    #region Misc
-
-    protected override void Flip()
-    {
-        if (InputSystemController.MovementInput().x > 0.1f) sprite.flipX = false;
-        if (InputSystemController.MovementInput().x < -0.1f) sprite.flipX = true;
-    }
-
-    #endregion
 }

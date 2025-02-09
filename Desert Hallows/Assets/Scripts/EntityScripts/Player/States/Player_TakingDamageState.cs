@@ -25,14 +25,14 @@ public class Player_TakingDamage : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if(player.IsTouchingGround() && player.recentStun - stateTimer >= .2f) player.ZeroVelocity();
+        if(player.IsTouchingGround()) player.ZeroVelocity();
     }
     
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
         //if(StateTimerDone()) return stunnedState;
-        return player.Velocity.y <= 0 && StateTimerDone() ? PlayerStateMachine.EPlayerState.falling : StateKey;
+        return StateTimerDone() ? PlayerStateMachine.EPlayerState.idle : StateKey;
     }
     
     public override void ExitState()

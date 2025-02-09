@@ -26,7 +26,7 @@ public class Enemy_StunnedState : EnemyState
     {
         if (enemy.dead) return EnemyStateMachine.EEnemyState.dying;
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
-        if (StateTimerDone()) return EnemyStateMachine.EEnemyState.retreat;
+        if (StateTimerDone() && enemy.canBeStunned) return EnemyStateMachine.EEnemyState.retreat;
         return StateKey;
 
     }

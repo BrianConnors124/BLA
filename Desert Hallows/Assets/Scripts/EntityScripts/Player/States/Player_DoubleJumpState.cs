@@ -25,5 +25,6 @@ public class Player_DoubleJumpState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        quest.Completed(1);
     }
 }

@@ -11,6 +11,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         rb = player.GetComponent<Rigidbody2D>();
         timer = entity.GetComponent<UniversalTimer>();
         playerController = entity.GetComponent<InputSystemController>();
+        quest = player.GetComponent<MiniQuestCompletion>();
     }
 
     [Header("AttackInfo")] 
@@ -23,6 +24,8 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     protected InputSystemController playerController;
 
     protected string idleWaitTime = "idleWaitTime";
+
+    protected MiniQuestCompletion quest;
     
 
     public override void EnterState()
@@ -48,7 +51,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         
         player.playerAudio.clip = player.soundEffect["Slash"];
         player.playerAudio.Play();
-        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),0, LayerMask.GetMask("Enemy"), 0.3f);
+        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x * player.MovementDirection(),player.transform.localScale.y), 0, new Vector2(1, 0),0, LayerMask.GetMask("Enemy"), 0.3f);
         foreach (var enemies in bcd)
         {
             enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage, player.knockBack/1.4f, player.stun, player.MovementDirection());

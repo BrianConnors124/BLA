@@ -19,7 +19,7 @@ public class EnemyDyingState : EnemyState
     {
         if (animEnded)
         {
-            enemy.DestroyGameObject();
+            enemy.DeathAnimFinished();
         }
         return StateKey;
     }

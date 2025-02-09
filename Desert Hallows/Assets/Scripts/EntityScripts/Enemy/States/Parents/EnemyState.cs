@@ -28,7 +28,7 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
     public override void EnterState()
     {
         base.EnterState();
-        //Debug.Log(StateKey);
+        Debug.Log(StateKey);
         enemy.Anim.Play(StateKey.ToString());
     }
     public override EnemyStateMachine.EEnemyState GetNextState()
@@ -53,18 +53,22 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
 
     public override void DoAttack()
     {
-        var a = BoxCastDrawer.BoxCastAndDraw(new Vector2(enemy.transform.position.x + enemy.reach / 4 * enemy.MovementDirection(), enemy.transform.position.y),new Vector2(enemy.reach,enemy.transform.localScale.y), 0, new Vector2(enemy.MovementDirection(), 0),0, LayerMask.GetMask("Player"), 0.3f);
+        var a = BoxCastDrawer.BoxCastAndDraw(enemy.transform.position, new Vector2(enemy.aoe,
+                enemy.transform.localScale.y * 1.1f), 0, new Vector2(enemy.MovementDirection(), 0), enemy.reach,
+            LayerMask.GetMask("Player"));
         if(a) a.collider.GetComponent<Player>().ReceiveDamage(enemy.damage, enemy.knockBack,enemy.stun, enemy.MovementDirection());
     }
 
-    public override void Die()
-    {
-        enemy.DestroyGameObject();
-    }
+    
 
     public override void FacePlayer()
     {
         enemy.PlayerDirection();
+    }
+
+    public override void DoLongRangeAttack()
+    {
+        ObjectPuller.PullProjectile(enemy.objPuller.enemyProjectilesFromAir, enemy.transform.position, enemy.player.transform.position, enemy);
     }
     
     

@@ -39,7 +39,7 @@ public class Enemy_RetrieveState : EnemyState
     {
         
         if (enemy.takingDamage) return EnemyStateMachine.EEnemyState.takingDamage;
-        if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh()) return EnemyStateMachine.EEnemyState.jump;
+        if (enemy.DetectsObjectForward() && Timer.TimerDone(jumpKey) && !enemy.ObjectTooHigh() && enemy.canJump) return EnemyStateMachine.EEnemyState.jump;
         if (enemy.returned || (pathObst && Timer.TimerDone("FindingNewOrigin"))) return EnemyStateMachine.EEnemyState.idle;
         if (rb.velocity.y < -0.1f) return EnemyStateMachine.EEnemyState.falling;
         

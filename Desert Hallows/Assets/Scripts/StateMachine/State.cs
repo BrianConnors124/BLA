@@ -69,7 +69,10 @@ public abstract class State<EState> where EState : Enum
     }
 
     protected bool StateTimerDone() => stateTimer < 0;
-    
-    
+
+    public virtual void DoLongRangeAttack()
+    {
+        throw new NotImplementedException();
+    }
     
 }

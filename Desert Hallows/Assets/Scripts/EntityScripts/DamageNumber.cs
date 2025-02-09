@@ -23,7 +23,6 @@ public class DamageNumber : MonoBehaviour
 
     private void OnEnable()
     {
-        damage.color = color;
         randomNum = Random.Range(0f, 100f);
         var negOrPos = 1;
         if (randomNum <= 50) negOrPos = -1;
@@ -35,7 +34,6 @@ public class DamageNumber : MonoBehaviour
 
     private void Update()
     {
-        damage.color = Color.Lerp(damage.color, Color.red, Time.deltaTime * 5);
         time -= Time.deltaTime;
         damage.fontSize += Time.deltaTime * 3;
         if(time <= 0) gameObject.SetActive(false);

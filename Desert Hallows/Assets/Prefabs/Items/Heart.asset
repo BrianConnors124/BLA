@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Heart
   m_EditorClassIdentifier: 
   itemName: The heart
-  description: At this point you're gonna lose HP
+  description: When consumed the player gains 50 hp
   itemImage: {fileID: 2068525458738161848, guid: 7a790df8768763b4283303ce01b9e17a, type: 3}

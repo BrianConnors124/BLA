@@ -18,7 +18,16 @@ public class ItemSlot : MonoBehaviour
     [Header("Item Slot")] 
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Image itemImage;
-    
+
+    public InventoryManager manager;
+
+
+    private Player player;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<Player>();
+    }
 
 
     public void AddItem(ItemInfo item, int quantity)
@@ -36,5 +45,41 @@ public class ItemSlot : MonoBehaviour
         quantityText.text = slotQuantity.ToString();
         quantityText.enabled = true;
         if(slotQuantity == 0) quantityText.enabled = false;
+    }
+    
+    private void UpdateInfo()
+    {
+        if (slotQuantity == 0)
+        {
+            quantityText.enabled = false;
+            currentItem = manager.emptyItem;
+        }
+        else
+        {
+            quantityText.text = slotQuantity.ToString();
+            quantityText.enabled = true;
+        }
+        
+        itemImage.sprite = currentItem.itemImage;
+        InputSystemController.instance.updateDescription.Invoke();
+    }
+
+
+    public void UseItem()
+    {
+        print("Use Item" + gameObject.name);
+        #region Heart
+
+        if (currentItem.itemName.ToUpper().Equals("THE HEART"))
+        {
+            player.health += 50;
+            slotQuantity--;
+            UpdateInfo();
+        }
+        
+
+        #endregion
+        
+        
     }
 }

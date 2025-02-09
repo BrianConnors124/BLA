@@ -10,44 +10,79 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private EventSystem eventSystem;
     public GameObject inventoryMenu;
+    private float inventoryCD;
+    public GameObject pauseScreen;
     private int currentPause;
     private Action setPauseButton;
     public ItemSlot[] itemSlot;
     public ItemSlot selectedSlot;
-    public GameObject description;
+    public Action simpleUpdate;
+    public InventoryAnimationDone anim;
 
     public ItemInfo emptyItem;
+    
     
 
     private void Start()
     {
         inventoryMenu.SetActive(true);
-        InputSystemController.instance.openInventory += OpenInventory;
+        anim = inventoryMenu.GetComponent<InventoryAnimationDone>();
+        InputSystemController.instance.openInventory += ToggleInventory;
+        InputSystemController.instance.pauseMenu += TogglePauseMenu;
         InputSystemController.instance.selectItem += SelectItem;
         InputSystemController.instance.unselectItem += UnSelectItem;
+        InputSystemController.instance.useItem += UseItem;
     }
 
-    private void OpenInventory()
+    private void ToggleInventory()
     {
-        currentPause %= 2;
-        Time.timeScale = currentPause;
-        InputSystemController.instance.playerInput.SwitchCurrentActionMap(InputSystemController.instance.actionMaps[currentPause]);
-
-        if (currentPause == 0)
+        if (!pauseScreen.activeInHierarchy && (!anim.inAnimation || !anim.isActiveAndEnabled))
         {
-            inventoryMenu.SetActive(true);
+            currentPause %= 2;
+            Time.timeScale = currentPause;
+
+            if (currentPause == 0)
+            {
+                InputSystemController.instance.playerInput.SwitchCurrentActionMap("InventoryNav");
+                inventoryMenu.SetActive(true);
+            }
+            else
+            {
+                InputSystemController.instance.playerInput.SwitchCurrentActionMap("Movement");
+                anim.Disable();
+            }
+            currentPause++; 
+        }
+    }
+    
+    private void TogglePauseMenu()
+    {
+        if (inventoryMenu.activeInHierarchy)
+        {
+            ToggleInventory();
         }
         else
         {
-            inventoryMenu.GetComponent<AnimationDone>().Disable();
+            currentPause %= 2;
+            Time.timeScale = currentPause;  
+            
+        
+            if (currentPause == 0)
+            {
+                InputSystemController.instance.playerInput.SwitchCurrentActionMap("PauseMenuNav");
+                pauseScreen.SetActive(true);
+            }
+            else
+            {
+                InputSystemController.instance.playerInput.SwitchCurrentActionMap("Movement");
+                pauseScreen.SetActive(false);
+            }
+        
+            currentPause++;   
         }
-        currentPause++;
     }
-
-    private void Update()
-    {
-        if(eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().slotQuantity > 0) description.GetComponent<ShowDescription>().UpdateDescription(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem);
-    }
+    
+    
 
 
     public void AddItem(ItemInfo item, int quantity)
@@ -65,11 +100,18 @@ public class InventoryManager : MonoBehaviour
     private void SelectItem()
     {
         selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
+        
     }
     private void UnSelectItem()
     {
         if(selectedSlot != eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>())
             SwitchItems(selectedSlot, eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>());
+        
+    }
+
+    private void UseItem()
+    {
+        eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().UseItem();
     }
 
     private void SwitchItems(ItemSlot firstSlot, ItemSlot newSlot)
@@ -94,5 +136,7 @@ public class InventoryManager : MonoBehaviour
             firstSlot.UpdateInfo(newSlot.slotQuantity);
             newSlot.UpdateInfo(placeHolderInt);   
         }
+
+        simpleUpdate.Invoke();
     }
 }
