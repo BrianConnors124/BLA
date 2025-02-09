@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Mummy
   m_EditorClassIdentifier: 
   named: 
+  aoe: 0.5
   description: 
   health: 30
   jumpHeight: 18
   movementSpeed: 6
   damage: 5
-  baseReach: 3
+  baseReach: 1
   stun: 0
   knockBack: 10
   primaryCD: 1

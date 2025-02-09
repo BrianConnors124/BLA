@@ -26,6 +26,7 @@ public class Entity : MonoBehaviour
     [Header("info")]
     public float health;
     public float maxHealth;
+    public bool canBeStunned;
     public float recentKnockBack;
     public int knockBackDirection;
     public float recentStun;
@@ -75,10 +76,14 @@ public class Entity : MonoBehaviour
             ObjectPuller.PullObjectAndSetTextAndColor(controller.GetComponent<ObjectLists>().damageNumbers, transform.position, "" + (int) damage, Color.red);
         
             if(health <= 0)Die();
-            recentKnockBack = knockBack;
-            recentStun = stun;
+
+            if (canBeStunned)
+            {
+                recentKnockBack = knockBack;
+                recentStun = stun;
+                knockBackDirection = direction; 
+            }
             takingDamage = true;
-            knockBackDirection = direction;   
         }
 
         if (sheild)

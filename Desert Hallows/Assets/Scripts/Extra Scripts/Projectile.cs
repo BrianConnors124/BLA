@@ -44,22 +44,16 @@ public class Projectile : MonoBehaviour
 
     private void Begin()
     {
-        rb.velocity = new Vector2(Uno(transform.position,aim) * speed, rb.velocityY);
+        rb.velocity = Direction(transform.position,aim) * speed;
         var mult = 1;
         if (rb.velocity.x < 0) mult = -1;
         transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * mult, transform.localScale.y);
     }
-
-    private Vector2 Direction(Vector2 a, Vector2 b)
-    {
-        return (b - a).normalized;
-    }
-
-    private float Uno(Vector2 a, Vector2 b) => b.x - a.x > 0 ? 1 : -1;
+    
+    private Vector2 Direction(Vector2 a, Vector2 b) => (b - a).normalized;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Player"))other.GetComponent<Player>().ReceiveDamage(damage, enemy.knockBack, 0, enemy.PlayerDirection());
-        gameObject.SetActive(false);
     }
 
     private void Update()

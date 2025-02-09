@@ -10,12 +10,14 @@ public class Enemy_TakingDamage : EnemyState
         
     }
 
+    private bool doneLoading;
+
     public override void EnterState()
     {
         base.EnterState();
+        stateTimer = 0.2f;
         enemy.sprite.color = Color.red;
         Timer.SetActionTimer("ChangeColorBack", 0.2f, () => enemy.sprite.color = Color.white);
-        stateTimer = 0.3f;
 
         if (enemy.knockBackDirection == -100)
         {
@@ -39,7 +41,8 @@ public class Enemy_TakingDamage : EnemyState
     public override EnemyStateMachine.EEnemyState GetNextState()
     {
         if (enemy.dead) return EnemyStateMachine.EEnemyState.dying;
-        if (enemy.IsTouchingGround() && StateTimerDone()) return EnemyStateMachine.EEnemyState.stunned;
+        if (enemy.IsTouchingGround() && enemy.canBeStunned && StateTimerDone()) return EnemyStateMachine.EEnemyState.stunned;
+        if (!enemy.canBeStunned) return EnemyStateMachine.EEnemyState.pursuit;
         
         return StateKey;
     }

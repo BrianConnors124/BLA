@@ -24,6 +24,7 @@ public class InputSystemController : MonoBehaviour
     [SerializeField] private InputActionReference walk;
     
     public Action openInventory;
+    public Action nextSequence;
     public Action pauseMenu;
     public Action useItem;
     public Action selectItem;
@@ -81,6 +82,11 @@ public void HandleJump(InputAction.CallbackContext context)
     public void ToggleInventory(InputAction.CallbackContext context)
     {
         if (context.performed) openInventory.Invoke();
+    }
+    
+    public void NextTutorialSequence(InputAction.CallbackContext context)
+    {
+        if (context.performed) nextSequence.Invoke();
     }
     
     public void TogglePauseMenu(InputAction.CallbackContext context)

@@ -7,29 +7,49 @@ using UnityEngine.UI;
 
 public class EnemyHealthSlider : MonoBehaviour
 {
+    public Image healthShadeSlider;
     public Image healthSlider;
+    public Image shieldSlider;
     public float maxHealth;
-    private Enemy enemy;
-    private Transform enemyTransform;
+    public float maxShield;
+    public float currentShield;
+    private SheildScript _shield;
+    private Enemy _enemy;
+    public Transform _enemyTransform;
+    private RectTransform _transform;
+    
 
     private void Start()
     {
-        enemy = GetComponentInParent<Enemy>();
-        enemyTransform = GetComponentInParent<Transform>();
-        maxHealth = enemy.info.health;
-        enemy.onTakeDamage += UpdateHealthSlider;
+        _transform = GetComponent<RectTransform>();
+        _enemy = GetComponentInParent<Enemy>();
+        maxHealth = _enemy.info.health;
+        _enemy.onTakeDamage += UpdateHealthSlider;
+        if (_enemy.sheild)
+        {
+            _shield = _enemy.sheild.GetComponent<SheildScript>();
+            maxShield = _shield.hitPoints;
+            _enemy.onTakeDamage += UpdateShieldSlider;
+        }
+        else shieldSlider.fillAmount = 0;
     }
 
     private void Update()
     {
-        // if (enemyTransform.localScale.x < 0)
-        //     transform.localScale = new Vector2(Math.Abs(transform.localScale.x) * -1, transform.localScale.y);
-        // else transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
+        Vector2 scale = _transform.localScale;
+        _transform.localScale = new Vector2(Mathf.Abs(scale.x) * _enemy.MovementDirection(), scale.y);
     }
 
     private void UpdateHealthSlider()
     {
-        healthSlider.fillAmount = (maxHealth - enemy.health) / maxHealth;
-        if(enemy.health == 0) Destroy(gameObject);
+        healthSlider.fillAmount = maxHealth;
+        healthShadeSlider.fillAmount = (maxHealth - _enemy.health) / maxHealth;
+        if(_enemy.health == 0) Destroy(gameObject);
+    }
+
+    private void UpdateShieldSlider()
+    {
+        shieldSlider.fillAmount = _shield.hitPoints / maxShield;
+        if(_enemy.health == 0) Destroy(gameObject);
     }
 }

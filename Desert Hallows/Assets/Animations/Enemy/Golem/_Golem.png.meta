@@ -1,25 +1,43 @@
 fileFormatVersion: 2
-guid: 4b7920cb908f2da468e4b8b5fee36470
+guid: cb1c7dc23efa6ad439904e67478e3c3a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4234090705077185718
-    second: Decorations_0
+      213: -3030794605390870092
+    second: Golem_0
   - first:
-      213: 5936755781256884489
-    second: Decorations_1
+      213: -4890351225413243827
+    second: Golem_1
   - first:
-      213: -4254563025835751457
-    second: Decorations_2
+      213: 2258720731076752970
+    second: Golem_2
   - first:
-      213: -6378001285771275336
-    second: Decorations_3
+      213: -8558182943265400422
+    second: Golem_3
   - first:
-      213: -5616891256712012705
-    second: Decorations_4
+      213: -8234283073180859218
+    second: Golem_4
   - first:
-      213: 6598800818792424630
-    second: Decorations_5
+      213: 5364265973111914673
+    second: Golem_5
+  - first:
+      213: -7005076754423207833
+    second: Golem_6
+  - first:
+      213: 3165055573760091616
+    second: Golem_7
+  - first:
+      213: 4491718667278462377
+    second: Golem_8
+  - first:
+      213: 7090992601551308341
+    second: Golem_9
+  - first:
+      213: 5923383455084623512
+    second: Golem_10
+  - first:
+      213: -2841899913268078105
+    second: Golem_11
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -66,7 +84,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 95
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,274 +131,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Vine
+      name: _Golem_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 154
-        width: 75
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a59c8a6cf9c568a458cdf2a812667fc1
-      internalID: 4234090705077185718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Light
-      rect:
-        serializedVersion: 2
-        x: 99
-        y: 135
-        width: 9
-        height: 35
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23f8b009a413a1d498c5754e1c5aef99
-      internalID: 5936755781256884489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pillar
-      rect:
-        serializedVersion: 2
-        x: 115
-        y: 77
-        width: 27
-        height: 108
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 469fd2f91247b3540aeb04f56c8783f8
-      internalID: -4254563025835751457
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lit Up Pillar
-      rect:
-        serializedVersion: 2
-        x: 161
-        y: 78
-        width: 25
-        height: 108
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e48b19586a6ca548b5320fc339f44bb
-      internalID: -6378001285771275336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Room Portal
-      rect:
-        serializedVersion: 2
-        x: 201
-        y: 78
-        width: 52
+        x: 0
+        y: 192
+        width: 96
         height: 96
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d88f4f205126864fac3e211e378730b
-      internalID: -2035518662
+      spriteID: 21aa460d7110a7f4da24236a786e7c4f
+      internalID: -1537130781
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tall Spike
+      name: _Golem_1
       rect:
         serializedVersion: 2
-        x: 6
-        y: 111
-        width: 14
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 96
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5564cf8e21f4fcc47945cef840e9604e
-      internalID: -5616891256712012705
+      spriteID: e1f06323b114c154a90c616a693f560e
+      internalID: 1635374225
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spike
+      name: _Golem_2
       rect:
         serializedVersion: 2
-        x: 23
-        y: 111
-        width: 14
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 192
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 701038c459ab1e04fb108f24d44bbc97
-      internalID: 6598800818792424630
+      spriteID: ef4155cb551682c4ca0c3cb848c656e2
+      internalID: -1008069381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chain
+      name: _Golem_3
       rect:
         serializedVersion: 2
-        x: 88
-        y: 134
-        width: 8
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 0
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81e1b433e18e1ce4fa713aa96a599736
-      internalID: -862047434
+      spriteID: 744c4ea1a5e1a82418e6ca6609b4bd22
+      internalID: 611446860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Broken Pillar
+      name: _Golem_4
       rect:
         serializedVersion: 2
-        x: 40
-        y: 2
-        width: 59
-        height: 71
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 96
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b62bc271977c25429eaa076218ca0ca
-      internalID: 1800534447
+      spriteID: fa2cf7ac23cdd2042b057e73209bc57e
+      internalID: 1697290209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spider Web
+      name: _Golem_5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f72b17e8ccbcf64c9faa63bbc32ed5e
+      internalID: -1333130255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: _Golem_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d916026da1bc8c744affd9a51ca9e3cb
+      internalID: -1703142522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: _Golem_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d0ac5ff13504394ebc55a616e8abfb8
+      internalID: -1212231669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: _Golem_8
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 25
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5647fc211c6cc3942a95c04fe1cebc58
-      internalID: 1344588100
+      spriteID: fa08322cf66e7564fba00644c356a1c2
+      internalID: 521198203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Odd Spider Web
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 130
-        width: 15
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 40ea35bf092cab9438ff030d49ed4ce3
-      internalID: -161099009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Vines 2
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 198
-        width: 32
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9cdab90416b7a8944b52f12478a5dc83
-      internalID: 2003287351
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Decorations_0
+      name: _Golem_9
       rect:
         serializedVersion: 2
         x: 96
-        y: 223
-        width: 111
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 209d2f628db4aac4f90b812c26d87dd1
-      internalID: 692469603
+      spriteID: 79a36749f5eb659428dc097aad19ebff
+      internalID: -1939476492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: _Golem_10
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2f2a17a46ccd23409e3a4f167e049f5
+      internalID: -1605609229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: _Golem_11
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.395, y: 0.432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5262ab5842c6b54db0c7e3cd4732125
+      internalID: 849593282
       vertices: []
       indices: 
       edges: []
@@ -388,7 +385,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6c6be744146a27148aa0376423b853c1
+    spriteID: d2826dcf546c70e4295f3c4ddd452ee2
     internalID: 0
     vertices: []
     indices: 
@@ -396,19 +393,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Broken Pillar: 1800534447
-      Chain: -862047434
-      Decorations_0: 692469603
-      Light: 5936755781256884489
-      Lit Up Pillar: -6378001285771275336
-      Odd Spider Web: -161099009
-      Pillar: -4254563025835751457
-      Room Portal: -2035518662
-      Spider Web: 1344588100
-      Spike: 6598800818792424630
-      Tall Spike: -5616891256712012705
-      Vine: 4234090705077185718
-      Vines 2: 2003287351
+      _Golem_0: -1537130781
+      _Golem_1: 1635374225
+      _Golem_10: -1605609229
+      _Golem_11: 849593282
+      _Golem_2: -1008069381
+      _Golem_3: 611446860
+      _Golem_4: 1697290209
+      _Golem_5: -1333130255
+      _Golem_6: -1703142522
+      _Golem_7: -1212231669
+      _Golem_8: 521198203
+      _Golem_9: -1939476492
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

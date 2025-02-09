@@ -353,6 +353,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "TutorialSequence",
+            "id": "94bbf22f-b35a-4da7-bc3d-f750a874ee76",
+            "actions": [
+                {
+                    "name": "Continue",
+                    "type": "Button",
+                    "id": "63bd73c4-0bc6-4aae-8447-c925b878b3fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "622effa3-97c9-4b4e-91b3-967c7c0e350c",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

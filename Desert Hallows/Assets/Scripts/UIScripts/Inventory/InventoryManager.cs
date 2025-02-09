@@ -41,7 +41,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            inventoryMenu.GetComponent<AnimationDone>().Disable();
+            inventoryMenu.GetComponent<InventoryAnimationDone>().Disable();
         }
         currentPause++;
     }

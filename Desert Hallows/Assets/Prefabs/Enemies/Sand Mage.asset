@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sand Mage
   m_EditorClassIdentifier: 
   named: 
+  aoe: 1.5
   description: 
   health: 10
   jumpHeight: 12

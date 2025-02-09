@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyInfo : ScriptableObject
 {
     public string named;
+    public float aoe;
     public string description;
     public float health = 100;
     public float jumpHeight = 12;

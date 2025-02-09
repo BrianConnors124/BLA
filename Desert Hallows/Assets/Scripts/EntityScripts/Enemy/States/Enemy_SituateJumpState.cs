@@ -13,7 +13,7 @@ public class Enemy_SituateJumpState : EnemyState
     {
         base.EnterState();
         stateTimer = 1;
-        rb.velocity = new Vector2(enemy.movementSpeed * -Line.LeftOrRight(enemy.transform.position.x, enemy.DetectsObjectForward().collider.transform.position.x), rb.velocity.y);
+        rb.velocity = new Vector2(enemy.movementSpeed * - enemy.MovementDirection(), rb.velocity.y);
     }
 
     public override void UpdateState()

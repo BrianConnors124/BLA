@@ -12,17 +12,21 @@ public class Enemy : Entity
     public EnemyInfo info;
     public Vector2 origin;
     private BoxCollider2D hitbox;
+    public bool canJump;
 
     [Header("Input")] 
     public float movementSpeed;
     public float jumpHeight;
     public float reach;
+    public float aoe;
     public float primaryCD;
     
     [Header("Output")]
     public bool playerInPursuitRange;
-    public bool playerInMeleeRange;
-    public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < transform.localScale.x * hitbox.size.x * reach;
+    public bool playerInMeleeRange => BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(.01f, 
+            transform.localScale.y * 1.1f), 0, new Vector2(MovementDirection(), 0), reach * .75f,
+        LayerMask.GetMask("Player"));
+    public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < hitbox.size.x + reach * .8f;
     public bool returned => Math.Abs(transform.position.x - origin.x) < 0.3f;
     public bool canAttack = true;
     
@@ -47,28 +51,18 @@ public class Enemy : Entity
     {
         movementSpeed = info.movementSpeed;
         jumpHeight = info.jumpHeight;
-        reach = info.baseReach / transform.localScale.x;
+        reach = info.baseReach;
         damage = info.damage;
         stun = info.stun;
         knockBack = info.knockBack;
         primaryCD = info.primaryCD;
         health = info.health;
+        aoe = info.aoe;
     }
 
     private void Update()
-    {
-        var position = transform.position;
-        
+    { 
         if(!takingDamage) Flip();
-
-        #region Detection
-
-        playerInMeleeRange = BoxCastDrawer.BoxCastAndDraw(new Vector2(position.x + .4f * MovementDirection(), position.y),
-            new Vector2(transform.localScale.x * hitbox.size.x * reach * MovementDirection(), transform.localScale.y * 1.1f), 0, Vector2.right, 0,
-            LayerMask.GetMask("Player"));
-
-
-        #endregion
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -100,36 +94,30 @@ public class Enemy : Entity
     }
     public RaycastHit2D DetectsObjectForward(){
     
+        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(.1f, .94f * hitBox.y), 0,
+        new Vector2(MovementDirection(), 0), reach * 1.5f, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"));
+        return a; 
+    }
+    
+    public RaycastHit2D DetectsObjectBackwards(){
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
-        new Vector2(
-            transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x),
-            transform.position.y), new Vector2(transform.localScale.x * .5f * MovementDirection(), transform.localScale.y * .94f), 0,
-        Vector2.right, 0, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"));
+            transform.position, new Vector2(.1f, .94f * hitBox.y), 0,
+            new Vector2(-MovementDirection(), 0), reach * 1.5f, LayerMask.GetMask("WorldObj")); 
         return a; 
     }
 
     public RaycastHit2D ObjectTooHigh() => Line.CreateAndDraw(
-        new Vector2(
-            transform.position.x +
-            (GetComponent<BoxCollider2D>().size.x * transform.localScale.x),
-            transform.position.y + transform.localScale.y / 5), new Vector2(MovementDirection(), 0),
-        transform.localScale.x * .35f * MovementDirection(), LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.gray);
+        new Vector2(transform.position.x, 
+            transform.position.y + hitBox.y * .1f), new Vector2(MovementDirection(), 0),
+        reach * 1.5f, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.red);
     
     public RaycastHit2D ObjectForwardTooClose(){
     
         RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
             new Vector2(
-                transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x),
+                transform.position.x + hitbox.size.x,
                 transform.position.y), new Vector2(transform.localScale.x * .1f * MovementDirection(), transform.localScale.y * .94f), 0,
             Vector2.right, 0, LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"));
-        return a; 
-    }
-    public RaycastHit2D DetectsObjectBackwards(){
-        RaycastHit2D a = BoxCastDrawer.BoxCastAndDraw(
-            new Vector2(
-                transform.position.x + (GetComponent<BoxCollider2D>().size.x * transform.localScale.x),
-                transform.position.y), new Vector2(transform.localScale.x * -MovementDirection(), transform.localScale.y * .94f), 0,
-            Vector2.right, 0, LayerMask.GetMask("WorldObj")); 
         return a; 
     }
     #endregion
@@ -147,7 +135,7 @@ public class Enemy : Entity
         return 1;
     }
           
-    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + .8f * MovementDirection(), transform.position.y), Vector2.down, transform.localScale.y * 1.4f,LayerMask.GetMask("World"), Color.red);
+    public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection() * .95f, transform.position.y), Vector2.down, transform.localScale.y,LayerMask.GetMask("World"), Color.yellow);
           
     #endregion
 
