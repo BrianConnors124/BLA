@@ -170,6 +170,9 @@ MonoBehaviour:
   slotQuantity: 0
   quantityText: {fileID: 8026765201161344857}
   itemImage: {fileID: 1641764963954715750}
+  manager: {fileID: 0}
+  eventSystem: {fileID: 0}
+  button: {fileID: 0}
 --- !u!114 &8728084118389182697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +263,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9.2, y: 11.200012}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0.000030518, y: 11.200012}
+  m_SizeDelta: {x: 80, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4889409800167494782
 CanvasRenderer:
@@ -356,7 +359,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 64.740616, y: 41.314873, z: 61.220116, w: -18.621437}
+  m_margin: {x: 68.66549, y: 41.314873, z: 57.949326, w: -18.621437}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

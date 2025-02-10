@@ -81,8 +81,12 @@ public class InventoryManager : MonoBehaviour
             currentPause++;   
         }
     }
-    
-    
+
+
+    private void Update()
+    {
+        //print(eventSystem.currentSelectedGameObject.name);
+    }
 
 
     public void AddItem(ItemInfo item, int quantity)

@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("Item Data")] 
     
@@ -22,12 +25,17 @@ public class ItemSlot : MonoBehaviour
 
     public InventoryManager manager;
 
+    public EventSystem eventSystem;
+
+    public Button button;
+
 
     private Player player;
 
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
     }
 
 
@@ -83,5 +91,20 @@ public class ItemSlot : MonoBehaviour
         #endregion
         
         
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        eventSystem.SetSelectedGameObject(gameObject);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UnityEngine.Debug.Log("Exited");
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        UseItem();
     }
 }
