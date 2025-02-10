@@ -7665,6 +7665,72 @@ RectTransform:
   m_AnchoredPosition: {x: -9.77, y: -0.07}
   m_SizeDelta: {x: 1, y: 3.4494}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1023725579
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 29.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.25779223
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623966582739554847, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5580932433190237986, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: canJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123256874845369920, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+      propertyPath: m_Name
+      value: Shepard Enemy (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+--- !u!1 &1023725580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6123256874845369920, guid: f26318d69570beb42b9e5c54b4046b29, type: 3}
+  m_PrefabInstance: {fileID: 1023725579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1025003634
 GameObject:
   m_ObjectHideFlags: 0
@@ -7756,7 +7822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7b87de7695ca14ea34912d6538dcd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Phase2
+  sceneName: Thank you
 --- !u!1 &1045082047
 GameObject:
   m_ObjectHideFlags: 0
@@ -30685,7 +30751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6028763074520496681, guid: 595bb7173ed8ea24db1dab032492e079, type: 3}
       propertyPath: objectives.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6028763074520496681, guid: 595bb7173ed8ea24db1dab032492e079, type: 3}
       propertyPath: 'objectives.Array.data[0]'
@@ -30710,7 +30776,7 @@ PrefabInstance:
     - target: {fileID: 6028763074520496681, guid: 595bb7173ed8ea24db1dab032492e079, type: 3}
       propertyPath: 'objectives.Array.data[5]'
       value: 
-      objectReference: {fileID: 1792415681}
+      objectReference: {fileID: 1023725580}
     - target: {fileID: 6028763074520496681, guid: 595bb7173ed8ea24db1dab032492e079, type: 3}
       propertyPath: activateOnCompletion.Array.size
       value: 1
@@ -35892,6 +35958,7 @@ SceneRoots:
   - {fileID: 1505975649}
   - {fileID: 710564876}
   - {fileID: 1126607896}
+  - {fileID: 1023725579}
   - {fileID: 1792415680}
   - {fileID: 375759361}
   - {fileID: 2077090456}

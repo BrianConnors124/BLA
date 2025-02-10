@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Phase2.unity
     guid: b26ef8ad715509f40a7d60a27c59de18
+  - enabled: 1
+    path: Assets/Scenes/Thank you.unity
+    guid: 027b26780a9df32448e86f41f15a5aa6
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

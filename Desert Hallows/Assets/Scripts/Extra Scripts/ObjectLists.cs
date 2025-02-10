@@ -29,16 +29,16 @@ public class ObjectLists : MonoBehaviour
 
     private void LoadedScene(Scene scene, LoadSceneMode sceneMode)
     {
-        if (!scene.name.Equals("MainScene"))
-        {
-            
-        }
-        else
+        if (scene.name.Equals("MainScene") || scene.name.Equals("Thank you"))
         {
             foreach (var item in dontDestroy)
             {
                 Destroy(item);
             }
+        }
+        else
+        {
+            
         }
     }
 }
