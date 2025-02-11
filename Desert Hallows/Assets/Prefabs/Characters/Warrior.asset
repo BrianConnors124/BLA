@@ -24,5 +24,5 @@ MonoBehaviour:
   gravityScale: 10
   baseDamage: 10
   baseKnockBack: 12
-  stun: 0.2
-  health: 100
+  stun: 0.5
+  health: 150

@@ -15,12 +15,12 @@ MonoBehaviour:
   named: 
   aoe: 2
   description: 
-  health: 200
+  health: 150
   jumpHeight: 0
-  movementSpeed: 3
+  movementSpeed: 2
   damage: 20
-  baseReach: 3.75
-  stun: 2
+  baseReach: 3.25
+  stun: 1.2
   knockBack: 15
   primaryCD: 2.5
   bossType: 0

@@ -32,6 +32,7 @@ public class TutorialSequence : MonoBehaviour
 
     private void OnEnable()
     {
+        makeMagicHappen[5].SetActive(false);
         sequence = 0;
         textDone = true;
         GameObject.Find("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("TutorialSequence");

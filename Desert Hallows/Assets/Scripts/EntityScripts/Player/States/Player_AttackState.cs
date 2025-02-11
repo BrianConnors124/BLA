@@ -14,6 +14,7 @@ public class Player_AttackState : PlayerState
     {
         base.EnterState();
         player.canFlip = false;
+        DoAttack();
         attackInt++;
         timer.SetActionTimer(attackKey, player.coolDowns[player.cooldownKey[0]], () => attackInt = 0);
     }

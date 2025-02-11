@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -86,7 +87,9 @@ public class Player : Entity
         maxHealth = playerInfo.health;
         
     }
+
     
+
 
     public Dictionary<string, float> GetCoolDowns() => coolDowns;
 

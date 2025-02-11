@@ -55,7 +55,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
     
-    private void TogglePauseMenu()
+    public void TogglePauseMenu()
     {
         if (inventoryMenu.activeInHierarchy)
         {
@@ -69,13 +69,13 @@ public class InventoryManager : MonoBehaviour
         
             if (currentPause == 0)
             {
-                InputSystemController.instance.playerInput.SwitchCurrentActionMap("PauseMenuNav");
                 pauseScreen.SetActive(true);
+                InputSystemController.instance.playerInput.SwitchCurrentActionMap("PauseMenuNav");
             }
             else
             {
-                InputSystemController.instance.playerInput.SwitchCurrentActionMap("Movement");
                 pauseScreen.SetActive(false);
+                InputSystemController.instance.playerInput.SwitchCurrentActionMap("Movement");
             }
         
             currentPause++;   

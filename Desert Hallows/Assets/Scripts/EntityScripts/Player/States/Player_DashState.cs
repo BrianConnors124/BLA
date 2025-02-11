@@ -11,6 +11,8 @@ public class Player_DashState : PlayerState
     {
         
     }
+
+    private Vector2 movementInputDirection;
     public override void EnterState()
     {
         TurnOnPhase();
@@ -19,8 +21,8 @@ public class Player_DashState : PlayerState
         timer.SetTimer("dashTimer", player.dashDuration);
         player.canTakeDamage = false;
         player.StartDashCD();
-        
-        player.Move(InputSystemController.MovementInput().x * player.dashSpeed, InputSystemController.MovementInput().y * player.dashSpeed/1.7f);
+        movementInputDirection = FindAngularVector(InputSystemController.MovementInput());
+        player.Move(movementInputDirection.x * player.dashSpeed * player.MovementDirection(), movementInputDirection.y * player.dashSpeed);
     }
 
     public override void UpdateState()
@@ -46,6 +48,7 @@ public class Player_DashState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        player.Move(20 * movementInputDirection.x, 20 * movementInputDirection.y);
         TurnOffPhase();
         player.canTakeDamage = true;
         rb.gravityScale = player.playerInfo.gravityScale;
@@ -61,6 +64,22 @@ public class Player_DashState : PlayerState
     {
         player.GetComponent<BoxCollider2D>().excludeLayers -= LayerMask.GetMask("WorldObj");
         player.GetComponent<BoxCollider2D>().includeLayers += LayerMask.GetMask("WorldObj");
+    }
+
+    private Vector2 FindAngularVector(Vector2 input)
+    {
+        if (Mathf.Rad2Deg * Math.Atan2(Math.Abs(input.y), Math.Abs(input.x)) + 22.5 >= 45)
+        {
+            if (Mathf.Rad2Deg * Math.Atan2(Math.Abs(input.y), Math.Abs(input.x)) + 22.5 >= 90)
+            {
+                return new Vector2(0, 1 * Math.Abs(input.y)/ input.y);
+            }
+            
+            return new Vector2((float)Math.Sqrt(2)/2, (float) Math.Sqrt(2)/2 * Math.Abs(input.y)/ input.y);
+            
+        }
+
+        return new Vector2(1, 0);
     }
     
 }

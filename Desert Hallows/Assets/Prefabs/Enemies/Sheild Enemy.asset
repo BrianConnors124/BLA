@@ -20,7 +20,7 @@ MonoBehaviour:
   movementSpeed: 4
   damage: 10
   baseReach: 1
-  stun: 1
+  stun: 0
   knockBack: 12.5
   primaryCD: 1.5
   bossType: 0

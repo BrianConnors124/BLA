@@ -225,7 +225,7 @@
                 {
                     "name": "",
                     "id": "8dfdc594-5533-43ae-97b6-5f859d522479",
-                    "path": "<Gamepad>/select",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -322,7 +322,7 @@
                 {
                     "name": "",
                     "id": "4f51e6fc-af30-4370-8e8f-59a5d552f335",
-                    "path": "<Gamepad>/select",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

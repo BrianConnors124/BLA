@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
     private bool aimEnabled;
     private bool startTimer;
     private float timer;
+
+    private bool canHitPlayer;
     
     private void Awake()
     {
@@ -35,6 +37,7 @@ public class Projectile : MonoBehaviour
     {
         timer = 1;
         startTimer = true;
+        canHitPlayer = true;
     }
 
     private void OnDisable()
@@ -53,7 +56,11 @@ public class Projectile : MonoBehaviour
     private Vector2 Direction(Vector2 a, Vector2 b) => (b - a).normalized;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))other.GetComponent<Player>().ReceiveDamage(damage, enemy.knockBack, 0, enemy.PlayerDirection());
+        if (other.CompareTag("Player") && canHitPlayer)
+        {
+            other.GetComponent<Player>().ReceiveDamage(damage, enemy.knockBack, 0, enemy.PlayerDirection());
+            canHitPlayer = false;
+        }
     }
 
     private void Update()
