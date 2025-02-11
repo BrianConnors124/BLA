@@ -32,7 +32,9 @@ public class Player : Entity
 
     public bool doneLoading;
     //public bool hasDash, hasDashAttack, hasSlamAttack;
-    public bool[] unlockables;
+    public bool hasDash;
+    public bool hasDashAttack;
+    public bool hasSlamAttack;
 
     [Header("Sound Effects")] 
     public string[] soundKey;
@@ -70,8 +72,6 @@ public class Player : Entity
 
     private void SetPresets()
     {
-        //0 => dash, 1 => dashAttack, 2 => slamAttack//
-        unlockables = new bool[3];
         doubleJumps = playerInfo.doubleJumps + 1;
         coolDowns.Add(cooldownKey[0], playerInfo.attackCD);
         coolDowns.Add(cooldownKey[1], playerInfo.dashCD);

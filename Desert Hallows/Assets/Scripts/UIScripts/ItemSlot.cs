@@ -79,10 +79,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         print("Use Item" + gameObject.name);
         #region Heart
 
-        if (currentItem.itemName.ToUpper().Equals("THE HEART") && player.health != player.maxHealth)
+        if (currentItem.itemName.ToUpper().Equals("HEALTH POTION") && player.health != player.maxHealth)
         {
-            player.health += 50;
+            player.health += 35;
             if (player.health > player.maxHealth) player.health = player.maxHealth;
+            slotQuantity--;
+            UpdateInfo();
+        }
+        else if(currentItem.itemName.ToUpper().Equals("DASH BOOK"))
+        {
+            player.hasDash = true;
             slotQuantity--;
             UpdateInfo();
         }
@@ -96,6 +102,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         eventSystem.SetSelectedGameObject(gameObject);
+        manager.simpleUpdate.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -105,6 +112,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        UseItem();
+        
     }
 }

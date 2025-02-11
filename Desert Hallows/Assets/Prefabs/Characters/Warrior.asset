@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4901dac5da7c8ff40ba4e9c1c6965113, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
-  movementSpeed: 8
+  movementSpeed: 9
   dashSpeed: 64
-  jumpHeight: 24
-  attackCD: 0.8
+  jumpHeight: 22
+  attackCD: 0.6
   superAttackCD: 2
   dashCD: 1
   dashDuration: 0.08
   doubleJumps: 1
   coyoteJump: 0.2
-  gravityScale: 10
+  gravityScale: 8
   baseDamage: 10
   baseKnockBack: 12
   stun: 0.5

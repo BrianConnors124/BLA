@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93f5ccc1781a38f41a6ca1f2c04cc4e5, type: 3}
-  m_Name: Heart
+  m_Name: Dash Book
   m_EditorClassIdentifier: 
-  itemName: Health Potion
-  description: When consumed the player gains 35 hp
-  itemImage: {fileID: -6992495488058172891, guid: 6f6c39520e8774f4186dedb5074272ed, type: 3}
+  itemName: Dash Book
+  description: Use this book to permanently unlock the dash
+  itemImage: {fileID: -3682108802450931141, guid: b3428921409a6644fb355b7617698e80, type: 3}

@@ -106,6 +106,7 @@ public class InventoryManager : MonoBehaviour
         selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
         
     }
+    
     private void UnSelectItem()
     {
         if(selectedSlot != eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>())

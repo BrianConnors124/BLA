@@ -48,7 +48,6 @@ public class Entity : MonoBehaviour
 
     protected virtual void Awake()
     {
-        quest = GameObject.Find("Quest").GetComponent<QuestPhases>();
         controller = GameObject.Find("Main Camera");
         _rb = GetComponent<Rigidbody2D>();
         timer = GetComponent<UniversalTimer>();
@@ -57,6 +56,7 @@ public class Entity : MonoBehaviour
         hitBox *= transform.localScale;
         sprite = GetComponent<SpriteRenderer>();
         objPuller = controller.GetComponent<ObjectLists>();
+        quest = GameObject.Find("QuestIsh").GetComponent<QuestPhases>();
     }
 
     public void ZeroVelocity() => _rb.velocity = Vector2.zero;
@@ -97,6 +97,8 @@ public class Entity : MonoBehaviour
     {
         quest.RemoveObjective(gameObject);
         dead = true;
+        GetComponent<BoxCollider2D>().enabled = false;
+        _rb.constraints = RigidbodyConstraints2D.FreezePosition;
         onDeath?.Invoke();
     }
 

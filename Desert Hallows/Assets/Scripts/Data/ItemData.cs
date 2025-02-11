@@ -8,13 +8,15 @@ public class ItemData : MonoBehaviour
     public int quantity;
     public GameObject image;
     private InventoryManager _inventoryManager;
-    private SpriteRenderer sprite; 
+    private SpriteRenderer sprite;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         _inventoryManager = GameObject.Find("Canvas").GetComponent<InventoryManager>();
         sprite = image.GetComponent<SpriteRenderer>();
         UpdateInfo(itemInfo);
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void UpdateInfo(ItemInfo item)
@@ -31,5 +33,7 @@ public class ItemData : MonoBehaviour
             _inventoryManager.AddItem(itemInfo, quantity);
             Destroy(gameObject);
         }
+
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
     }
 }

@@ -217,7 +217,6 @@ GameObject:
   - component: {fileID: 5280505843641274115}
   - component: {fileID: 1440812464554532647}
   - component: {fileID: 5993869145848922999}
-  - component: {fileID: -1610034439520183742}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -426,7 +425,7 @@ MonoBehaviour:
   canAttack: 1
   longRangeAttackReady: 1
   playerInLongRange: 0
-  hasAMeleAttack: 1
+  hasAMeleAttack: 0
   hasALongRangeAttack: 0
 --- !u!95 &828553757172234437
 Animator:
@@ -523,22 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemToDrop:
   - {fileID: 11400000, guid: 654d8df9c75998b45a08547050eddc1a, type: 2}
-  rarity: 03000000
-  baseItem: {fileID: 0}
---- !u!114 &-1610034439520183742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2175698870036102128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72d13009fd0eec44ca3110d3f5a6a049, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemToDrop: []
-  rarity: 
+  rarity: 00000000
   baseItem: {fileID: 0}
 --- !u!1 &4765363166065948234
 GameObject:
