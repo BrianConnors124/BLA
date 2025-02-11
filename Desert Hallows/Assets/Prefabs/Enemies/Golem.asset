@@ -15,10 +15,10 @@ MonoBehaviour:
   named: 
   aoe: 2
   description: 
-  health: 150
+  health: 200
   jumpHeight: 0
-  movementSpeed: 2
-  damage: 20
+  movementSpeed: 4
+  damage: 25
   baseReach: 3.25
   stun: 1.2
   knockBack: 15
