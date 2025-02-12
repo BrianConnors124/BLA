@@ -323,7 +323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemToDrop:
   - {fileID: 11400000, guid: 654d8df9c75998b45a08547050eddc1a, type: 2}
-  rarity: 00000000
+  - {fileID: 11400000, guid: 33cbf1c8fadc61145a40759b792a9eb0, type: 2}
+  rarity: 0000000002000000
   baseItem: {fileID: 3556213510739215126, guid: ff4615ed224f9ac4f96c0d0707cbb759, type: 3}
 --- !u!1 &5134109000652713448
 GameObject:

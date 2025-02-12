@@ -15,6 +15,7 @@ public class Player_SlamAttack : PlayerState
     {
         base.EnterState();
         once = true;
+        player.canTakeDamage = false;
         rb.gravityScale *= 3;
     }
 
@@ -41,6 +42,7 @@ public class Player_SlamAttack : PlayerState
         base.ExitState();
         player.StartSuperAttackCD();
         rb.gravityScale = player.playerInfo.gravityScale;
+        player.timer.SetActionTimer("I-Frames", .5f, () => player.canTakeDamage = true);
         maxVelo = 0;
     }
 }

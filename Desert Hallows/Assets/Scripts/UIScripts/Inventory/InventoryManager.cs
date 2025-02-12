@@ -19,6 +19,8 @@ public class InventoryManager : MonoBehaviour
     public Action simpleUpdate;
     public InventoryAnimationDone anim;
 
+    public PickedUpItem notification;
+
     public ItemInfo emptyItem;
     
     
@@ -27,6 +29,7 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryMenu.SetActive(true);
         anim = inventoryMenu.GetComponent<InventoryAnimationDone>();
+        notification = GetComponent<PickedUpItem>();
         InputSystemController.instance.openInventory += ToggleInventory;
         InputSystemController.instance.pauseMenu += TogglePauseMenu;
         InputSystemController.instance.selectItem += SelectItem;
@@ -91,6 +94,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemInfo item, int quantity)
     {
+        notification.PickedUpNewItem(item, quantity);
         for (int i = 0; i < itemSlot.Length; i++)
         {
             if (!itemSlot[i].isOccupied || itemSlot[i].currentItem.itemName.Equals(item.itemName))
@@ -103,13 +107,13 @@ public class InventoryManager : MonoBehaviour
 
     private void SelectItem()
     {
-        selectedSlot = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>();
+        selectedSlot = eventSystem.currentSelectedGameObject?.GetComponent<ItemSlot>();
         
     }
     
     private void UnSelectItem()
     {
-        if(selectedSlot != eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>())
+        if(eventSystem.currentSelectedGameObject && selectedSlot && selectedSlot != eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>())
             SwitchItems(selectedSlot, eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>());
         
     }

@@ -17,6 +17,7 @@ public class Player_DashAttackState : PlayerState
         base.EnterState();
         timer.SetTimer("attackDashTimer", player.dashDuration);
         startingPos = rb.position;
+        player.canTakeDamage = false;
         once = true;
         player.Move(player.dashSpeed * player.MovementDirection(), 0);
     }
@@ -50,6 +51,7 @@ public class Player_DashAttackState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        player.timer.SetActionTimer("I-Frames", .5f, () => player.canTakeDamage = true);
         player.StartSuperAttackCD();
         
     }

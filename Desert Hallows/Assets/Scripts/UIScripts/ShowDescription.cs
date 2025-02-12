@@ -12,23 +12,15 @@ public class ShowDescription : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemText;
     public EventSystem eventSystem;
     public InventoryManager manager;
-    private GameObject oldSelected;
 
     private void Start()
     {
         manager.simpleUpdate += SimpleUpdate;
-        InputSystemController.instance.updateDescription += () => oldSelected = eventSystem.currentSelectedGameObject;
-        InputSystemController.instance.updateDescription += () => StartCoroutine(UpdateDescription());
-        
+        InputSystemController.instance.updateDescription += SimpleUpdate;
+
     }
 
-    private IEnumerator UpdateDescription()
-    {
-        yield return new WaitUntil(() => !oldSelected.name.Equals(eventSystem.currentSelectedGameObject.name));
-        SimpleUpdate();
-    }
-
-    public void SimpleUpdate()
+    private void SimpleUpdate()
     {
         var item = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem;
         itemImage.sprite = item.itemImage;
