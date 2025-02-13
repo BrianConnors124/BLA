@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class InputSystemController : MonoBehaviour
 {
+    #region variables
 
     public static InputSystemController instance;
     public PlayerInput playerInput;
@@ -30,18 +31,16 @@ public class InputSystemController : MonoBehaviour
     public Action unselectItem;
     public Action updateDescription;
 
-
+    #endregion
     private void Awake()
     {
         instance = this;
         _queueTimer = GetComponent<UniversalTimer>();
-        
-
     }
 
     public static Vector2 MovementInput() => instance.walk.action.ReadValue<Vector2>();
-
-public void HandleJump(InputAction.CallbackContext context)
+    
+    public void HandleJump(InputAction.CallbackContext context)
     {
         
         if(context.performed)_queueTimer.SetTimer(jumpKey, 0.1f);

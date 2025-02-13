@@ -9,31 +9,6 @@ using Object = UnityEngine.Object;
 
 public static class ObjectPuller
 {
-
-    public static void PullObjectAndSetText(List<GameObject> obj, Vector3 origin, string text)
-    {
-        int currentObj;
-        var needNewGameObject = true;
-        for (currentObj = 0; currentObj < obj.Count; currentObj++)
-        {
-            if (!obj[currentObj].activeInHierarchy)
-            {
-                needNewGameObject = false;
-                break;
-            }
-        }
-        
-        //Console.WriteLine(needNewGameObject);
-        if (needNewGameObject)
-        {
-            obj.Add(Object.Instantiate(obj[0]));
-            currentObj = obj.Count - 1;
-        }
-        obj[currentObj].transform.position = origin;
-        SetObjectText(text, obj[currentObj].GetComponent<TextMeshPro>());
-        obj[currentObj].GetComponent<TextMeshPro>().text = text;
-        obj[currentObj].SetActive(true);
-    }
     public static void PullObjectAndSetTextAndColor(GameObject[] obj, Vector3 origin, string text, Color color)
     {
         int currentObj;
@@ -66,8 +41,66 @@ public static class ObjectPuller
         obj[currentObj].GetComponent<TextMeshPro>().text = text;
         obj[currentObj].SetActive(true);
     }
-    
+    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction, Enemy enemy)
+    {
+        int currentObj;
+        var needNewGameObject = true;
+        for (currentObj = 0; currentObj < obj.Count; currentObj++)
+        {
+            if (!obj[currentObj].activeInHierarchy)
+            {
+                needNewGameObject = false;
+                break;
+            }
+        }
+        
+        if (needNewGameObject)
+        {
+            obj.Add(Object.Instantiate(obj[0]));
+            currentObj = obj.Count - 1;
+        }
+        obj[currentObj].transform.position = origin;
+        obj[currentObj].SetActive(true);
+        obj[currentObj].GetComponent<Projectile>().Initialize(direction, enemy);
+    }
 
+    
+    
+    private static void SetObjectTextAndColor(string text, TextMeshPro obj, Color color)
+    {
+        obj.text = text;
+        obj.color = color;
+    }
+    
+    private static void SetObjectText(string text, TextMeshPro obj)
+    {
+        obj.text = text;
+    }
+    
+    public static void PullObjectAndSetText(List<GameObject> obj, Vector3 origin, string text)
+    {
+        int currentObj;
+        var needNewGameObject = true;
+        for (currentObj = 0; currentObj < obj.Count; currentObj++)
+        {
+            if (!obj[currentObj].activeInHierarchy)
+            {
+                needNewGameObject = false;
+                break;
+            }
+        }
+        
+        //Console.WriteLine(needNewGameObject);
+        if (needNewGameObject)
+        {
+            obj.Add(Object.Instantiate(obj[0]));
+            currentObj = obj.Count - 1;
+        }
+        obj[currentObj].transform.position = origin;
+        SetObjectText(text, obj[currentObj].GetComponent<TextMeshPro>());
+        obj[currentObj].GetComponent<TextMeshPro>().text = text;
+        obj[currentObj].SetActive(true);
+    }
     public static void PullObject(GameObject[] obj, Vector3 origin)
     {
         int currentObj;
@@ -97,7 +130,6 @@ public static class ObjectPuller
         obj[currentObj].transform.position = origin;
         obj[currentObj].SetActive(true);
     }
-    
     public static void PullObject(List<GameObject> obj, Vector3 origin)
     {
         int currentObj;
@@ -118,7 +150,6 @@ public static class ObjectPuller
         obj[^1].transform.position = origin;
         obj[^1].SetActive(true);
     }
-    
     public static void PullObject(List<GameObject> obj, Vector3 origin, GameObject other)
     {
         int currentObj;
@@ -141,42 +172,6 @@ public static class ObjectPuller
         obj[currentObj].SetActive(true);
         other.SetActive(false);
     }
-    
-    public static void PullProjectile(List<GameObject> obj, Vector3 origin, Vector2 direction, Enemy enemy)
-    {
-        int currentObj;
-        var needNewGameObject = true;
-        for (currentObj = 0; currentObj < obj.Count; currentObj++)
-        {
-            if (!obj[currentObj].activeInHierarchy)
-            {
-                needNewGameObject = false;
-                break;
-            }
-        }
-        
-        if (needNewGameObject)
-        {
-            obj.Add(Object.Instantiate(obj[0]));
-            currentObj = obj.Count - 1;
-        }
-        obj[currentObj].transform.position = origin;
-        obj[currentObj].SetActive(true);
-        obj[currentObj].GetComponent<Projectile>().Initialize(direction, enemy);
-    }
-
-    private static void SetObjectText(string text, TextMeshPro obj)
-    {
-        obj.text = text;
-    }
-    
-    private static void SetObjectTextAndColor(string text, TextMeshPro obj, Color color)
-    {
-        obj.text = text;
-        obj.color = color;
-    }
-
-
     
     
 }

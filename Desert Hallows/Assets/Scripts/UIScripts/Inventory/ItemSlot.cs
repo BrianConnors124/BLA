@@ -12,6 +12,8 @@ using Image = UnityEngine.UI.Image;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    #region Variables
+
     [Header("Item Data")] 
     
     [SerializeField] private ItemInfo currentItem;
@@ -34,12 +36,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private Player player;
 
+    #endregion
+    
+
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
     }
-    
     private void UpdateVisualInfo()
     {
         if (slotQuantity == 0)
@@ -55,7 +59,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         
         itemImage.sprite = currentItem.itemImage;
     }
-
     public void ChangeInfo(ItemInfo newItem, int newQuantity)
     {
         previousItem = currentItem.itemName;
@@ -70,34 +73,47 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         
         UpdateVisualInfo();
     }
-
+    private Action AbilityFunction(ItemInfo item)
+    {
+        Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name! Add Ability");
+        if(item.itemName.ToUpper().Equals("DASH BOOK"))
+        {
+            commit = () => player.hasDash = true;
+            return commit;
+        }
+        if (item.itemName.ToUpper().Equals("DASH ATTACK BOOK"))
+        {
+            commit = () => player.hasDashAttack = true;
+            return commit;
+        }
+        if (item.itemName.ToUpper().Equals("SLAM ATTACK BOOK"))
+        {
+            commit = () => player.hasSlamAttack = true;
+            return commit;
+        }
+        return commit;
+    }
     public int GetSlotQuantity()
     {
         return slotQuantity;
     }
-
     public void AddSlotQuantity(int change)
     {
         slotQuantity += change;
         UpdateVisualInfo();
     }
-
     public ItemInfo GetItem()
     {
         return currentItem;
     }
-    
     public string GetItemName()
     {
         return currentItem.itemName;
     }
-
-
     public void UseItem()
     {
         ItemFunction(currentItem).Invoke();
     }
-    
     private Action AAbilityFunction(string name)
     {
         Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name! Remove Ability");
@@ -128,37 +144,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         return commit;
     }
-
-    private Action AbilityFunction(ItemInfo item)
-    {
-        Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name! Add Ability");
-        if(item.itemName.ToUpper().Equals("DASH BOOK"))
-        {
-            commit = () => player.hasDash = true;
-            
-
-            return commit;
-        }
-        
-        if (item.itemName.ToUpper().Equals("DASH ATTACK BOOK"))
-        {
-            commit = () => player.hasDashAttack = true;
-            
-
-            return commit;
-        }
-        
-        if (item.itemName.ToUpper().Equals("SLAM ATTACK BOOK"))
-        {
-            commit = () => player.hasSlamAttack = true;
-            
-
-            return commit;
-        }
-
-        return commit;
-    }
-
     private Action ItemFunction(ItemInfo item)
     {
         Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name!");

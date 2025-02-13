@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    #region Variables
+
     [Header("Info")]
     public float startingXPos;
     public EnemyStateMachine _stateMachine;
@@ -13,29 +15,29 @@ public class Enemy : Entity
     public Vector2 origin;
     private BoxCollider2D hitbox;
     public bool canJump;
+    
+        [Header("Input")] 
+        public float movementSpeed;
+        public float jumpHeight;
+        public float reach;
+        public float aoe;
+        public float primaryCD;
+        
+        [Header("Output")]
+        public bool playerInPursuitRange;
+        public bool playerInMeleeRange => BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(.01f, 
+                transform.localScale.y * 1.1f), 0, new Vector2(MovementDirection(), 0), reach * .75f,
+            LayerMask.GetMask("Player"));
+        public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < reach * .8f;
+        public bool returned => Math.Abs(transform.position.x - origin.x) < 0.3f;
+        public bool canAttack = true;
+        
+        public bool longRangeAttackReady = true;
+        public bool playerInLongRange;
+        public bool hasAMeleAttack;
+        public bool hasALongRangeAttack;
 
-    [Header("Input")] 
-    public float movementSpeed;
-    public float jumpHeight;
-    public float reach;
-    public float aoe;
-    public float primaryCD;
-    
-    [Header("Output")]
-    public bool playerInPursuitRange;
-    public bool playerInMeleeRange => BoxCastDrawer.BoxCastAndDraw(transform.position, new Vector2(.01f, 
-            transform.localScale.y * 1.1f), 0, new Vector2(MovementDirection(), 0), reach * .75f,
-        LayerMask.GetMask("Player"));
-    public bool SimilarX => Math.Abs(transform.position.x - player.transform.position.x) < reach * .8f;
-    public bool returned => Math.Abs(transform.position.x - origin.x) < 0.3f;
-    public bool canAttack = true;
-    
-    public bool longRangeAttackReady = true;
-    public bool playerInLongRange;
-    public bool hasAMeleAttack;
-    public bool hasALongRangeAttack;
-    
-
+    #endregion
     protected override void Awake()
     {
         base.Awake();
@@ -90,7 +92,8 @@ public class Enemy : Entity
 
     public RaycastHit2D PlayerOutOfSight()
     {
-        return player != null? Line.CreateAndDraw(transform.position, player.transform.position - transform.position, Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.black) : new RaycastHit2D();
+        return player != null? Line.CreateAndDraw(transform.position, player.transform.position - transform.position, 
+            Line.Length(transform.position,player.transform.position),LayerMask.GetMask("WorldObj") + LayerMask.GetMask("World"), Color.black) : new RaycastHit2D();
     }
     public RaycastHit2D DetectsObjectForward(){
     
@@ -136,6 +139,7 @@ public class Enemy : Entity
     public RaycastHit2D ThereIsAFloor() => Line.CreateAndDraw(new Vector2(transform.position.x + reach * MovementDirection() * .95f, transform.position.y), Vector2.down, transform.localScale.y,LayerMask.GetMask("World"), Color.yellow);
           
     #endregion
+    
 
 
     

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Player : Entity
@@ -9,6 +10,7 @@ public class Player : Entity
     public PlayerInfo playerInfo;
     public PlayerStateMachine _stateMachine;
     public InputSystemController playerController;
+    public bool usingGamePad;
 
     [Header("Input / Info")]
     
@@ -134,5 +136,10 @@ public class Player : Entity
     public bool SuperAttackReady() => !timer.TimerActive(cooldownKey[2]);
     
     #endregion
+    
+    public void NewControls(PlayerInput input)
+    {
+        usingGamePad = input.currentControlScheme.Equals("Controller");
+    }
 
 }

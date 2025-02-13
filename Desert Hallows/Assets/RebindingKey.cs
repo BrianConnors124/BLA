@@ -10,12 +10,15 @@ public class RebindingKey : MonoBehaviour
     public InputActionReference action;
     
 
-    public GameObject buttonDisplay;
+    public GameObject buttonDisplayKeyboard;
+    public GameObject buttonDisplayController;
     public GameObject buttonDisplayName;
     public GameObject waitingForButtonDisplay;
-    private TextMeshProUGUI buttonText;
+    private TextMeshProUGUI buttonTextKeyBoard;
+    private TextMeshProUGUI buttonTextController;
 
-    public bool isControllerBinding;
+    private Player player;
+    
     
     private InputActionRebindingExtensions.RebindingOperation _rebindingOperation;
 
@@ -24,27 +27,31 @@ public class RebindingKey : MonoBehaviour
 
     private void Start()
     {
-        buttonText = buttonDisplay.GetComponent<TextMeshProUGUI>();
+        player = GameObject.Find("Player").GetComponent<Player>();
+        buttonTextKeyBoard = buttonDisplayKeyboard.GetComponent<TextMeshProUGUI>();
+        buttonTextController = buttonDisplayController.GetComponent<TextMeshProUGUI>();
     }
 
     public void RebindKey()
     {
-        buttonDisplay.SetActive(false);
+        buttonDisplayKeyboard.SetActive(false);
+        buttonDisplayController.SetActive(false);
         waitingForButtonDisplay.SetActive(true);
         buttonDisplayName.SetActive(false);
+        
 
-        if (isControllerBinding)
+        if (player.usingGamePad)
         {
             _rebindingOperation = action.action.PerformInteractiveRebinding(0)
                 .OnMatchWaitForAnother(0.1f)
-                .OnComplete(operation => RebindComplete())
+                .OnComplete(operation => RebindComplete(true))
                 .Start();
         }
         else
         {
             _rebindingOperation = action.action.PerformInteractiveRebinding(1)
                 .OnMatchWaitForAnother(0.1f)
-                .OnComplete(operation => RebindComplete())
+                .OnComplete(operation => RebindComplete(false))
                 .Start();
         }
         
@@ -52,14 +59,24 @@ public class RebindingKey : MonoBehaviour
     }
 
 
-    private void RebindComplete()
+    private void RebindComplete(bool isController)
     {
         int bindingIndex = action.action.GetBindingIndexForControl(action.action.controls[0]);
-        buttonText.text = InputControlPath.ToHumanReadableString(action.action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        if (isController)
+        {
+            buttonTextController.text = InputControlPath.ToHumanReadableString(action.action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        }
+        else
+        {
+            buttonTextKeyBoard.text = InputControlPath.ToHumanReadableString(action.action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        }
+        
         _rebindingOperation.Dispose();
         waitingForButtonDisplay.SetActive(false);
         buttonDisplayName.SetActive(true);
-        buttonDisplay.SetActive(true);
+        buttonDisplayKeyboard.SetActive(true);
+        buttonDisplayController.SetActive(true);
+        
     }
     
     

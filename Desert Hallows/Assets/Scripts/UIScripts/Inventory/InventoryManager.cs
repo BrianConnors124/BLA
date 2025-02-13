@@ -9,8 +9,11 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField] private EventSystem eventSystem;
     public GameObject inventoryMenu;
+    public GameObject controlsMenu;
     private float inventoryCD;
     public GameObject pauseScreen;
     private int currentPause;
@@ -28,9 +31,8 @@ public class InventoryManager : MonoBehaviour
     public TextMeshProUGUI strText;
 
     public ItemInfo emptyItem;
-    
-    
 
+    #endregion
     private void Start()
     {
         inventoryMenu.SetActive(true);
@@ -70,6 +72,10 @@ public class InventoryManager : MonoBehaviour
         if (inventoryMenu.activeInHierarchy)
         {
             ToggleInventory();
+        } else if (controlsMenu.activeInHierarchy)
+        {
+            pauseScreen.SetActive(true);
+            controlsMenu.SetActive(false);
         }
         else
         {
@@ -91,9 +97,6 @@ public class InventoryManager : MonoBehaviour
             currentPause++;   
         }
     }
-    
-
-
     public void AddItem(ItemInfo item, int quantity)
     {
         notification.PickedUpNewItem(item, quantity);
@@ -111,27 +114,23 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
-    }
-
+    } 
     private void SelectItem()
     {
         selectedSlot = eventSystem.currentSelectedGameObject?.GetComponent<ItemSlot>();
         
     }
-
     private void UpdateStats()
     {
         hpText.text = "" + player.maxHealth;
         strText.text = "" + player.damage;
     }
-    
     private void UnSelectItem()
     {
         if(eventSystem.currentSelectedGameObject && selectedSlot && selectedSlot != eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>())
             SwitchItems(selectedSlot, eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>());
         
     }
-
     private void UseItem()
     {
         if (eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().GetItem().isAnAbility)
@@ -144,7 +143,6 @@ public class InventoryManager : MonoBehaviour
         simpleUpdate.Invoke();
         UpdateStats();
     }
-
     private void SwitchItems(ItemSlot firstSlot, ItemSlot newSlot)
     {
         if (firstSlot.GetItem().itemName.Equals(newSlot.GetItem().itemName))
@@ -162,8 +160,6 @@ public class InventoryManager : MonoBehaviour
 
         simpleUpdate.Invoke();
     }
-    
-    
     private void HotKeyAbility(ItemSlot firstSlot)
     {
         ItemSlot newSlot = null;
