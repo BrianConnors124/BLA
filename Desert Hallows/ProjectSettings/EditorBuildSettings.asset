@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Thank you.unity
     guid: 027b26780a9df32448e86f41f15a5aa6
+  - enabled: 1
+    path: Assets/Scenes/Phase3.unity
+    guid: 06aa76b8c9d42424eaff19fa28513f02
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
