@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,11 +16,16 @@ public class InventoryManager : MonoBehaviour
     private int currentPause;
     private Action setPauseButton;
     public ItemSlot[] itemSlot;
+    public ItemSlot[] abilitySlot;
     public ItemSlot selectedSlot;
     public Action simpleUpdate;
     public InventoryAnimationDone anim;
+    public Player player;
 
     public PickedUpItem notification;
+
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI strText;
 
     public ItemInfo emptyItem;
     
@@ -47,6 +53,7 @@ public class InventoryManager : MonoBehaviour
             if (currentPause == 0)
             {
                 InputSystemController.instance.playerInput.SwitchCurrentActionMap("InventoryNav");
+                UpdateStats();
                 inventoryMenu.SetActive(true);
             }
             else
@@ -84,12 +91,7 @@ public class InventoryManager : MonoBehaviour
             currentPause++;   
         }
     }
-
-
-    private void Update()
-    {
-        //print(eventSystem.currentSelectedGameObject.name);
-    }
+    
 
 
     public void AddItem(ItemInfo item, int quantity)
@@ -97,9 +99,15 @@ public class InventoryManager : MonoBehaviour
         notification.PickedUpNewItem(item, quantity);
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            if (!itemSlot[i].isOccupied || itemSlot[i].currentItem.itemName.Equals(item.itemName))
+            if (itemSlot[i].GetItemName().Equals(item.itemName))
             {
-                itemSlot[i].AddItem(item, quantity);
+                itemSlot[i].AddSlotQuantity(quantity);
+                return;
+            }
+            if (!itemSlot[i].isOccupied)
+            {
+                print(itemSlot[i].name);
+                itemSlot[i].ChangeInfo(item, quantity);
                 return;
             }
         }
@@ -109,6 +117,12 @@ public class InventoryManager : MonoBehaviour
     {
         selectedSlot = eventSystem.currentSelectedGameObject?.GetComponent<ItemSlot>();
         
+    }
+
+    private void UpdateStats()
+    {
+        hpText.text = "" + player.maxHealth;
+        strText.text = "" + player.damage;
     }
     
     private void UnSelectItem()
@@ -120,31 +134,65 @@ public class InventoryManager : MonoBehaviour
 
     private void UseItem()
     {
+        if (eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().GetItem().isAnAbility)
+        {
+            HotKeyAbility(eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>());
+            return;
+        }
+        
         eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().UseItem();
         simpleUpdate.Invoke();
+        UpdateStats();
     }
 
     private void SwitchItems(ItemSlot firstSlot, ItemSlot newSlot)
     {
-        if (firstSlot.currentItem.itemName.Equals(newSlot.currentItem.itemName))
+        if (firstSlot.GetItem().itemName.Equals(newSlot.GetItem().itemName))
         {
-            newSlot.UpdateInfo(newSlot.slotQuantity += firstSlot.slotQuantity);
-            
-            firstSlot.currentItem = emptyItem;
-            firstSlot.UpdateInfo(0);
+            newSlot.AddSlotQuantity(firstSlot.GetSlotQuantity());
+            firstSlot.ChangeInfo(emptyItem, 0);
         }
         else
         {
-            var placeHolder = ScriptableObject.CreateInstance<ItemInfo>();
+            var placeHolderItem = firstSlot.GetItem();
+            var placeHolderQuantity = firstSlot.GetSlotQuantity();
+            firstSlot.ChangeInfo(newSlot.GetItem(), newSlot.GetSlotQuantity());
+            newSlot.ChangeInfo(placeHolderItem, placeHolderQuantity);
+        }
 
-            placeHolder = firstSlot.currentItem;
-            
-            firstSlot.currentItem = newSlot.currentItem;
-            newSlot.currentItem = placeHolder;
+        simpleUpdate.Invoke();
+    }
+    
+    
+    private void HotKeyAbility(ItemSlot firstSlot)
+    {
+        ItemSlot newSlot = null;
 
-            var placeHolderInt = firstSlot.slotQuantity;
-            firstSlot.UpdateInfo(newSlot.slotQuantity);
-            newSlot.UpdateInfo(placeHolderInt);   
+        for (int i = 0; i < abilitySlot.Length; i++)
+        {
+            if (abilitySlot[i].isOccupied)
+            {
+                
+            }
+            else
+            {
+                newSlot = abilitySlot[i];
+            }
+        }
+
+        if (newSlot == null) return;
+        
+        if (firstSlot.GetItem().itemName.Equals(newSlot.GetItem().itemName))
+        {
+            newSlot.AddSlotQuantity(firstSlot.GetSlotQuantity());
+            firstSlot.ChangeInfo(emptyItem, 0);
+        }
+        else
+        {
+            var placeHolderItem = firstSlot.GetItem();
+            var placeHolderQuantity = firstSlot.GetSlotQuantity();
+            firstSlot.ChangeInfo(newSlot.GetItem(), newSlot.GetSlotQuantity());
+            newSlot.ChangeInfo(placeHolderItem, placeHolderQuantity);
         }
 
         simpleUpdate.Invoke();

@@ -14,9 +14,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Item Data")] 
     
-    public ItemInfo currentItem;
+    [SerializeField] private ItemInfo currentItem;
+
+    [SerializeField] private String previousItem;
     
-    public int slotQuantity;
+    [SerializeField] private int slotQuantity;
     public bool isOccupied => !currentItem.itemName.Equals("");
 
     [Header("Item Slot")] 
@@ -27,7 +29,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public EventSystem eventSystem;
 
-    public Button button;
+    public bool isAbilitySlot;
 
 
     private Player player;
@@ -37,31 +39,13 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         player = GameObject.Find("Player").GetComponent<Player>();
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
     }
-
-
-    public void AddItem(ItemInfo item, int quantity)
-    {
-        if (slotQuantity == 0)
-            currentItem = item;
-        
-        slotQuantity += quantity;
-        UpdateInfo(slotQuantity);
-    }
-    public void UpdateInfo(int newSlotCount)
-    {
-        slotQuantity = newSlotCount;
-        itemImage.sprite = currentItem.itemImage;
-        quantityText.text = slotQuantity.ToString();
-        quantityText.enabled = true;
-        if(slotQuantity == 0) quantityText.enabled = false;
-    }
     
-    private void UpdateInfo()
+    private void UpdateVisualInfo()
     {
         if (slotQuantity == 0)
         {
-            quantityText.enabled = false;
             currentItem = manager.emptyItem;
+            quantityText.enabled = false;
         }
         else
         {
@@ -70,50 +54,135 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         
         itemImage.sprite = currentItem.itemImage;
-        InputSystemController.instance.updateDescription.Invoke();
+    }
+
+    public void ChangeInfo(ItemInfo newItem, int newQuantity)
+    {
+        previousItem = currentItem.itemName;
+        currentItem = newItem;
+        slotQuantity = newQuantity;
+
+        if (isAbilitySlot)
+        {
+            AAbilityFunction(previousItem).Invoke();
+            AbilityFunction(currentItem).Invoke();
+        }
+        
+        UpdateVisualInfo();
+    }
+
+    public int GetSlotQuantity()
+    {
+        return slotQuantity;
+    }
+
+    public void AddSlotQuantity(int change)
+    {
+        slotQuantity += change;
+        UpdateVisualInfo();
+    }
+
+    public ItemInfo GetItem()
+    {
+        return currentItem;
+    }
+    
+    public string GetItemName()
+    {
+        return currentItem.itemName;
     }
 
 
     public void UseItem()
     {
-        print("Use Item" + gameObject.name);
-        #region Item Functions
+        ItemFunction(currentItem).Invoke();
+    }
+    
+    private Action AAbilityFunction(string name)
+    {
+        Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name! Remove Ability");
+        
+        if(name.ToUpper().Equals("DASH BOOK"))
+        {
+            commit = () => player.hasDash = false;
+            
 
-        if (currentItem.itemName.ToUpper().Equals("HEALTH POTION") && player.health != player.maxHealth)
-        {
-            player.health += 35;
-            if (player.health > player.maxHealth) player.health = player.maxHealth;
-            slotQuantity--;
-            UpdateInfo();
-        }
-        else if(currentItem.itemName.ToUpper().Equals("DASH BOOK"))
-        {
-            player.hasDash = true;
-            slotQuantity--;
-            UpdateInfo();
-        } else if (currentItem.itemName.ToUpper().Equals("DASH ATTACK BOOK"))
-        {
-            player.hasDashAttack = true;
-            slotQuantity--;
-            UpdateInfo();
-        } else if (currentItem.itemName.ToUpper().Equals("SLAM ATTACK BOOK"))
-        {
-            player.hasSlamAttack = true;
-            slotQuantity--;
-            UpdateInfo();
-        } else if (currentItem.itemName.ToUpper().Equals("STRENGTH BOOK"))
-        {
-            player.damage += 4;
-            slotQuantity--;
-            UpdateInfo();
+            return commit;
         }
         
+        if (name.ToUpper().Equals("DASH ATTACK BOOK"))
+        {
+            commit = () => player.hasDashAttack = false;
+            
 
-        #endregion
+            return commit;
+        }
         
-        
+        if (name.ToUpper().Equals("SLAM ATTACK BOOK"))
+        {
+            commit = () => player.hasSlamAttack = false;
+            
+
+            return commit;
+        } 
+
+        return commit;
     }
 
+    private Action AbilityFunction(ItemInfo item)
+    {
+        Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name! Add Ability");
+        if(item.itemName.ToUpper().Equals("DASH BOOK"))
+        {
+            commit = () => player.hasDash = true;
+            
+
+            return commit;
+        }
+        
+        if (item.itemName.ToUpper().Equals("DASH ATTACK BOOK"))
+        {
+            commit = () => player.hasDashAttack = true;
+            
+
+            return commit;
+        }
+        
+        if (item.itemName.ToUpper().Equals("SLAM ATTACK BOOK"))
+        {
+            commit = () => player.hasSlamAttack = true;
+            
+
+            return commit;
+        }
+
+        return commit;
+    }
+
+    private Action ItemFunction(ItemInfo item)
+    {
+        Action commit = () => Debug.LogWarning("No action assigned to item, try checking the name!");
+        if (item.itemName.ToUpper().Equals("HEALTH POTION") && player.health != player.maxHealth)
+        {
+            
+            commit = () => player.health += 35;
+            if (player.health > player.maxHealth) commit += () => player.health = player.maxHealth;
+            slotQuantity--;
+            UpdateVisualInfo();
+            
+            return commit;
+        }
+        
+        if (item.itemName.ToUpper().Equals("STRENGTH POTION"))
+        {
+            commit = () => player.damage += 4;
+            slotQuantity--;
+            UpdateVisualInfo();
+            return commit;
+        }
+
+        return commit;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         eventSystem.SetSelectedGameObject(gameObject); 

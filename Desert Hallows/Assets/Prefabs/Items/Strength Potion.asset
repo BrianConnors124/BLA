@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93f5ccc1781a38f41a6ca1f2c04cc4e5, type: 3}
-  m_Name: Strength Book
+  m_Name: Strength Potion
   m_EditorClassIdentifier: 
-  itemName: Strength Book
-  description: This book grants the consumer a slight increase in strength
-  itemImage: {fileID: 7868257836774604258, guid: b3428921409a6644fb355b7617698e80, type: 3}
+  itemName: Strength Potion
+  description: This Potion grants the consumer a permanent increase in strength
+  itemImage: {fileID: -1462766811, guid: 6f6c39520e8774f4186dedb5074272ed, type: 3}
+  isAnAbility: 0

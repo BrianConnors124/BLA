@@ -16,3 +16,4 @@ MonoBehaviour:
   description: This book will grant the consumer an attack that impales all enemies
     in the way
   itemImage: {fileID: -1434633946477102147, guid: b3428921409a6644fb355b7617698e80, type: 3}
+  isAnAbility: 1

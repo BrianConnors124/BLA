@@ -22,7 +22,7 @@ public class ShowDescription : MonoBehaviour
 
     private void SimpleUpdate()
     {
-        var item = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().currentItem;
+        var item = eventSystem.currentSelectedGameObject.GetComponent<ItemSlot>().GetItem();
         itemImage.sprite = item.itemImage;
         itemText.text = item.itemName + "\n\n" + item.description;
     }

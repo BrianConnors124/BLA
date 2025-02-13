@@ -16,3 +16,4 @@ MonoBehaviour:
   description: This book will grant the consumer the ability to fall down at blazing
     speeds sending a shockwave to nearby foes
   itemImage: {fileID: 8632951155382932051, guid: b3428921409a6644fb355b7617698e80, type: 3}
+  isAnAbility: 1

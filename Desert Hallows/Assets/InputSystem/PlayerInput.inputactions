@@ -365,6 +365,17 @@
                 },
                 {
                     "name": "",
+                    "id": "efe01fc2-28dd-4dbf-a77b-85f517270b2b",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e1f5126b-98fb-4c30-8a36-ee0f07e812ba",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
