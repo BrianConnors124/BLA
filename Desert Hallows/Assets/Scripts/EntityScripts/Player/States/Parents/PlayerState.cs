@@ -71,20 +71,32 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
     {
         float changeInDistance = endingPos.x - startingPos.x;
         
-        var bcd = BoxCastDrawer.BoxCastAllAndDraw(startingPos ,new Vector2(0.1f ,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),changeInDistance * player.MovementDirection(), LayerMask.GetMask("Enemy"), 5f);
+        var ecd = BoxCastDrawer.BoxCastAllAndDraw(startingPos ,new Vector2(0.1f ,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),changeInDistance * player.MovementDirection(), LayerMask.GetMask("Enemy"), 5f);
+        var bcd = BoxCastDrawer.BoxCastAllAndDraw(startingPos ,new Vector2(0.1f ,player.transform.localScale.y), 0, new Vector2(player.MovementDirection(), 0),changeInDistance * player.MovementDirection(), LayerMask.GetMask("Boss"), 5f);
         
-        foreach (var enemies in bcd)
+        foreach (var enemies in ecd)
         {
             enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage * 2, player.knockBack * 1.5f, player.stun, -200);
+        }
+        
+        foreach (var boss in bcd)
+        {
+            boss.collider.gameObject.GetComponent<BossController>().ReceiveDamage(player.damage);
         }
     }
 
     protected void DoSlamAttack(float maxVelo)
     {
-        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(rb.position.x, rb.position.y - .5f), new Vector2(player.hitBox.x * 10, player.hitBox.y * 2), 0, Vector2.down, 0, LayerMask.GetMask("Enemy"), 5f);
-        foreach (var a in bcd)
+        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(rb.position.x, rb.position.y - .5f), new Vector2(player.hitBox.x * 10, player.hitBox.y * 2), 0, Vector2.down, 0, LayerMask.GetMask("Boss"), 5f);
+        var ecd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(rb.position.x, rb.position.y - .5f), new Vector2(player.hitBox.x * 10, player.hitBox.y * 2), 0, Vector2.down, 0, LayerMask.GetMask("Enemy"), 5f);
+        foreach (var a in ecd)
         {
             a.collider.gameObject.GetComponent<Enemy>().ReceiveDamage((int)maxVelo * player.damage * .05f, player.knockBack * 1.5f, player.stun, -100);
+        }
+        
+        foreach (var boss in bcd)
+        {
+            boss.collider.gameObject.GetComponent<BossController>().ReceiveDamage(player.damage);
         }
     }
 

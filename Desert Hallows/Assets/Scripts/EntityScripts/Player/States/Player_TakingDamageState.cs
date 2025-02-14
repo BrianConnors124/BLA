@@ -14,31 +14,28 @@ public class Player_TakingDamage : PlayerState
     {
         base.EnterState();
         TakeDamage();
-        player.canFlip = false;
-        //Debug.Log("Taking Damage");
+        
         if (player.recentKnockBack == 0) return;
         player.Move(player.recentKnockBack * player.knockBackDirection,player.recentKnockBack);
         stateTimer = 0.2f;
-        if (player.recentStun > 0) stateTimer = player.recentStun;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        if(player.IsTouchingGround()) player.ZeroVelocity();
+        player.Move(player.movementSpeed * InputSystemController.MovementInput().x, rb.velocityY);
     }
     
 
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
         //if(StateTimerDone()) return stunnedState;
-        return StateTimerDone() ? PlayerStateMachine.EPlayerState.idle : StateKey;
+        return StateTimerDone() ? PlayerStateMachine.EPlayerState.stunned : StateKey;
     }
     
     public override void ExitState()
     {
         base.ExitState();
         player.takingDamage = false;
-        player.canFlip = true;
     }
 }

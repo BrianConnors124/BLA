@@ -10,10 +10,14 @@ public class SetSelectedButton : MonoBehaviour
     public EventSystem eventSystem;
     public GameObject setObj;
 
+    private void Awake()
+    {
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+    }
+
     private void Start()
     {
         SceneManager.sceneLoaded += LoadedScene;
-        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
     }
 
     private void OnEnable()

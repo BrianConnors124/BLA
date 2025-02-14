@@ -12,10 +12,8 @@ public class EnemyHealthSlider : MonoBehaviour
     public Image shieldSlider;
     public float maxHealth;
     public float maxShield;
-    public float currentShield;
     private SheildScript _shield;
     private Enemy _enemy;
-    public Transform _enemyTransform;
     private RectTransform _transform;
     
 

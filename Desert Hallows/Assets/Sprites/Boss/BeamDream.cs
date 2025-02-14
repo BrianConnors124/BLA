@@ -34,11 +34,18 @@ public class BeamDream : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private float timer = 0;
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.collider.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            other.collider.GetComponent<Player>().ReceiveDamage(10, 0, 0, 0);
+            if (timer <= 0)
+            {
+                other.GetComponent<Player>().ReceiveDamage(10, 0, 0, 0);
+                timer = .3f;
+            }
+
+            timer -= Time.deltaTime;
         }
     }
 }

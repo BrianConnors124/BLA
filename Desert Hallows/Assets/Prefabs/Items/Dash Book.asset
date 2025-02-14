@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Dash Book
   m_EditorClassIdentifier: 
   itemName: Dash Book
-  description: Use this book to permanently unlock the dash
+  description: When equipped this mysterious book grants the user the ability to
+    warp in one place and out of the other
   itemImage: {fileID: -3682108802450931141, guid: b3428921409a6644fb355b7617698e80, type: 3}
   isAnAbility: 1

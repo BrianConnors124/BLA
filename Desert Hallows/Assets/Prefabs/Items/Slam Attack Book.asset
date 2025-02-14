@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slam Attack Book
   m_EditorClassIdentifier: 
   itemName: Slam Attack Book
-  description: This book will grant the consumer the ability to fall down at blazing
-    speeds sending a shockwave to nearby foes
+  description: When equiped it bestows the user a great deal of heat when falling.
+    Must be in the air and controlled with the super attack key.
   itemImage: {fileID: 8632951155382932051, guid: b3428921409a6644fb355b7617698e80, type: 3}
   isAnAbility: 1

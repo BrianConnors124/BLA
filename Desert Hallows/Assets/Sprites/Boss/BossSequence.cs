@@ -10,34 +10,26 @@ public class BossSequence : MonoBehaviour
     public GameObject[] enemies;
     public Animator boss_ac;
     public List<GameObject> aliveEnemies;
+    private int sequence;
     private UniversalTimer timer;
     private float time;
     public GameObject beam;
+    private bool attacking;
 
     private void Start()
     {
         aliveEnemies = new List<GameObject>();
         timer = GetComponent<UniversalTimer>();
-        timer.SetActionTimer("Waiting for new Attack", 1, RandomAttack);
+        timer.SetActionTimer("Get New Attack ", 5, RandomAttack);
     }
-
-    private void Update()
-    {
-        time -= Time.deltaTime;
-    }
-
-    private void BlastBeam()
-    {
-        beam.SetActive(true);
-        boss_ac.Play("attack");
-        timer.SetActionTimer("Waiting for new Attack", 10, RandomAttack);
-    }
+    
 
     private void RandomAttack()
     {
         beam.SetActive(false);
-        var a = Random.Range(0, 3);
+        var a = Random.Range(0, 1);
 
+        print(a);
         if (a == 0)
         {
             BlastBeam();
@@ -46,25 +38,26 @@ public class BossSequence : MonoBehaviour
         {
             SummonEnemies();
         }
-        else
-        {
-            Idle();
-        }
+        
     }
-
-    private void Idle()
+    private void BlastBeam()
     {
-        timer.SetActionTimer("Waiting for new Attack", 20, RandomAttack);
+        sequence++;
+        beam.SetActive(true);
+        boss_ac.Play("attack");
+        timer.SetActionTimer("Get New Attack " + sequence, 5, RandomAttack);
     }
 
     private void SummonEnemies()
     {
+        sequence++;
         boss_ac.Play("attack");
+        
         foreach (var enemy in enemies)
         {
             Instantiate(enemy);
         }
-        timer.SetActionTimer("Waiting for new Attack", 45, RandomAttack);
+        timer.SetActionTimer("Get New Attack " + sequence, 25, RandomAttack);
     }
     
     

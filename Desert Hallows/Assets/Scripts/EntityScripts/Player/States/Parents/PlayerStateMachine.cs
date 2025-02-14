@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStateMachine : StateMachine<PlayerStateMachine.EPlayerState>
 {
     private Rigidbody2D rb;
-    public enum EPlayerState{idle, walking, attack, dash, jump, takingDamage, falling, doubleJump, slamAttack, dashAttack}
+    public enum EPlayerState{idle, walking, attack, dash, jump, takingDamage, falling, doubleJump, slamAttack, dashAttack, stunned}
 
     public void Initialize(Player player, Rigidbody2D RB)
     {
@@ -21,6 +21,7 @@ public class PlayerStateMachine : StateMachine<PlayerStateMachine.EPlayerState>
         States.Add(EPlayerState.takingDamage, new Player_TakingDamage(EPlayerState.takingDamage, player));
         States.Add(EPlayerState.slamAttack, new Player_SlamAttack(EPlayerState.slamAttack, player));
         States.Add(EPlayerState.dashAttack, new Player_DashAttackState(EPlayerState.dashAttack, player));
+        States.Add(EPlayerState.stunned, new Player_StunnedState(EPlayerState.stunned, player));
         CurrentState = States[EPlayerState.idle];
     }
     

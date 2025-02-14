@@ -730,6 +730,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "End Game",
+            "id": "a58551fa-c0ab-4ada-a89b-eaa01a662261",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "22d43480-543e-4b14-9bc4-636dae47f94c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6838fcfa-f44a-4b1b-9f72-88f442a9c2d2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

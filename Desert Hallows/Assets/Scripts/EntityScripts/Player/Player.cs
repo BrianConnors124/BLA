@@ -11,6 +11,7 @@ public class Player : Entity
     public PlayerStateMachine _stateMachine;
     public InputSystemController playerController;
     public bool usingGamePad;
+    public PlayerInput input;
 
     [Header("Input / Info")]
     

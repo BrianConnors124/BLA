@@ -17,5 +17,6 @@ public class GetNextScene : MonoBehaviour
     public void GetScene()
     {
         SceneManager.LoadScene(sceneName);
+        gameObject.SetActive(false);
     }
 }
