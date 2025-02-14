@@ -27,7 +27,7 @@ public class BossSequence : MonoBehaviour
     private void RandomAttack()
     {
         beam.SetActive(false);
-        var a = Random.Range(0, 1);
+        var a = Random.Range(0, 2);
 
         print(a);
         if (a == 0)

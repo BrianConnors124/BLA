@@ -42,7 +42,7 @@ public class BeamDream : MonoBehaviour
             if (timer <= 0)
             {
                 other.GetComponent<Player>().ReceiveDamage(10, 0, 0, 0);
-                timer = .3f;
+                timer = .1f;
             }
 
             timer -= Time.deltaTime;

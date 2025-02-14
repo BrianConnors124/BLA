@@ -9,7 +9,7 @@ using Object = System.Object;
 public class ObjectLists : MonoBehaviour
 {
     public GameObject[] dontDestroy;
-    public GameObject[] damageNumbers;
+    public List<GameObject> damageNumbers;
     public List<GameObject> enemyProjectilesFromAir;
 
     private void Awake()
@@ -36,9 +36,11 @@ public class ObjectLists : MonoBehaviour
                 Destroy(item);
             }
         }
-        else
+
+
+        for (int i = 1; i < damageNumbers.Count; i++)
         {
-            
+            damageNumbers.RemoveAt(i);
         }
     }
 }
