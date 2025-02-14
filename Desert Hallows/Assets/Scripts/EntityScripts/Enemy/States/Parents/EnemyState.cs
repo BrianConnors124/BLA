@@ -71,5 +71,4 @@ public class EnemyState : State<EnemyStateMachine.EEnemyState>
         ObjectPuller.PullProjectile(enemy.objPuller.enemyProjectilesFromAir, enemy.transform.position, enemy.player.transform.position, enemy);
     }
     
-    
 }
