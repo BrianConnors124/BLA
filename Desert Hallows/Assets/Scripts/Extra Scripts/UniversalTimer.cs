@@ -15,7 +15,7 @@ public class UniversalTimer : MonoBehaviour
     #endregion
     
 
-    public void Start()
+    public void Awake()
     {
         key = new List<string>();
         timer = new Dictionary<string, float>();
@@ -23,23 +23,6 @@ public class UniversalTimer : MonoBehaviour
         action = new Dictionary<string, Action>();
     }
     
-    private void FixedUpdate()
-    {
-        for (int i = 0; i < timer.Count; i++)
-        { timer[key[i]] -= Time.deltaTime;
-            if(timer[key[i]] <= 0){
-                if(action.ContainsKey(key[i]))
-                {
-                    action[key[i]].Invoke();
-                    action.Remove(key[i]);
-                }  
-                timer.Remove(key[i]);
-                startVal.Remove(key[i]);
-                key.RemoveAt(i);
-                i--;                   
-            }    
-        }   
-    }
     public void SetActionTimer(string code, float length, Action commit)
     {
         if (!key.Contains(code)) key.Add(code);
@@ -70,6 +53,25 @@ public class UniversalTimer : MonoBehaviour
         startVal.Remove(code);
         key.Remove(code);
         action.Remove(code);
+    }
+    
+    private void Update()
+    {
+        
+        for (int i = 0; i < timer.Count; i++)
+        { timer[key[i]] -= Time.deltaTime;
+            if(timer[key[i]] <= 0){
+                if(action.ContainsKey(key[i]))
+                {
+                    action[key[i]].Invoke();
+                    action.Remove(key[i]);
+                }  
+                timer.Remove(key[i]);
+                startVal.Remove(key[i]);
+                key.RemoveAt(i);
+                i--;                   
+            }    
+        }   
     }
 
 }
