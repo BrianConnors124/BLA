@@ -10,10 +10,12 @@ public class ObjectLists : MonoBehaviour
 {
     public GameObject[] dontDestroy;
     public List<GameObject> damageNumbers;
+    public GameObject original;
     public List<GameObject> enemyProjectilesFromAir;
 
     private void Awake()
     {
+        original = damageNumbers[0];
         SceneManager.sceneLoaded += LoadedScene;
         
         foreach (var item in dontDestroy)
@@ -38,9 +40,11 @@ public class ObjectLists : MonoBehaviour
         }
 
 
-        for (int i = 1; i < damageNumbers.Count; i++)
+        for (int i = 0; i < damageNumbers.Count; i++)
         {
             damageNumbers.RemoveAt(i);
         }
+
+        damageNumbers[0] = original;
     }
 }
