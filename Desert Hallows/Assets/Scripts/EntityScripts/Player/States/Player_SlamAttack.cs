@@ -24,7 +24,7 @@ public class Player_SlamAttack : PlayerState
         base.UpdateState();
         if (-player.Velocity.y > maxVelo) maxVelo = -player.Velocity.y;
 
-        if (player.CloseToGround() && once)
+        if ((player.CloseToGround() || player.Velocity.y == 0) && once)
         {
             DoSlamAttack(maxVelo);
             once = false;

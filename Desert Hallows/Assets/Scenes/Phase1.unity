@@ -5731,8 +5731,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 625153179}
     - target: {fileID: 5265643795957621827, guid: 94e2412adad2fa9428488f6843d9403a, type: 3}
+      propertyPath: original
+      value: 
+      objectReference: {fileID: 1295451366}
+    - target: {fileID: 5265643795957621827, guid: 94e2412adad2fa9428488f6843d9403a, type: 3}
       propertyPath: dontDestroy.Array.size
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265643795957621827, guid: 94e2412adad2fa9428488f6843d9403a, type: 3}
+      propertyPath: damageNumbers.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5265643795957621827, guid: 94e2412adad2fa9428488f6843d9403a, type: 3}
       propertyPath: 'dontDestroy.Array.data[0]'
@@ -30630,6 +30638,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 597154671126057513, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2060444991934993580, guid: fc95e2f05d4896249b6b35bec3787065, type: 3}
       propertyPath: m_Name
       value: Player

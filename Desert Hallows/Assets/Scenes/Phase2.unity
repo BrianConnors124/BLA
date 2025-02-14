@@ -36257,13 +36257,13 @@ HingeJoint2D:
   m_Enabled: 1
   serializedVersion: 4
   m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
+  m_ConnectedRigidBody: {fileID: 1565010844}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: -3.25}
-  m_ConnectedAnchor: {x: 3.670001, y: 38.678364}
+  m_Anchor: {x: -0.10049495, y: -3.2643561}
+  m_ConnectedAnchor: {x: -0.105643034, y: -0.6004944}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:
@@ -36283,13 +36283,13 @@ HingeJoint2D:
   m_Enabled: 1
   serializedVersion: 4
   m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
+  m_ConnectedRigidBody: {fileID: 1820121779}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 3.27}
-  m_ConnectedAnchor: {x: -2.8500004, y: 38.678364}
+  m_ConnectedAnchor: {x: 0.10999942, y: -0.5}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:
@@ -37098,7 +37098,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.21, y: -0.07}
+  m_AnchoredPosition: {x: 11.15, y: -0.07}
   m_SizeDelta: {x: 1, y: 3.4494}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1691339108
