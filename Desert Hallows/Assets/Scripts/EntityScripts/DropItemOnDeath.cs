@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class DropItemOnDeath : MonoBehaviour
@@ -8,6 +9,8 @@ public class DropItemOnDeath : MonoBehaviour
     private Enemy parent;
 
     public ItemInfo[] itemToDrop;
+
+    public GameObject objToDrop;
 
     [Range(0, 100)]public int[] rarity;
 
@@ -28,5 +31,11 @@ public class DropItemOnDeath : MonoBehaviour
             
             if(num == 0)Instantiate(baseItem, transform.position, Quaternion.identity).GetComponent<ItemData>().UpdateInfo(itemToDrop[i]);
         }
+        
+    }
+
+    public void DropHead()
+    {
+        Instantiate(objToDrop, transform.position - new Vector3(0, transform.localScale.y * .8f, 0), Quaternion.identity);
     }
 }

@@ -122,8 +122,6 @@ MonoBehaviour:
   shieldSlider: {fileID: 6069696954684892242}
   maxHealth: 0
   maxShield: 0
-  currentShield: 0
-  _enemyTransform: {fileID: 1037303484446035007}
 --- !u!1 &1197433584921219443
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +521,7 @@ MonoBehaviour:
   itemToDrop:
   - {fileID: 11400000, guid: 654d8df9c75998b45a08547050eddc1a, type: 2}
   - {fileID: 11400000, guid: 33cbf1c8fadc61145a40759b792a9eb0, type: 2}
+  objToDrop: {fileID: 1640124691175144732, guid: 965e734c4fd5e4d4eb614be2691baf2b, type: 3}
   rarity: 000000000a000000
   baseItem: {fileID: 0}
 --- !u!1 &4765363166065948234

@@ -1630,6 +1630,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5887340279638791414, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
+      propertyPath: objToDrop
+      value: 
+      objectReference: {fileID: 1640124691175144732, guid: 965e734c4fd5e4d4eb614be2691baf2b, type: 3}
+    - target: {fileID: 5887340279638791414, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
       propertyPath: rarity.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -37638,6 +37642,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5887340279638791414, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
+      propertyPath: objToDrop
+      value: 
+      objectReference: {fileID: 1640124691175144732, guid: 965e734c4fd5e4d4eb614be2691baf2b, type: 3}
+    - target: {fileID: 5887340279638791414, guid: 507d33679a3adf4439d225ee0a584c98, type: 3}
       propertyPath: 'rarity.Array.data[0]'
       value: 1
       objectReference: {fileID: 0}
@@ -38728,6 +38736,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5993869145848922999, guid: b971da430a9421641bb05816b27625af, type: 3}
+      propertyPath: objToDrop
+      value: 
+      objectReference: {fileID: 1640124691175144732, guid: 965e734c4fd5e4d4eb614be2691baf2b, type: 3}
     - target: {fileID: 5993869145848922999, guid: b971da430a9421641bb05816b27625af, type: 3}
       propertyPath: 'rarity.Array.data[0]'
       value: 3
