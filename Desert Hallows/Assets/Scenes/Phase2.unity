@@ -294,7 +294,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 1
 --- !u!1 &74939134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +1356,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 1
 --- !u!4 &324154490 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2967993608164226730, guid: 78605b2f313b5cd4b8eb479eaeb155ab, type: 3}
@@ -3018,7 +3018,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 1
 --- !u!1001 &787809032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35397,7 +35397,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 1
 --- !u!1001 &1419255213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36329,7 +36329,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 1
 --- !u!1 &1522528298
 GameObject:
   m_ObjectHideFlags: 0

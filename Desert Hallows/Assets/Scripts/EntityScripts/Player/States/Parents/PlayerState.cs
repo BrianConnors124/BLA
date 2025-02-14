@@ -81,7 +81,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         
         foreach (var boss in bcd)
         {
-            boss.collider.gameObject.GetComponent<BossController>().ReceiveDamage(player.damage);
+            boss.collider.gameObject.GetComponent<BossController>().ReceiveDamage(player.damage * 2);
         }
     }
 
@@ -96,7 +96,7 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         
         foreach (var boss in bcd)
         {
-            boss.collider.gameObject.GetComponent<BossController>().ReceiveDamage(player.damage);
+            boss.collider.gameObject.GetComponent<BossController>().ReceiveDamage((int)maxVelo * player.damage * .05f);
         }
     }
 

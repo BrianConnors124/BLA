@@ -57,7 +57,7 @@ public class BossSequence : MonoBehaviour
         {
             Instantiate(enemy);
         }
-        timer.SetActionTimer("Get New Attack " + sequence, 25, RandomAttack);
+        timer.SetActionTimer("Get New Attack " + sequence, 15, RandomAttack);
     }
     
     
