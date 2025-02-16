@@ -51,8 +51,8 @@ public class PlayerState : State<PlayerStateMachine.EPlayerState>
         
         player.playerAudio.clip = player.soundEffect["Slash"];
         player.playerAudio.Play();
-        var ecd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x * player.MovementDirection(),player.transform.localScale.y), 0, new Vector2(1, 0),0, LayerMask.GetMask("Enemy"), 0.3f);
-        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x * player.MovementDirection(),player.transform.localScale.y), 0, new Vector2(1, 0),0, LayerMask.GetMask("Boss"), 0.3f);
+        var ecd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x * player.MovementDirection() * 2,player.transform.localScale.y), 0, new Vector2(1, 0),0, LayerMask.GetMask("Enemy"), 0.3f);
+        var bcd = BoxCastDrawer.BoxCastAllAndDraw(new Vector2(player.transform.position.x + player.MovementDirection()/1.4f, player.transform.position.y),new Vector2(player.transform.localScale.x * player.MovementDirection() * 2,player.transform.localScale.y), 0, new Vector2(1, 0),0, LayerMask.GetMask("Boss"), 0.3f);
         foreach (var enemies in ecd)
         {
             enemies.collider.gameObject.GetComponent<Enemy>().ReceiveDamage(player.damage, player.knockBack/1.4f, player.stun, player.MovementDirection());

@@ -20,7 +20,7 @@ public class BossSequence : MonoBehaviour
     {
         aliveEnemies = new List<GameObject>();
         timer = GetComponent<UniversalTimer>();
-        timer.SetActionTimer("Get New Attack ", 5, RandomAttack);
+        timer.SetActionTimer("Get New Attack ", 2, RandomAttack);
     }
     
 
@@ -57,7 +57,7 @@ public class BossSequence : MonoBehaviour
         {
             Instantiate(enemy);
         }
-        timer.SetActionTimer("Get New Attack " + sequence, 15, RandomAttack);
+        timer.SetActionTimer("Get New Attack " + sequence, 10, RandomAttack);
     }
     
     
